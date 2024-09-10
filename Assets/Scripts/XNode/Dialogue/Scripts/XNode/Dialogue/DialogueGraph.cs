@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 using XNodeEditor;
+using System;
+using XNode;
 
 [CreateAssetMenu]
 public class DialogueGraph : NodeGraph 

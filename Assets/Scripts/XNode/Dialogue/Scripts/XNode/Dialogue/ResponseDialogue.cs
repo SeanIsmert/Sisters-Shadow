@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 
 public class ResponseDialogue : DialogueNodeBase 
 {
