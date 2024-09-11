@@ -1,6 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Serializable Dictionary, able to read and write from JSON.
+/// Used in place of a dictionary ONLY inside the Game data.
+/// Written by: Sean
+/// Modified by: 
+/// </summary>
 [System.Serializable]
 public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
 {

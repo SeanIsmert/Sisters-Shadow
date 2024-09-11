@@ -2,6 +2,13 @@ using UnityEngine;
 
 namespace AIController
 {
+    /// <summary>
+    /// Class responsible for the "senses" of the AI.
+    /// Allows for line of sight, and "hearing"
+    /// Needs a big refactor!!!
+    /// Written by: Sean
+    /// Modified by:
+    /// </summary>
     #region Require
     [RequireComponent(typeof(SphereCollider))]
     #endregion
