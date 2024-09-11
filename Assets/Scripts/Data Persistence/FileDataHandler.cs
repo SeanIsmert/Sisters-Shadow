@@ -2,6 +2,12 @@ using UnityEngine;
 using System.IO;
 using System;
 
+/// <summary>
+/// The class responsible for reading and writing data.
+/// Contains the methods used elsewhere to do various important serialization
+/// Written by: Sean
+/// Modified by:
+/// </summary>
 public class FileDataHandler
 {
     private string dataDirPath = "";

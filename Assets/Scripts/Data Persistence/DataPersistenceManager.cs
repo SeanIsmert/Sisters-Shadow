@@ -2,6 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// This is the manager that calls methods that utilize save and load.
+/// Responsible for fetching all objects to be saved.
+/// Reads and writes data using the handler.
+/// Written by: Sean
+/// Modified by:
+/// </summary>
 public class DataPersistenceManager : MonoBehaviour
 {
     [Header("File Storage Config")]
@@ -18,7 +25,6 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.Log("Found more than one Data Persistence Manager in the scene. Destroying the newest one.");
             Destroy(this.gameObject);
             return;
         }
@@ -27,7 +33,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     /// <summary>
-    /// THIS NEEDS TO BE CHANGED IN THE FUTURE. WILL BREAK IF YOU WANT A MAIN MENU
+    /// THIS NEEDS TO BE CHANGED IN THE FUTURE. WILL BREAK IF YOU WANT scenes
     /// </summary>
     private void Start()
     {

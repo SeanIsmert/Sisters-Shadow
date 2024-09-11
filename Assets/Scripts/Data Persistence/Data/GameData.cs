@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that stores the base default values for all saved data.
+/// is called or overwritten based on save and load data.
+/// Written by: Sean
+/// Modified by:
+/// </summary>
 [System.Serializable]
 public class GameData
 {
     //Information to store
     #region Variables
-    public SerializableDictionary<string, bool> itemsCollected;
-    //public SerializableDictionary<string, DoorState> doorsState;
     public SerializableDictionary<string, AIState> AIStates;
-
 
     public Vector3 playerPosition;
     public Quaternion playerRotation;
@@ -23,8 +26,6 @@ public class GameData
     #region Initialize
     public GameData() 
     {
-        itemsCollected = new SerializableDictionary<string, bool>();
-        //doorsState = new SerializableDictionary<string, DoorState>();
         AIStates = new SerializableDictionary<string, AIState>();
         keys = new List<string>();
         this.playerPosition = Vector3.zero;

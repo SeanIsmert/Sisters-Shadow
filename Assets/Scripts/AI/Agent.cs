@@ -3,8 +3,16 @@ using UnityEngine.AI;
 using AIController;
 using UnityEngine;
 
+
 namespace AIController
 {
+    /// <summary>
+    /// Base Agent class that all AI will have. 
+    /// Holds important information on health and such.
+    /// Little complicated and needs refactor!!!
+    /// Written by: Sean
+    /// Modified by:
+    /// </summary>
     #region Require
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Animator))]

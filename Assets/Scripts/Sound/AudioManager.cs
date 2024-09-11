@@ -1,6 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Audio Player class that allows any class to call upon it to play SFX and BGM
+/// features different overload methods for 3D, 2D, and BGM audio playing.
+/// Written by: Sean
+/// Modified by: 
+/// </summary>
 public class AudioManager : MonoBehaviour
 {
     #region Variables
@@ -37,7 +43,6 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        
         _sfxSources = new AudioSource[_sfxSourceLength];
         for (int i = 0; i < _sfxSourceLength; i++)
         {

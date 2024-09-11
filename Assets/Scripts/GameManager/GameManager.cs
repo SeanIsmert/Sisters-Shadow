@@ -1,6 +1,14 @@
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Game Manager class that controls the state of the game.
+/// Made a singletom and able to be called elsewhere.
+/// Utilizes an action in order to let other scripts know of state changes.
+/// Simple easy and feed zero info about other things.
+/// Written by: Sean
+/// Modified by:
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     #region Variables

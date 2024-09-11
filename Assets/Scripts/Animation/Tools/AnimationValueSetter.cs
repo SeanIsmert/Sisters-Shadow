@@ -1,5 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// Allows for Changing parameters like bools in the animator controller.
+/// This is useful for streamlining the process and decluttering code.
+/// Written by: Sean
+/// Modified by:
+/// </summary>
 public class AnimationValueSetter : StateMachineBehaviour
 {
     public BoolValue[] onEntetBools;

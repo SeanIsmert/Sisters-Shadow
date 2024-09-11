@@ -3,8 +3,11 @@ using UnityEngine;
 namespace AIController
 {
     /// <summary>
-    /// The Base Version of a state
-    /// Stores all methods and data shared by every state
+    /// The Base Version of a state that Stores all methods and data shared by every state.
+    /// Every state inherits these characteristics.
+    /// Might be fixed?! but I don't know how to make AI without update :p
+    /// Written by: Sean
+    /// Modified by:
     /// </summary>
     public abstract class StateBase : MonoBehaviour
     {
