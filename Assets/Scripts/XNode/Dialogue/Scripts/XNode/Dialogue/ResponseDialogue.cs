@@ -8,5 +8,4 @@ public class ResponseDialogue : DialogueNodeBase
     public bool exit;
 
     public override string GetDialogueType { get { return "Response"; } }
-
 }

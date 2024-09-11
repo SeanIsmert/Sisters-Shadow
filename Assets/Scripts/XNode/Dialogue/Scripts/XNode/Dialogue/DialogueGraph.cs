@@ -14,7 +14,7 @@ public class DialogueGraphEditor : NodeGraphEditor
 {
     public override string GetNodeMenuName(Type type)
     {
-        if (type.IsSubclassOf(typeof(DialogueNodeBase)) || type.IsSubclassOf(typeof(CoreNodeBase)))
+        if (type.IsSubclassOf(typeof(CoreNodeBase)) || type.IsSubclassOf(typeof(DialogueNodeBase)) || type.IsSubclassOf(typeof(ConditionalNodeBase)))
         {
             return base.GetNodeMenuName(type);        
         }
