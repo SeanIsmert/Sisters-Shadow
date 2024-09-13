@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The player's rotation speed.")]
     [SerializeField] private float _rotateSpeed;
 
+    [Header("Movement State")]
     public MoveStates curMoveState;
 
     public enum MoveStates
