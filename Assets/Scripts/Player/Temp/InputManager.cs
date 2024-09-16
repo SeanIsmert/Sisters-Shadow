@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private InteractableHandler _interactableHandler;
+    //private InteractableHandler _interactableHandler;
     private PlayerMovementHandler _playerMovement;
     private PlayerShootingHandler _playerShooting;
 
@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        _interactableHandler = GetComponent<InteractableHandler>();
+        //_interactableHandler = GetComponent<InteractableHandler>();
         _playerMovement = GetComponent<PlayerMovementHandler>();
         _playerShooting = GetComponent<PlayerShootingHandler>();
         input = new PlayerInput();
@@ -28,7 +28,7 @@ public class InputManager : MonoBehaviour
     {
         if (GameManager.instance.state == GameState.Gameplay)
         {
-            _playerMovement?.UpdateMovement(input.Gameplay.Movement.ReadValue<Vector2>());
+            //_playerMovement?.UpdateMovement(input.Gameplay.Movement.ReadValue<Vector2>());
         }
     }
 
@@ -50,25 +50,25 @@ public class InputManager : MonoBehaviour
     {
         input.Enable();
         GameManager.OnGameStateChanged += ActionMaps;
-        input.Gameplay.Interact.started += ctx => _interactableHandler.HandleInteraction();
+        //input.Gameplay.Interact.started += ctx => _interactableHandler.HandleInteraction();
         input.Gameplay.Sprint.started += ctx => _playerMovement.Sprint();
         input.Gameplay.Sprint.canceled += ctx => _playerMovement.ReleaseSprint();
         input.Gameplay.Aim.started += ctx => _playerShooting.Aim();
         input.Gameplay.Aim.canceled += ctx => _playerShooting.AimRelease();
-        input.Gameplay.Shooting.started += ctx => _playerShooting.Shoot(-1);
-        input.Gameplay.Pause.started += ctx => GameManager.instance.UpdateGameState(GameState.Pause);
+        //input.Gameplay.Shooting.started += ctx => _playerShooting.Shoot(-1);
+        //input.Gameplay.Pause.started += ctx => GameManager.instance.UpdateGameState(GameState.Pause);
     }
 
     private void OnDisable()
     {
         input.Disable();
         GameManager.OnGameStateChanged -= ActionMaps;
-        input.Gameplay.Interact.started -= ctx => _interactableHandler.HandleInteraction();
+        //input.Gameplay.Interact.started -= ctx => _interactableHandler.HandleInteraction();
         input.Gameplay.Sprint.started -= ctx => _playerMovement.Sprint();
         input.Gameplay.Sprint.canceled -= ctx => _playerMovement.ReleaseSprint();
         input.Gameplay.Aim.started -= ctx => _playerShooting.Aim();
         input.Gameplay.Aim.canceled -= ctx => _playerShooting.AimRelease();
-        input.Gameplay.Shooting.started -= ctx => _playerShooting.Shoot(-1);
-        input.Gameplay.Pause.started -= ctx => GameManager.instance.UpdateGameState(GameState.Pause);
+        //input.Gameplay.Shooting.started -= ctx => _playerShooting.Shoot(-1);
+        //input.Gameplay.Pause.started -= ctx => GameManager.instance.UpdateGameState(GameState.Pause);
     }
 }
