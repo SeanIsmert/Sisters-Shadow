@@ -1,7 +1,7 @@
 using AIController;
 using UnityEngine;
 
-public class PlayerShootingHandler : MonoBehaviour,IShooting
+public class PlayerShootingHandler : MonoBehaviour//,IShooting
 {
     [SerializeField] private Transform _gunBarrel;
 
@@ -28,14 +28,14 @@ public class PlayerShootingHandler : MonoBehaviour,IShooting
     {
         if (!_aiming )
             return;
-        if (PlayerManager.instance.bullets <= 0)
-            return;
+        //if (PlayerManager.instance.bullets <= 0)
+        //    return;
         if (_animator.GetCurrentAnimatorStateInfo(2).IsName("Pistol Shoot"))
             return;
         
         _animator.Play("Pistol Shoot");
 
-        PlayerManager.instance.Shoot(amount);
+        //PlayerManager.instance.Shoot(amount);
 
         RaycastHit hit;
 
@@ -52,7 +52,7 @@ public class PlayerShootingHandler : MonoBehaviour,IShooting
                 damageable = hit.transform.GetComponentInChildren<IDamageable>();
             }
 
-            damageable?.TakeDamage(-1);
+            //damageable?.TakeDamage(-1);
         }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, .1f);
