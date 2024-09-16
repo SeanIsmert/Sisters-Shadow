@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -49,8 +48,8 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         _input.Enable();
-        _movement = _input.Gameplay.Locomotion;
-        _movement.Enable();                                                                         // Input for movement and rotation.
+        _movement = _input.Gameplay.Locomotion;                                                     // Input for movement and rotation.
+        _movement.Enable();
         _input.Gameplay.Sprint.performed += SprintActive;                                           // Input for sprinting.
         _input.Gameplay.Sprint.canceled += SprintEnded;
         _input.Gameplay.Aim.performed += AimActive;                                                 // Input for aiming.
