@@ -57,7 +57,7 @@ public class InteractableConversation : MonoBehaviour, IInteract
             ClearButtons();
             NextNode("exit");
         }
-        else if (_dialogueTree.core.GetCoreType == "Exit")
+        else if (_dialogueTree.current.GetDialogueType == "Exit")
         {
             Debug.Log("called exit");
             ClearButtons();
