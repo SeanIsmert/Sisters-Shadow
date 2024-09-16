@@ -48,11 +48,13 @@ public class PlayerMovement : MonoBehaviour
     private void OnEnable()
     {
         _input.Enable();
-        _movement = _input.Gameplay.Locomotion;
-        _movement.Enable();                     // Input for movement and rotation.
-        _input.Gameplay.Sprint.Enable();        // Input for sprinting.
-        _input.Gameplay.Aim.Enable();           // Input for aiming.
-        _input.Gameplay.Interact.started += ctx => _interactableManager.HandleInteraction();
+        _movement = _input.Gameplay.Locomotion;                                                     // Input for movement and rotation.
+        _movement.Enable();
+        _input.Gameplay.Sprint.performed += SprintActive;                                           // Input for sprinting.
+        _input.Gameplay.Sprint.canceled += SprintEnded;
+        _input.Gameplay.Aim.performed += AimActive;                                                 // Input for aiming.
+        _input.Gameplay.Aim.canceled += AimEnded;
+        _input.Gameplay.Interact.started += ctx => _interactableManager.HandleInteraction();        // Input for interaction.
 
     }
 
@@ -61,15 +63,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _input.Disable();
         _movement.Disable();
-        _input.Gameplay.Sprint.Disable();
-        _input.Gameplay.Aim.Disable();
+        _input.Gameplay.Sprint.performed -= SprintActive;
+        _input.Gameplay.Sprint.canceled -= SprintEnded;
+        _input.Gameplay.Aim.performed -= AimActive;
+        _input.Gameplay.Aim.canceled -= AimEnded;
         _input.Gameplay.Interact.started -= ctx => _interactableManager.HandleInteraction();
-    }
-
-    // Read player input to determine movement state.
-    void Update()
-    {
-        SetMovementState();
     }
 
     // Perform movement actions in fixed update.
@@ -80,31 +78,18 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Reads player input to determine movement state.
-    /// </summary>
-    private void SetMovementState()
-    {
-        if (_movement.ReadValue<Vector2>() != Vector2.zero)
-        {
-            if (_input.Gameplay.Aim.phase == InputActionPhase.Performed)
-                curMoveState = MoveStates.Aiming;                                       // Aiming state takes priority over all others.
-
-            else if (_input.Gameplay.Sprint.phase == InputActionPhase.Performed)
-                curMoveState = MoveStates.Sprinting;                                    // Sprinting state comes second.
-
-            else
-                curMoveState = MoveStates.Moving;                                       // Moving state if there are no extra inputs.
-        }
-        else
-            curMoveState = MoveStates.Idle;                                             // Idle if no input at all.
-    }
-
-    /// <summary>
     /// Performs movement actions based on the movement state.
     /// </summary>
     private void CharacterMovement()
     {
         Vector3 force = new(0f, 0f, _movement.ReadValue<Vector2>().y);        // Creates a vector3 based on vertical axis input.
+
+        if (force != Vector3.zero && curMoveState == MoveStates.Idle)         // Set movement state when appropriate, otherwise return to idle.
+        {
+            curMoveState = MoveStates.Moving;
+        }
+        else if (force == Vector3.zero && curMoveState == MoveStates.Moving)
+            curMoveState = MoveStates.Idle;
 
         switch (curMoveState)
         {
@@ -138,5 +123,43 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(_rotateSpeed * force);     // Creates a quaternion using input multiplied by speed.
         _rb.MoveRotation(transform.rotation * rotation);                  // Applies the rotation!
+    }
+
+    /// <summary>
+    /// Actions to perform when sprint input is pressed.
+    /// </summary>
+    /// <param name="context"></param>
+    private void SprintActive(InputAction.CallbackContext context)
+    {
+        if (curMoveState != MoveStates.Aiming)      // Aiming takes priority?
+            curMoveState = MoveStates.Sprinting;
+    }
+
+    /// <summary>
+    /// Actions to perform when sprint input is released.
+    /// </summary>
+    /// <param name="context"></param>
+    private void SprintEnded(InputAction.CallbackContext context)
+    {
+        if (curMoveState != MoveStates.Aiming)
+            curMoveState = MoveStates.Idle;
+    }
+
+    /// <summary>
+    /// Actions to perform when aim input is pressed.
+    /// </summary>
+    /// <param name="context"></param>
+    private void AimActive(InputAction.CallbackContext context)
+    {
+        curMoveState = MoveStates.Aiming;
+    }
+
+    /// <summary>
+    /// Actions to perform when aim input is released.
+    /// </summary>
+    /// <param name="context"></param>
+    private void AimEnded(InputAction.CallbackContext context)
+    {
+        curMoveState = MoveStates.Idle;
     }
 }
