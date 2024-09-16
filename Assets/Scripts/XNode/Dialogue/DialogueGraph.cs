@@ -7,6 +7,7 @@ using XNode;
 public class DialogueGraph : NodeGraph 
 {
 	public DialogueNodeBase current;
+    public CoreNodeBase core;
 }
 
 [CustomNodeGraphEditor(typeof(DialogueGraph))]

@@ -3,7 +3,7 @@ using UnityEngine;
 
 /// <summary>
 /// Class that collects information on interactable events.
-/// Uses a simple dot product to engage interactions.
+/// Uses a simple dot product to engage interactions based on players rotation.
 /// Utilizes a interface to filter and invokes Interaction on said event.
 /// Written by: Sean
 /// Modified by: 
@@ -13,6 +13,21 @@ public class InteractableManager : MonoBehaviour
     [SerializeField] private IInteract _currentTarget;
     [SerializeField] private List<IInteract> _targets = new List<IInteract>();
 
+    public static InteractableManager instance;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (instance != null)
+        {
+            Destroy(this);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         IInteract target = other.GetComponent<IInteract>();
@@ -20,6 +35,7 @@ public class InteractableManager : MonoBehaviour
         if (target != null && !_targets.Contains(target))
         {
             _targets.Add(target);
+            Debug.Log("Added: " + other);
         }
     }
 
@@ -30,21 +46,14 @@ public class InteractableManager : MonoBehaviour
         if (target != null)
         {
             _targets.Remove(target);
-        }
-    }
-
-    public void RemoveTarget(IInteract target)
-    {
-        _targets.Remove(target);
-        if (_currentTarget == target)
-        {
-            _currentTarget = null;
+            Debug.Log("Removed: " + other);
         }
     }
 
     // Method to handle interactions
     public void HandleInteraction()
     {
+        Debug.Log("handle interaction");
         if (_targets.Count == 0)
         {
             _currentTarget = null;
@@ -73,5 +82,15 @@ public class InteractableManager : MonoBehaviour
 
         if (GameManager.instance.state == GameState.Gameplay)
             _currentTarget?.Interaction();
+    }
+
+    public void RemoveTarget(IInteract target)
+    {
+        _targets.Remove(target);
+        Debug.Log("Poped: " + target);
+        if (_currentTarget == target)
+        {
+            _currentTarget = null;
+        }
     }
 }

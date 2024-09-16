@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Interactable: //UI
                 break;
+            case GameState.Dialogue: // UI
+                break;
             case GameState.Menu: //UI
                 break;
             case GameState.Lose: //UI
@@ -73,6 +75,6 @@ public class GameManager : MonoBehaviour
 #region States
 public enum GameState
 {
-    Menu, Gameplay, Pause, Animation, Inventory, Interactable, Lose, Win
+    Menu, Gameplay, Pause, Animation, Inventory, Interactable, Dialogue, Lose, Win
 }
 #endregion

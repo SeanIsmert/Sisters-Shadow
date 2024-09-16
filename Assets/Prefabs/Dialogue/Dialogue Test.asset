@@ -90,56 +90,6 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   entry: 0
---- !u!114 &-3360489725890723758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f98f636ae40c2f94ea77175c4d955059, type: 3}
-  m_Name: Health Check
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 216, y: -248}
-  ports:
-    keys:
-    - entry
-    - ifTrue
-    - ifFalse
-    values:
-    - _fieldName: entry
-      _node: {fileID: -3360489725890723758}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 2
-      _dynamic: 0
-    - _fieldName: ifTrue
-      _node: {fileID: -3360489725890723758}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: ifFalse
-      _node: {fileID: -3360489725890723758}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-  entry: 20
-  ifTrue: 0
-  ifFalse: 0
 --- !u!114 &-2850233849097316832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,8 +212,7 @@ MonoBehaviour:
   - {fileID: -7266934002435830760}
   - {fileID: -3460134707354819205}
   - {fileID: -2850233849097316832}
-  - {fileID: -3360489725890723758}
-  current: {fileID: 0}
+  current: {fileID: -7266934002435830760}
 --- !u!114 &5038095466950862195
 MonoBehaviour:
   m_ObjectHideFlags: 0
