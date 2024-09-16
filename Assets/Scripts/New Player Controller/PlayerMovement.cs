@@ -1,9 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Player movement logic and state handler
+/// Handles with physics and a Rigidbody
+/// Written by: Kay
+/// Modified by: Sean
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovement : MonoBehaviour
 {
+    private InteractableManager _interactableManager;
     private PlayerInput _input;
     private InputAction _movement;
     private Rigidbody _rb;
@@ -32,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     // Gather references to required components.
     void Awake()
     {
+        _interactableManager = GetComponent<InteractableManager>();
         _rb = GetComponent<Rigidbody>();
         _input = new PlayerInput();
     }
@@ -39,18 +47,23 @@ public class PlayerMovement : MonoBehaviour
     // Subscribe to input events.
     private void OnEnable()
     {
+        _input.Enable();
         _movement = _input.Gameplay.Locomotion;
         _movement.Enable();                     // Input for movement and rotation.
         _input.Gameplay.Sprint.Enable();        // Input for sprinting.
         _input.Gameplay.Aim.Enable();           // Input for aiming.
+        _input.Gameplay.Interact.started += ctx => _interactableManager.HandleInteraction();
+
     }
 
     // Unsubscribe from input events.
     private void OnDisable()
     {
+        _input.Disable();
         _movement.Disable();
         _input.Gameplay.Sprint.Disable();
         _input.Gameplay.Aim.Disable();
+        _input.Gameplay.Interact.started -= ctx => _interactableManager.HandleInteraction();
     }
 
     // Read player input to determine movement state.
