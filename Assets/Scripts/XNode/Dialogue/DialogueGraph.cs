@@ -6,8 +6,8 @@ using XNode;
 [CreateAssetMenu]
 public class DialogueGraph : NodeGraph 
 {
-	public DialogueNodeBase current;
-    public CoreNodeBase core;
+	//public DialogueNodeBase dialogue;
+    public CoreNodeBase current;
 }
 
 [CustomNodeGraphEditor(typeof(DialogueGraph))]

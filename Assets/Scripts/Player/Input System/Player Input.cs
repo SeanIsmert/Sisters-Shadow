@@ -658,6 +658,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""254c7f30-29d3-40dd-902f-6d50265e7d74"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""52a263dd-37f0-4c3a-a9c6-c633ed7335bb"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
