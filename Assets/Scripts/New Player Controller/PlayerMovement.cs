@@ -82,6 +82,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private void CharacterMovement()
     {
+
+
         Vector3 force = new(0f, 0f, _movement.ReadValue<Vector2>().y);        // Creates a vector3 based on vertical axis input.
 
         if (force != Vector3.zero && curMoveState == MoveStates.Idle)         // Set movement state when appropriate, otherwise return to idle.

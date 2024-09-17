@@ -564,7 +564,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1721128125}
-  m_Father: {fileID: 1331659610}
+  m_Father: {fileID: 635427298}
   m_LocalEulerAnglesHint: {x: 0, y: -28.05, z: 0}
 --- !u!114 &196335547
 MonoBehaviour:
@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfd4a1452c1bfb4dacc9c5ed68fcb88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialogueTree: {fileID: 11400000, guid: 12562a862a63b274b83544def7f3e41a, type: 2}
+  _conversationGraph: {fileID: 11400000, guid: 12562a862a63b274b83544def7f3e41a, type: 2}
   _spokenLine: {fileID: 73459792}
   _responsePanle: {fileID: 838154618}
   _buttonPrefab: {fileID: 3253543163588556840, guid: 01ed710816246214d91d11610a211f73, type: 3}
@@ -820,7 +820,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 196335546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &714176030
@@ -1239,7 +1240,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1747770364}
-  - {fileID: 196335546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1554805872
@@ -1255,6 +1255,7 @@ GameObject:
   - component: {fileID: 1554805877}
   - component: {fileID: 1554805876}
   - component: {fileID: 1554805875}
+  - component: {fileID: 1554805880}
   - component: {fileID: 1554805874}
   - component: {fileID: 1554805879}
   m_Layer: 0
@@ -1408,6 +1409,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c4ec00dee53c7cc4c8f2f54ca1c19fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1554805880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554805872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31304235244579e46a31a9dee6734e43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1721128124

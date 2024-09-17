@@ -2,5 +2,5 @@
 
 public abstract class CoreNodeBase : Node 
 {
-    public abstract string GetCoreType { get; }
+    public abstract string GetNodeType { get; }
 }

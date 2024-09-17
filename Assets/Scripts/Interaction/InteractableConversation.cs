@@ -2,10 +2,11 @@ using UnityEngine.UI;
 using UnityEngine;
 using XNode;
 using TMPro;
+using UnityEngine.Windows;
 
 public class InteractableConversation : MonoBehaviour, IInteract
 {
-    [SerializeField] private DialogueGraph _dialogueTree;
+    [SerializeField] private DialogueGraph _conversationGraph;
     [SerializeField] private TextMeshProUGUI _spokenLine;
     [SerializeField] private Transform _responsePanle;
     [SerializeField] private GameObject _buttonPrefab;
@@ -15,20 +16,21 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     public Vector3 Position { get { return transform.position; } }
 
+
     public void Interaction()
     {
         GameManager.instance.UpdateGameState(GameState.Dialogue);
         _dialogueObject.SetActive(true);
 
         //On start, we need to know the first node (luckily we have an EntryNode)
-        foreach (Node item in _dialogueTree.nodes)
+        foreach (Node node in _conversationGraph.nodes)
         {
-            if (item is EntryNode)
+            if (node is EntryNode)
             {
                 /*Issue? we only store current as a DialogueNodeBase in our DialogueGraph script
                   our entry node is a coreNode, but luckily our Entry node leads to only one DialogueNodeBase anyway
                   lets access that */
-                _dialogueTree.current = item.GetPort("exit").Connection.node as DialogueNodeBase;
+                _conversationGraph.current = node.GetPort("exit").Connection.node as CoreNodeBase;
                 break;
             }
         }
@@ -39,37 +41,32 @@ public class InteractableConversation : MonoBehaviour, IInteract
     //what to do with the node information
     private void ParseNode()
     {
-        if (_dialogueTree.current == null || _spokenLine == null)
+        if (_conversationGraph.current == null || _spokenLine == null)
             return;
-
-        Debug.Log("Current Node: " + _dialogueTree.core);
-        Debug.Log("Current Node: " + _dialogueTree.current);
-
-        //Now I need to know the kind of node im dealing with
+        /*Now I need to know the kind of node im dealing with
         //remember our getDialogueType we made in our DialogueNodeBase
-        if (_dialogueTree.current.GetDialogueType == "NPC")
+        if (_conversationGraph.current.GetNodeType == "NPC")
         {
-            _spokenLine.text = _dialogueTree.current.dialogueSpoken;
+            _spokenLine.text = (_conversationGraph.current as NPCDialogue)?.dialogueSpoken;
             SpawnResponseButtons();
         }
-        else if (_dialogueTree.current.GetDialogueType == "Response")
+        else if (_conversationGraph.current.GetNodeType == "Response")
         {
             ClearButtons();
             NextNode("exit");
         }
-        else if (_dialogueTree.current.GetDialogueType == "Exit")
+        else if (_conversationGraph.current.GetNodeType == "Exit")
         {
             Debug.Log("called exit");
             ClearButtons();
             ExitConversation();
         }
-        //FIGURE OUT HOW TO DO THIS IN A SWITCH STATEMENT?
+        FIGURE OUT HOW TO DO THIS IN A SWITCH STATEMENT?*/
 
-        /*
-        switch (_dialogueTree.current.GetDialogueType || _dialogueTree.core.GetCoreType) 
+        switch (_conversationGraph.current.GetNodeType) 
         {
             case "NPC":
-                _spokenLine.text = _dialogueTree.current.dialogueSpoken;
+                _spokenLine.text = (_conversationGraph.current as NPCDialogue)?.dialogueSpoken;
                 SpawnResponseButtons();
                 break;
             case "Response":
@@ -81,16 +78,16 @@ public class InteractableConversation : MonoBehaviour, IInteract
                 ExitConversation();
                 break;
         }
-        */
+        
     }
 
     public void NextNode(string fieldName)
     {
-        foreach (NodePort port in _dialogueTree.current.Ports)
+        foreach (NodePort port in _conversationGraph.current.Ports)
         {
             if (port.fieldName == fieldName)
             {
-                _dialogueTree.current = port.Connection.node as DialogueNodeBase;
+                _conversationGraph.current = port.Connection.node as CoreNodeBase;
                 break;
             }
         }
@@ -107,7 +104,7 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     private void SpawnResponseButtons()
     {
-        foreach (NodePort port in _dialogueTree.current.Ports)
+        foreach (NodePort port in _conversationGraph.current.Ports)
         {
             if (port.Connection == null || port.IsInput)
                 continue;
@@ -135,5 +132,15 @@ public class InteractableConversation : MonoBehaviour, IInteract
                 Destroy(children[i].gameObject);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        PlayerInputManager.instance.input.UI.Cancel.performed += ctx => { ClearButtons(); ExitConversation(); };
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputManager.instance.input.UI.Cancel.performed -= ctx => { ClearButtons(); ExitConversation(); };
     }
 }
