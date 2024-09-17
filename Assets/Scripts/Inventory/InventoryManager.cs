@@ -18,15 +18,26 @@ public class InventoryManager : MonoBehaviour
             inventorySlots.Add(slot.GetComponent<InventorySlot>());
         }
 
-        for (int i = 0;i < inventory.Length; i++)
+        refreshInventory();
+    }
+
+    void refreshInventory()
+    {
+
+        for (int i = 0; i < inventory.Length; i++)
         {
             inventorySlots[i].onLoad(inventory[i]);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool AddItem(InventoryItem newItem)
     {
-        
+        if(inventory.Length > maxSize)
+        {
+            return false;
+        }
+        refreshInventory();
+        return true;
+    
     }
 }
