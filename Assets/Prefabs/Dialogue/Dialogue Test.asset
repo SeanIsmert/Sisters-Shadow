@@ -143,7 +143,7 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 1
-  dialogueSpoken: 
+  dialogueSpoken: ouch!
   entry: 0
   exit: 0
 --- !u!114 &-2154900191156043352
@@ -213,7 +213,6 @@ MonoBehaviour:
   - {fileID: -2850233849097316832}
   - {fileID: -3460134707354819205}
   - {fileID: 6104793144903603971}
-  dialogue: {fileID: 0}
   current: {fileID: -7266934002435830760}
 --- !u!114 &5038095466950862195
 MonoBehaviour:
