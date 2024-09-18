@@ -2,7 +2,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using XNode;
 using TMPro;
-using UnityEngine.Windows;
 
 public class InteractableConversation : MonoBehaviour, IInteract
 {
@@ -27,9 +26,6 @@ public class InteractableConversation : MonoBehaviour, IInteract
         {
             if (node is EntryNode)
             {
-                /*Issue? we only store current as a DialogueNodeBase in our DialogueGraph script
-                  our entry node is a coreNode, but luckily our Entry node leads to only one DialogueNodeBase anyway
-                  lets access that */
                 _conversationGraph.current = node.GetPort("exit").Connection.node as CoreNodeBase;
                 break;
             }
@@ -43,25 +39,6 @@ public class InteractableConversation : MonoBehaviour, IInteract
     {
         if (_conversationGraph.current == null || _spokenLine == null)
             return;
-        /*Now I need to know the kind of node im dealing with
-        //remember our getDialogueType we made in our DialogueNodeBase
-        if (_conversationGraph.current.GetNodeType == "NPC")
-        {
-            _spokenLine.text = (_conversationGraph.current as NPCDialogue)?.dialogueSpoken;
-            SpawnResponseButtons();
-        }
-        else if (_conversationGraph.current.GetNodeType == "Response")
-        {
-            ClearButtons();
-            NextNode("exit");
-        }
-        else if (_conversationGraph.current.GetNodeType == "Exit")
-        {
-            Debug.Log("called exit");
-            ClearButtons();
-            ExitConversation();
-        }
-        FIGURE OUT HOW TO DO THIS IN A SWITCH STATEMENT?*/
 
         switch (_conversationGraph.current.GetNodeType) 
         {
