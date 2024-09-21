@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
-using XNodeEditor;
 using System;
 using XNode;
+
+#if UNITY_EDITOR
+using XNodeEditor;
+#endif
 
 [CreateAssetMenu]
 public class DialogueGraph : NodeGraph 
@@ -10,6 +13,7 @@ public class DialogueGraph : NodeGraph
     public CoreNodeBase current;
 }
 
+#if UNITY_EDITOR
 [CustomNodeGraphEditor(typeof(DialogueGraph))]
 public class DialogueGraphEditor : NodeGraphEditor
 {
@@ -23,3 +27,4 @@ public class DialogueGraphEditor : NodeGraphEditor
         return null;
     }
 }
+#endif
