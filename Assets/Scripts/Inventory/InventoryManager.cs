@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //GameManager.instance.UpdateGameState(GameState.Inventory);
         for (int i = 0; i < maxSize; i++) 
         { 
             var slot = Instantiate(inventorySlotPrefab, panel.transform);
@@ -39,5 +40,16 @@ public class InventoryManager : MonoBehaviour
         refreshInventory();
         return true;
     
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChanged += GameStateChanged;
+        //PlayerInputManager.instance.input.UI 
+    }
+
+    private void GameStateChanged(GameState state)
+    {
+        Debug.Log(state.ToString());
     }
 }
