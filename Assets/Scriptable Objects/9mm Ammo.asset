@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 9mm Ammo
   m_EditorClassIdentifier: 
   itemName: 9mm Ammo
+  description: 
   multiple: 1
   amount: 15
-  icon: {fileID: 2800000, guid: bb61925bc8ffb314188663471d970878, type: 3}
+  icon: {fileID: 2800000, guid: 4cbb13af116050d4ba106ce92db72e54, type: 3}
