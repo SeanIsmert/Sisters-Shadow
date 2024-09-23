@@ -8,7 +8,7 @@ public class InventoryItem : ScriptableObject
     [TextArea(4, 8)] public string description;
     public bool multiple = false;
     public uint amount = 0;
-    public Texture2D icon;
+    public Sprite icon;
 }
 
 #if UNITY_EDITOR
@@ -24,17 +24,12 @@ public class InventoryItemEditor : Editor
 
     public override Texture2D RenderStaticPreview(string assetPath, Object[] subAssets, int width, int height)
     {
-        if (_curItem == null || _curItem.icon == null)                      // If object or icon are null, do nothing.
+        if(_curItem == null || _curItem.icon == null)
             return null;
 
-        Texture2D previewIcon = _curItem.icon;
-
-        while (previewIcon == null)
-            previewIcon = AssetPreview.GetAssetPreview(_curItem.icon);      // Set preview reference to item icon.
-
         Texture2D cache = new(width, height);
-        EditorUtility.CopySerialized(previewIcon, cache);                   // Apply width/height.
-        return cache;                                                       // Return preview.
+        EditorUtility.CopySerialized(_curItem.icon.texture, cache);
+        return cache;
     }
 }
 #endif

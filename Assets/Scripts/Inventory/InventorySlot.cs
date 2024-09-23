@@ -24,6 +24,6 @@ public class InventorySlot : MonoBehaviour
         {
             itemAmount.text = string.Empty;
         }
-        img.texture = item.icon;
+        img.texture = item.icon.texture;
     }
 }
