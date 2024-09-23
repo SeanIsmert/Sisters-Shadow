@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEditor;
-using UnityEngine.UI;
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/InventoryItem", order = 1)]
 
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/InventoryItem", order = 1)]
 public class InventoryItem : ScriptableObject
 {
     public string itemName;
@@ -12,7 +11,6 @@ public class InventoryItem : ScriptableObject
     public Texture2D icon;
 }
 
-// Custom Editor.
 #if UNITY_EDITOR
 [CustomEditor(typeof(InventoryItem))]
 public class InventoryItemEditor : Editor
@@ -29,7 +27,7 @@ public class InventoryItemEditor : Editor
         if (_curItem == null || _curItem.icon == null)                      // If object or icon are null, do nothing.
             return null;
 
-        Texture2D previewIcon = null;
+        Texture2D previewIcon = _curItem.icon;
 
         while (previewIcon == null)
             previewIcon = AssetPreview.GetAssetPreview(_curItem.icon);      // Set preview reference to item icon.
