@@ -43,7 +43,8 @@ public class InteractableConversation : MonoBehaviour, IInteract
         switch (_conversationGraph.current.GetNodeType) 
         {
             case "NPC":
-                _spokenLine.text = (_conversationGraph.current as NPCDialogue)?.dialogueSpoken;
+                IDialogue d = (IDialogue) _conversationGraph.current as IDialogue;
+                SetText(_spokenLine, d.TextField);
                 SpawnResponseButtons();
                 break;
             case "Response":
@@ -86,16 +87,21 @@ public class InteractableConversation : MonoBehaviour, IInteract
             if (port.Connection == null || port.IsInput)
                 continue;
 
-            if (port.Connection.node is ResponseDialogue)
+            if (port.Connection.node is IDialogue)
             {
-                ResponseDialogue rd = port.Connection.node as ResponseDialogue;
+                IDialogue rd = port.Connection.node as IDialogue;
 
                 Button b = Instantiate(_buttonPrefab, _responsePanle).GetComponent<Button>();
 
                 b.onClick.AddListener(() => NextNode(port.fieldName));
-                b.GetComponentInChildren<TextMeshProUGUI>().text = rd.dialogueSpoken.ToString();
+                SetText(b.GetComponentInChildren<TextMeshProUGUI>(), rd.TextField);
             }
         }
+    }
+
+    private void SetText(TMP_Text t, string d)
+    {
+        t.text = d;
     }
 
     private void ClearButtons()

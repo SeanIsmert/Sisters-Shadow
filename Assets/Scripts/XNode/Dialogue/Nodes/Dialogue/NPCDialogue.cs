@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class NPCDialogue : CoreNodeBase
+public class NPCDialogue : CoreNodeBase, IDialogue
 {
     [TextArea]
     public string dialogueSpoken;
@@ -11,4 +11,6 @@ public class NPCDialogue : CoreNodeBase
     public int exit;
 
     public override string GetNodeType { get { return "NPC"; } }
+
+    public string TextField { get { return dialogueSpoken; } }
 }
