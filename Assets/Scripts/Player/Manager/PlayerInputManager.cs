@@ -8,11 +8,17 @@ using UnityEngine;
 /// </summary>
 public class PlayerInputManager : MonoBehaviour
 {
+    public static PlayerInputManager instance;
     public PlayerInput input;
 
     void Awake()
     {
         input = new PlayerInput();
+
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
 
     /// <summary>
