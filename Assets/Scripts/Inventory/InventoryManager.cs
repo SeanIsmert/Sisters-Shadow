@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager instance;
     public GameObject panel;
     public GameObject inventorySlotPrefab;
-    public InventoryItem[] inventory;
+    public List<InventoryItem> inventory;
     public List<InventorySlot> inventorySlots;
     public int maxSize;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if (instance != null)
+        {
+            Destroy(this);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +38,7 @@ public class InventoryManager : MonoBehaviour
     void refreshInventory()
     {
 
-        for (int i = 0; i < inventory.Length; i++)
+        for (int i = 0; i < inventory.Count; i++)
         {
             inventorySlots[i].onLoad(inventory[i]);
         }
@@ -33,10 +46,11 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(InventoryItem newItem)
     {
-        if(inventory.Length > maxSize)
+        if(inventory.Count > maxSize)
         {
             return false;
         }
+        inventory.Add(newItem);
         refreshInventory();
         return true;
     

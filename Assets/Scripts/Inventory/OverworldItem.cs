@@ -9,7 +9,6 @@ using UnityEngine;
 /// </summary>
 public class OverworldItem : MonoBehaviour, IInteract
 {
-    public InventoryManager inventoryManager;
     public InventoryItem onCollect;
     public Vector3 Position { get { return transform.position; } }
 
@@ -23,14 +22,17 @@ public class OverworldItem : MonoBehaviour, IInteract
     public void Interaction()
     {
         Debug.Log("interacted with item!");
-        if (inventoryManager.AddItem(onCollect))
+        if (InventoryManager.instance.AddItem(onCollect))
         {
+            InteractableManager.instance.RemoveTarget(this);
             Debug.Log("picked up " + onCollect.itemName);
+            Destroy(this.gameObject);
         }
         else
         {
             Debug.Log("inventory full!");
         }
     }
-
+    
+    
 }
