@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4993827880400208}
   - component: {fileID: 33770150997202870}
   - component: {fileID: 23265506500685760}
-  - component: {fileID: 64734235171831088}
+  - component: {fileID: 3154536208077487585}
   m_Layer: 0
   m_Name: SM_Env_Hedge_03
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64734235171831088
-MeshCollider:
+--- !u!65 &3154536208077487585
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,7 +102,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43718024113818514, guid: 532034e4dd857ca449122903997f789e, type: 2}
+  serializedVersion: 3
+  m_Size: {x: 0.91, y: 1.3625418, z: 0.83}
+  m_Center: {x: -0.019479379, y: 0.6276216, z: 0.0031897426}
