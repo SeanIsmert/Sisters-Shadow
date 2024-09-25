@@ -3,7 +3,7 @@ using UnityEngine;
 public class InputManager : MonoBehaviour
 {
     //private InteractableHandler _interactableHandler;
-    private PlayerMovementHandler _playerMovement;
+    private PlayerMovementHandler2 _playerMovement;
     private PlayerShootingHandler _playerShooting;
 
     public static InputManager instance;
@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         //_interactableHandler = GetComponent<InteractableHandler>();
-        _playerMovement = GetComponent<PlayerMovementHandler>();
+        _playerMovement = GetComponent<PlayerMovementHandler2>();
         _playerShooting = GetComponent<PlayerShootingHandler>();
         input = new PlayerInput();
 
