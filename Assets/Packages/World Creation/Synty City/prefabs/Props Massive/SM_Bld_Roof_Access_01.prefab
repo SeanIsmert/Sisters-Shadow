@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8582744101240350846}
   - component: {fileID: 5419226865864720786}
   - component: {fileID: 6798138248904000596}
+  - component: {fileID: 6032526018418470887}
   m_Layer: 0
   m_Name: SM_Bld_Roof_Access_01
   m_TagString: Untagged
@@ -83,3 +84,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6032526018418470887
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352686184593092205}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6792243, y: 2.74361, z: 2.765626}
+  m_Center: {x: 0.0024322271, y: 1.371805, z: -0.0046305656}
