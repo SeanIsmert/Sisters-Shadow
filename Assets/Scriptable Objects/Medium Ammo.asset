@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7aefd993ec7395489504614a32487f0, type: 3}
-  m_Name: 9mm Ammo
+  m_Name: Medium Ammo
   m_EditorClassIdentifier: 
-  itemName: 9mm Ammo
+  itemName: Medium Ammo
   description: 
   multiple: 1
   amount: 15
-  icon: {fileID: 21300000, guid: 4cbb13af116050d4ba106ce92db72e54, type: 3}
+  icon: {fileID: 21300000, guid: 33f0b74cefdf97d479ef8c7243bece34, type: 3}
