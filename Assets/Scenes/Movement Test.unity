@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18212697, g: 0.22782516, b: 0.30738318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18212673, g: 0.2278248, b: 0.3073822, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6352,6 +6352,51 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &618646250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 618646251}
+  - component: {fileID: 618646252}
+  m_Layer: 0
+  m_Name: PlayerUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &618646251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618646250}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1537579194}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &618646252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 618646250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 774c970fa437a0641b0fbd0dca82a8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthCircle: {fileID: 922199013}
 --- !u!1 &623888210
 GameObject:
   m_ObjectHideFlags: 0
@@ -21238,7 +21283,6 @@ GameObject:
   - component: {fileID: 1374760203}
   - component: {fileID: 1374760202}
   - component: {fileID: 1374760201}
-  - component: {fileID: 1374760204}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -21329,19 +21373,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1374760204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374760199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 774c970fa437a0641b0fbd0dca82a8f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthCircle: {fileID: 922199013}
 --- !u!1 &1378766791
 GameObject:
   m_ObjectHideFlags: 0
@@ -23206,7 +23237,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 618646251}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1591021043
@@ -31642,7 +31674,7 @@ MonoBehaviour:
   _onHealthChange:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374760204}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerHealthUI, Assembly-CSharp
         m_MethodName: UpdateHealthUI
         m_Mode: 0
