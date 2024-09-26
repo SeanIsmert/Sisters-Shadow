@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 /// <summary>
 /// Input manager that subscribes and unsubscribes to certain actions.
@@ -9,11 +10,16 @@ using UnityEngine;
 public class PlayerInputManager : MonoBehaviour
 {
     public static PlayerInputManager instance;
-    public PlayerInput input;
+    public static PlayerInput input;
+
+    private PlayerMovementHandler _movementHandler;
+    private InteractableManager _interactableManager;
 
     void Awake()
     {
         input = new PlayerInput();
+        _movementHandler = GetComponent<PlayerMovementHandler>();
+        _interactableManager = GetComponent<InteractableManager>();
 
         if (instance == null)
             instance = this;
@@ -42,11 +48,21 @@ public class PlayerInputManager : MonoBehaviour
     {
         input.Enable();
         GameManager.OnGameStateChanged += ActionMaps;
+        input.Gameplay.Sprint.performed += ctx => _movementHandler.SetMovementState(MoveStates.Sprinting);                                           // Input for sprinting.
+        input.Gameplay.Sprint.canceled += ctx => _movementHandler.SetMovementState(MoveStates.Idle);
+        input.Gameplay.Aim.performed += ctx => _movementHandler.SetMovementState(MoveStates.Aiming);                                                 // Input for aiming.
+        input.Gameplay.Aim.canceled += ctx => _movementHandler.SetMovementState(MoveStates.Idle);
+        input.Gameplay.Interact.started += ctx => _interactableManager.HandleInteraction();                                  // Input for interaction.
     }
 
     private void OnDisable()
     {
         input.Disable();
         GameManager.OnGameStateChanged -= ActionMaps;
+        input.Gameplay.Sprint.performed -= ctx => _movementHandler.SetMovementState(MoveStates.Sprinting);                                           // Input for sprinting.
+        input.Gameplay.Sprint.canceled -= ctx => _movementHandler.SetMovementState(MoveStates.Idle);
+        input.Gameplay.Aim.performed -= ctx => _movementHandler.SetMovementState(MoveStates.Aiming);                                                 // Input for aiming.
+        input.Gameplay.Aim.canceled -= ctx => _movementHandler.SetMovementState(MoveStates.Idle);
+        input.Gameplay.Interact.started -= ctx => _interactableManager.HandleInteraction();                                  // Input for interaction.
     }
 }

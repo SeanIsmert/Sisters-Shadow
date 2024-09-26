@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
-public class PlayerMovementHandler : MonoBehaviour
+public class PlayerMovementHandler2 : MonoBehaviour
 {
     [Tooltip("Speed at which the character transitions between movement animations.")]
     [SerializeField] private float _movementSpeed = 1f;
@@ -25,7 +25,7 @@ public class PlayerMovementHandler : MonoBehaviour
     private Coroutine _coroutine;
     public bool _isLoading = true;
 
-    public static PlayerMovementHandler instance { get; private set; }
+    public static PlayerMovementHandler2 instance { get; private set; }
 
     private void Awake()
     {

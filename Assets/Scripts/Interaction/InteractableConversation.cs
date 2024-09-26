@@ -119,11 +119,11 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     private void OnEnable()
     {
-        PlayerInputManager.instance.input.UI.Cancel.performed += ctx => { ClearButtons(); ExitConversation(); };
+        PlayerInputManager.input.UI.Cancel.performed += ctx => { ClearButtons(); ExitConversation(); };
     }
 
     private void OnDisable()
     {
-        PlayerInputManager.instance.input.UI.Cancel.performed -= ctx => { ClearButtons(); ExitConversation(); };
+        PlayerInputManager.input.UI.Cancel.performed -= ctx => { ClearButtons(); ExitConversation(); };
     }
 }
