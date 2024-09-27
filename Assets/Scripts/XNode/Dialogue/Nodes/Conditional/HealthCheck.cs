@@ -14,4 +14,6 @@ public class HealthCheck : ConditionalNodeBase
 
         return false;
     }
+
+    public override string GetNodeType { get { return "HealthCheck"; } }
 }

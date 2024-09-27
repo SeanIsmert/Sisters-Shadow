@@ -16,11 +16,12 @@ MonoBehaviour:
   position: {x: 456, y: -104}
   ports:
     keys:
-    - entry
+    - enter
     - exit
     - exit 0
+    - exit 1
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: -7266934002435830760}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -46,16 +47,121 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
+      - fieldName: enter
         node: {fileID: 6104793144903603971}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: exit 1
+      _node: {fileID: -7266934002435830760}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: enter
+        node: {fileID: -4997816773807355854}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 1
   dialogueSpoken: Watch out for monsters!
-  entry: 0
+  enter: 0
   exit: 0
+--- !u!114 &-4997816773807355854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78814bd9e399cf540a849c56a0664ba7, type: 3}
+  m_Name: Response Dialogue
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 696, y: 56}
+  ports:
+    keys:
+    - enter
+    - exit
+    values:
+    - _fieldName: enter
+      _node: {fileID: -4997816773807355854}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: exit 1
+        node: {fileID: -7266934002435830760}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 2
+      _dynamic: 0
+    - _fieldName: exit
+      _node: {fileID: -4997816773807355854}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: enter
+        node: {fileID: -3460134707354819205}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  dialogueSpoken: No Thanks!
+  enter: 0
+  exit: 0
+--- !u!114 &-4184760018994846867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56943732a99a7d46be7a01d7db9665d, type: 3}
+  m_Name: Set Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 936, y: -104}
+  ports:
+    keys:
+    - enter
+    - exit
+    values:
+    - _fieldName: enter
+      _node: {fileID: -4184760018994846867}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: exit
+        node: {fileID: 6104793144903603971}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 2
+      _dynamic: 0
+    - _fieldName: exit
+      _node: {fileID: -4184760018994846867}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: enter
+        node: {fileID: -3460134707354819205}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  enter: 0
+  exit: 0
+  gameObject: {fileID: 3040584679484896575, guid: 17595f898c3530e4986003ef86d73e8d, type: 3}
+  state: 0
 --- !u!114 &-3460134707354819205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,27 +175,30 @@ MonoBehaviour:
   m_Name: Exit
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 920, y: 216}
+  position: {x: 1128, y: 232}
   ports:
     keys:
-    - entry
+    - enter
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: -3460134707354819205}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: exit 0
-        node: {fileID: -2850233849097316832}
+      - fieldName: exit
+        node: {fileID: -4184760018994846867}
         reroutePoints: []
       - fieldName: exit
-        node: {fileID: 6104793144903603971}
+        node: {fileID: -4997816773807355854}
+        reroutePoints: []
+      - fieldName: exit 0
+        node: {fileID: -2850233849097316832}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  entry: 0
+  enter: 0
 --- !u!114 &-2850233849097316832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,20 +212,20 @@ MonoBehaviour:
   m_Name: NPC Dialogue
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 456, y: 104}
+  position: {x: 456, y: 120}
   ports:
     keys:
-    - entry
+    - enter
     - exit
     - exit 0
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: -2850233849097316832}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: exit
-        node: {fileID: 5959861041506115572}
+        node: {fileID: 3252589639695456456}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -136,7 +245,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
+      - fieldName: enter
         node: {fileID: -3460134707354819205}
         reroutePoints: []
       _direction: 1
@@ -144,7 +253,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   dialogueSpoken: ouch!
-  entry: 0
+  enter: 0
   exit: 0
 --- !u!114 &-2154900191156043352
 MonoBehaviour:
@@ -162,10 +271,10 @@ MonoBehaviour:
   position: {x: 216, y: -104}
   ports:
     keys:
-    - entry
+    - enter
     - exit
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: -2154900191156043352}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -182,7 +291,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
+      - fieldName: enter
         node: {fileID: -7266934002435830760}
         reroutePoints: []
       _direction: 1
@@ -190,7 +299,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   dialogueSpoken: Hi.
-  entry: 0
+  enter: 0
   exit: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -213,7 +322,57 @@ MonoBehaviour:
   - {fileID: -2850233849097316832}
   - {fileID: -3460134707354819205}
   - {fileID: 6104793144903603971}
-  current: {fileID: -7266934002435830760}
+  - {fileID: -4997816773807355854}
+  - {fileID: -4184760018994846867}
+  - {fileID: 3252589639695456456}
+  current: {fileID: -3460134707354819205}
+--- !u!114 &3252589639695456456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e56943732a99a7d46be7a01d7db9665d, type: 3}
+  m_Name: Set Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 216, y: 248}
+  ports:
+    keys:
+    - enter
+    - exit
+    values:
+    - _fieldName: enter
+      _node: {fileID: 3252589639695456456}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: exit
+        node: {fileID: 5959861041506115572}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 2
+      _dynamic: 0
+    - _fieldName: exit
+      _node: {fileID: 3252589639695456456}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: enter
+        node: {fileID: -2850233849097316832}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+  enter: 0
+  exit: 0
+  gameObject: {fileID: 5572927789239004986, guid: cd35ecaa9583dd34c99a43c4c47e459d, type: 3}
+  state: 1
 --- !u!114 &5038095466950862195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,12 +389,12 @@ MonoBehaviour:
   position: {x: -24, y: -104}
   ports:
     keys:
-    - entry
+    - enter
     - exit
     - exit 0
     - exit 1
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: 5038095466950862195}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -261,7 +420,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
+      - fieldName: enter
         node: {fileID: -2154900191156043352}
         reroutePoints: []
       _direction: 1
@@ -273,7 +432,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
+      - fieldName: enter
         node: {fileID: 5959861041506115572}
         reroutePoints: []
       _direction: 1
@@ -281,7 +440,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   dialogueSpoken: Hello
-  entry: 0
+  enter: 0
   exit: 0
 --- !u!114 &5959861041506115572
 MonoBehaviour:
@@ -299,10 +458,10 @@ MonoBehaviour:
   position: {x: 216, y: 56}
   ports:
     keys:
-    - entry
+    - enter
     - exit
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: 5959861041506115572}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -319,15 +478,15 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
-        node: {fileID: -2850233849097316832}
+      - fieldName: enter
+        node: {fileID: 3252589639695456456}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   dialogueSpoken: You stink!
-  entry: 0
+  enter: 0
   exit: 0
 --- !u!114 &6104793144903603971
 MonoBehaviour:
@@ -345,10 +504,10 @@ MonoBehaviour:
   position: {x: 696, y: -104}
   ports:
     keys:
-    - entry
+    - enter
     - exit
     values:
-    - _fieldName: entry
+    - _fieldName: enter
       _node: {fileID: 6104793144903603971}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -365,15 +524,15 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
-        node: {fileID: -3460134707354819205}
+      - fieldName: enter
+        node: {fileID: -4184760018994846867}
         reroutePoints: []
       _direction: 1
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
   dialogueSpoken: Will do thanks!
-  entry: 0
+  enter: 0
   exit: 0
 --- !u!114 &9028525578663188321
 MonoBehaviour:
@@ -398,7 +557,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: entry
+      - fieldName: enter
         node: {fileID: 5038095466950862195}
         reroutePoints: []
       _direction: 1

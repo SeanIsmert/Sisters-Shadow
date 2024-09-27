@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
 
-public class ResponseDialogue : CoreNodeBase, IDialogue
+public class ResponseDialogue : DialogueNodeBase, IDialogue
 {
-    [TextArea]
-    public string dialogueSpoken;
-
     [Input(typeConstraint = TypeConstraint.Strict)] 
-    public int entry;
+    public int enter;
     [Output(connectionType = ConnectionType.Override)] 
     public bool exit;
 
     public override string GetNodeType { get { return "Response"; } }
-
-    public string TextField { get { return dialogueSpoken; } }
 }

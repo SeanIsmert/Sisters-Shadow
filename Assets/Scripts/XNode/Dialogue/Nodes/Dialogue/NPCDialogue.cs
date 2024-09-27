@@ -1,16 +1,11 @@
 ﻿using UnityEngine;
 
-public class NPCDialogue : CoreNodeBase, IDialogue
+public class NPCDialogue : DialogueNodeBase, IDialogue
 {
-    [TextArea]
-    public string dialogueSpoken;
-
     [Input(typeConstraint = TypeConstraint.Strict)] 
-    public bool entry;
+    public bool enter;
     [Output(dynamicPortList = true, connectionType = ConnectionType.Override)] 
     public int exit;
 
     public override string GetNodeType { get { return "NPC"; } }
-
-    public string TextField { get { return dialogueSpoken; } }
 }
