@@ -35,7 +35,6 @@ public class InteractableManager : MonoBehaviour
         if (target != null && !_targets.Contains(target))
         {
             _targets.Add(target);
-            Debug.Log("Added: " + other);
         }
     }
 
@@ -46,14 +45,12 @@ public class InteractableManager : MonoBehaviour
         if (target != null)
         {
             _targets.Remove(target);
-            Debug.Log("Removed: " + other);
         }
     }
 
     // Method to handle interactions
     public void HandleInteraction()
     {
-        Debug.Log("handle interaction");
         if (_targets.Count == 0)
         {
             _currentTarget = null;
@@ -87,7 +84,6 @@ public class InteractableManager : MonoBehaviour
     public void RemoveTarget(IInteract target)
     {
         _targets.Remove(target);
-        Debug.Log("Poped: " + target);
         if (_currentTarget == target)
         {
             _currentTarget = null;
