@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System;
 using XNode;
+using UnityEditor;
+
 
 #if UNITY_EDITOR
 using XNodeEditor;
@@ -21,7 +23,7 @@ public class DialogueGraphEditor : NodeGraphEditor
     {
         if (type.IsSubclassOf(typeof(CoreNodeBase)) || type.IsSubclassOf(typeof(DialogueNodeBase)) || type.IsSubclassOf(typeof(ConditionalNodeBase)))
         {
-            return base.GetNodeMenuName(type);        
+            return base.GetNodeMenuName(type);
         }
 
         return null;

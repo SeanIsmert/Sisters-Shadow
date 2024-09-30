@@ -1,47 +1,47 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.UIElements;
 using UnityEngine.Windows;
 
 /// <summary>
 /// Player movement logic and state handler
-/// Handles with physics and a Rigidbody
+/// Handles movement with root motion.
 /// Written by: Kay
 /// Modified by: Sean
 /// </summary>
 [RequireComponent(typeof(Animator))]
 public class PlayerMovementHandler : MonoBehaviour
 {
-    [Header("Movement Values")]
-    [Tooltip("Speed at which the character transitions between movement animations.")]
-    [SerializeField] private float _movementSpeed = 1f;
-    [Tooltip("Speed at which the character rotates. (variable on how left or right)")]
-    [SerializeField] private float _rotationSpeed = 5.0f;
-    [Tooltip("Angle left and right that determins a characters state of movement.")]
+    [Header("Movement Establish")]
+    [Tooltip("Speed at which the character transitions between movement animations."), Range(0f, 2f)]
+    [SerializeField] private float _movementTransition = 1f;
+    [Tooltip("Angle left and right that determins a characters state of movement. Also used to determin the forward deadzone."), Range(0f, 10f)]
     [SerializeField] private float _movementAngle = 0.1f;
-    [Tooltip("How far the player needs to move the joystick to begin moving.")]
-    [SerializeField] private float _movementThreshold = 0.1f;
+    [Space]
+
+    [Header("Movement Settings")]
+    [Tooltip("The player's standard movement speed."), Range(0f, 5f)]
+    [SerializeField] private float _walkSpeed;
+    [Tooltip("The player's movement speed while sprinting."), Range(0f, 5f)]
+    [SerializeField] private float _sprintSpeed;
+    [Tooltip("The player's movement speed while aiming."), Range(0f, 5f)]
+    [SerializeField] private float _aimSpeed;
+    [Tooltip("The player's rotation speed."), Range(0f, 5f)]
+    [SerializeField] private float _rotationSpeed;
     [Space]
 
     [Header("Movement State")]
     public MoveStates curMoveState;
 
-    /*
-    [Header("Movement Settings")]
-    [Tooltip("The player's standard movement speed.")]
-    [SerializeField] private float _walkSpeed;
-    [Tooltip("The player's movement speed while sprinting.")]
-    [SerializeField] private float _sprintSpeed;
-    [Tooltip("The player's movement speed while aiming.")]
-    [SerializeField] private float _aimSpeed;
-    [Tooltip("The player's rotation speed.")]
-    [SerializeField] private float _rotateSpeed;
-    */
-
     private Animator _animator;
     private Vector2 _currentVelocity = Vector2.zero;
-    private Vector2 _targetVelocity = Vector2.zero;
+    private Vector2 _controllerInput = Vector2.zero;
 
+    //Temp for test
+    private bool _isAiming;
+    private bool _isSprinting;
 
     // Gather references to required components.
     void Awake()
@@ -49,9 +49,10 @@ public class PlayerMovementHandler : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    // Perform movement actions in fixed update.
+    // Perform movement actions in  update.
     void Update()
     {
+        CheckMovementState();
         CharacterMovement(PlayerInputManager.input.Gameplay.Locomotion.ReadValue<Vector2>());
         CharacterRotation();
     }
@@ -61,33 +62,28 @@ public class PlayerMovementHandler : MonoBehaviour
     /// </summary>
     private void CharacterMovement(Vector2 controllerInput)
     {
-        controllerInput.Normalize(); _targetVelocity = controllerInput;
-
-        if (_targetVelocity.magnitude < _movementThreshold)
-            curMoveState = MoveStates.Idle;
-        else if (curMoveState != MoveStates.Aiming || curMoveState != MoveStates.Sprinting)
-            curMoveState = MoveStates.Walking;
+        _controllerInput = controllerInput;
 
         switch (curMoveState)
         {
             case MoveStates.Idle:
-                SmoothTransition(Vector2.zero, _movementSpeed * 2);
+                SmoothTransition(Vector2.zero, _movementTransition * 2);
                 break;
 
             case MoveStates.Walking:
-                SmoothTransition(_targetVelocity, _movementSpeed);
+                SmoothTransition(controllerInput * _walkSpeed, _movementTransition);
                 break;
 
             case MoveStates.Sprinting:
-                SmoothTransition(_targetVelocity * 2, _movementSpeed);
+                SmoothTransition(controllerInput * _sprintSpeed, _movementTransition);
                 break;
 
             case MoveStates.Aiming:
-                SmoothTransition(_targetVelocity * 0.5f, _movementSpeed);
+                SmoothTransition(controllerInput * _aimSpeed, _movementTransition);
                 break;
 
             case MoveStates.Turning:
-                SmoothTransition(Vector2.zero * 0, _movementSpeed * 3);
+                SmoothTransition(Vector2.zero * 0, _movementTransition * 2);
                 break;
         }
 
@@ -141,7 +137,15 @@ public class PlayerMovementHandler : MonoBehaviour
     /// </summary>
     private void SmoothTransition(Vector2 targetVelocity, float speedMultiplier)
     {
-        _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier);
+        if (_currentVelocity.magnitude > 1 && targetVelocity.magnitude < 1)
+            speedMultiplier = speedMultiplier * 2f;
+        else
+            speedMultiplier = speedMultiplier * .5f;
+
+        if ((_currentVelocity.y <= 0 && targetVelocity.y > 0) || (_currentVelocity.y >= 0 && targetVelocity.y < 0))
+            _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier * 2);
+        else
+            _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier);
     }
 
     /// <summary>
@@ -149,16 +153,27 @@ public class PlayerMovementHandler : MonoBehaviour
     /// </summary>
     public void CharacterRotation()
     {
-        if (AngleCheck())
-        {
-            _currentVelocity = Vector2.MoveTowards(_currentVelocity, Vector2.zero, Time.deltaTime * _movementSpeed * 3f);
+        if (curMoveState == MoveStates.Idle)
+            return;
 
+        if (curMoveState == MoveStates.Turning)
+        {
             // Adjust rotation speed based on movement input direction
-            float rotationSpeed = (_targetVelocity.x > 0) ? _rotationSpeed : -_rotationSpeed;
+            float rotationSpeed = (_controllerInput.x > 0) ? _rotationSpeed : -_rotationSpeed;
 
             transform.Rotate(0, (rotationSpeed * 150) * Time.deltaTime, 0);
-
         }
+        else
+        {
+            float rotationSpeed = (_controllerInput.x >= 0) ? _rotationSpeed : -_rotationSpeed;
+            float angle = (_controllerInput.y >= 0)
+            ? Mathf.Abs(Vector2.SignedAngle(Vector2.up, _controllerInput))
+            : Mathf.Abs(Vector2.SignedAngle(Vector2.down, _controllerInput));
+            angle = _controllerInput.y >= 0 ? angle : -angle;
+
+            transform.Rotate(0, ((rotationSpeed * 2) * angle) * Time.deltaTime, 0);
+        }
+
         return;
 
         /*
@@ -175,19 +190,17 @@ public class PlayerMovementHandler : MonoBehaviour
     /// </summary>
     private bool AngleCheck()
     {
-        float angle = Mathf.Abs((_currentVelocity.y >= 0) 
-            ? Vector2.SignedAngle(Vector2.up, _targetVelocity) 
-            : Vector2.SignedAngle(Vector2.down, _targetVelocity));
+        float angle = Mathf.Abs(Vector2.SignedAngle(Vector2.up, _controllerInput));
 
         if (angle > 90f - _movementAngle && angle < 90f + _movementAngle)
         {
-            _animator.applyRootMotion = false;
+           // _animator.applyRootMotion = false;
 
             return true;
         }
         else
         {
-            _animator.applyRootMotion = true;
+            //_animator.applyRootMotion = true;
 
             return false;
         }
@@ -195,7 +208,38 @@ public class PlayerMovementHandler : MonoBehaviour
 
     public void SetMovementState(MoveStates newState)
     {
-            curMoveState = newState;
+
+        curMoveState = newState;
+    }
+
+    private void CheckMovementState()
+    { 
+        if (AngleCheck())
+            curMoveState = MoveStates.Turning;
+        else if(_isAiming)
+            curMoveState = MoveStates.Aiming;
+        else if (_isSprinting)
+            curMoveState = MoveStates.Sprinting;
+        else if (_controllerInput != Vector2.zero)
+            curMoveState = MoveStates.Walking;
+        else
+            curMoveState = MoveStates.Idle;
+    }
+
+    //Temp
+    public void SprintCheck(bool check)
+    {
+        if (check)
+            _isSprinting = true;
+        else
+            _isSprinting = false;
+    }
+    public void AimCheck(bool check)
+    {
+        if (check)
+            _isAiming = true;
+        else
+            _isAiming = false;
     }
 }
 public enum MoveStates
