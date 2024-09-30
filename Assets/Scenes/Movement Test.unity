@@ -8272,6 +8272,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1045401375514670, guid: f11fc98cf1e8d5547a9b2ec85cc9c664, type: 3}
       insertIndex: -1
       addedObject: {fileID: 752712835}
+    - targetCorrespondingSourceObject: {fileID: 1045401375514670, guid: f11fc98cf1e8d5547a9b2ec85cc9c664, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 752712842}
   m_SourcePrefab: {fileID: 100100000, guid: f11fc98cf1e8d5547a9b2ec85cc9c664, type: 3}
 --- !u!1 &747524124
 GameObject:
@@ -8689,23 +8692,11 @@ MonoBehaviour:
   _maxHealth: 100
   _onHealthChange:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerHealthUI, Assembly-CSharp
-        m_MethodName: UpdateHealthUI
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _onDeathActions:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8592228841799611225}
+      - m_Target: {fileID: 752712833}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -8729,7 +8720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb1059d0f4cf7ea4aa127a4c2fd75584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementTransition: 2
+  _movementTransition: 5
   _movementAngle: 10
   _walkSpeed: 1
   _sprintSpeed: 2
@@ -8782,6 +8773,32 @@ CapsuleCollider:
   m_Radius: 0.3
   m_Height: 1.8
   m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!143 &752712842
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752712833}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.8
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &817490933
 GameObject:
@@ -9622,7 +9639,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 881767499}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.05622943, y: 0.93680453, z: -0.29586768, w: -0.17803901}
+  m_LocalRotation: {x: -0.087422386, y: 0.9110944, z: -0.3107557, w: -0.25631082}
   m_LocalPosition: {x: 12.674486, y: 8.872139, z: 12.674486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9648,7 +9665,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 19601704}
+  m_LookAt: {fileID: 752712834}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60.000004
@@ -23655,7 +23672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762658606}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.008233658, y: 0.8283078, z: -0.52824867, w: -0.18652572}
+  m_LocalRotation: {x: -0.018105546, y: 0.79962033, z: -0.53597516, w: -0.27020377}
   m_LocalPosition: {x: 12.674486, y: 12.349093, z: 32.89501}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
