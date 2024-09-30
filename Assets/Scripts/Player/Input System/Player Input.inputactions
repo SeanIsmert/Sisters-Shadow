@@ -10,7 +10,7 @@
                     "type": "Value",
                     "id": "021bb8dc-6441-41a8-9abc-22eda2915e4e",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "StickDeadzone(max=1.1),NormalizeVector2",
                     "interactions": "",
                     "initialStateCheck": true
                 },
@@ -261,7 +261,7 @@
                     "type": "PassThrough",
                     "id": "ed288814-ec1b-4818-98e4-57618f97625d",
                     "expectedControlType": "Vector2",
-                    "processors": "",
+                    "processors": "StickDeadzone(max=1.1),NormalizeVector2",
                     "interactions": "",
                     "initialStateCheck": false
                 },

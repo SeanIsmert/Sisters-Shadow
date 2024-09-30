@@ -5,6 +5,7 @@ using TMPro;
 using System.Collections;
 using UnityEditor.Rendering;
 using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.InputSystem;
 
 public class InteractableConversation : MonoBehaviour, IInteract
 {
@@ -23,6 +24,7 @@ public class InteractableConversation : MonoBehaviour, IInteract
     [SerializeField] private GameObject _dialogueObject;
 
     private Coroutine _textTyping;
+    private string _currentText;
 
     public Vector3 Position { get { return transform.position; } }
 
@@ -95,8 +97,6 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     private void SpawnResponseButtons(string text)
     {
-        PlayerInputManager.input.UI.Submit.started -= ctx => { StopCoroutine(_textTyping); SetText(_spokenLine, text); SpawnResponseButtons(text); };
-
         foreach (NodePort port in _conversationGraph.current.Ports)
         {
             if (port.Connection == null || port.IsInput)
@@ -136,7 +136,7 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     private IEnumerator TextTyping(string text)
     {
-        PlayerInputManager.input.UI.Submit.started += ctx => { StopCoroutine(_textTyping); SetText(_spokenLine, text); SpawnResponseButtons(text); };
+        PlayerInputManager.input.UI.Submit.started += OnSubmitPerformed;
 
         string currentText = null;
         for (int i = 0; i < text.Length; i++)
@@ -146,9 +146,22 @@ public class InteractableConversation : MonoBehaviour, IInteract
             yield return new WaitForSeconds(.1f);
         }
 
+        PlayerInputManager.input.UI.Submit.started -= OnSubmitPerformed;
+
         SpawnResponseButtons(text);
         _textTyping = null;
         yield return null;
+    }
+
+    private void OnSubmitPerformed(InputAction.CallbackContext ctx)
+    {
+        if (_textTyping != null)
+        {
+            StopCoroutine(_textTyping);
+            //SetText(_spokenLine, _lastText);
+            //SpawnResponseButtons(_lastText);
+            _textTyping = null;
+        }
     }
 
     private void OnEnable()
