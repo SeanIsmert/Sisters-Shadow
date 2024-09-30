@@ -3,8 +3,6 @@ using UnityEngine;
 using XNode;
 using TMPro;
 using System.Collections;
-using UnityEditor.Rendering;
-using static System.Net.Mime.MediaTypeNames;
 using UnityEngine.InputSystem;
 
 public class InteractableConversation : MonoBehaviour, IInteract
@@ -22,6 +20,9 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     //for now
     [SerializeField] private GameObject _dialogueObject;
+
+    [Header("World Objects")]
+    [SerializeField] private GameObject[] objectsToChange;
 
     private Coroutine _textTyping;
     private string _currentText;
@@ -63,7 +64,7 @@ public class InteractableConversation : MonoBehaviour, IInteract
                 NextNode("exit");
                 break;
             case "ActiveEvent":
-                (_conversationGraph.current as SetActive)?.ExecuteEvent();
+                (_conversationGraph.current as SetActive)?.ExecuteEvent(objectsToChange);
                 NextNode("exit");
                 break;
             case "Exit":

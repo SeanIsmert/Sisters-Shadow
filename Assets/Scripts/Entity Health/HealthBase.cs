@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 public class HealthBase : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int _curHealth;        // This object's current health value.
-    [SerializeField] private float _maxHealth;        // This object's maximum health value.
+    [SerializeField] private int _curHealth;                           // This object's current health value.
+    [SerializeField] private float _maxHealth;                         // This object's maximum health value.
 
     [SerializeField] private UnityEvent<float> _onHealthChange;        // Event called when this object takes damage.
     [SerializeField] private UnityEvent _onDeathActions;               // Event called when this object's health reaches zero.
@@ -16,12 +16,11 @@ public class HealthBase : MonoBehaviour, IDamageable
 
     public void ValueChange(int amount)
     {
-        _curHealth -= amount;           // Subtract damage amount from current health.
+        _curHealth -= amount;                                // Subtract damage amount from current health.
 
-        _onHealthChange?.Invoke(_curHealth/_maxHealth);      // Call the onHealthChange event.
-        Debug.Log(_curHealth / _maxHealth);
+        _onHealthChange?.Invoke(_curHealth/_maxHealth);      // Send normalized value through the onHealthChange event.
 
         if(_curHealth <= 0)
-            _onDeathActions?.Invoke();      // Call death event when health reaches zero.
+            _onDeathActions?.Invoke();                       // Call death event when health reaches zero.
     }
 }

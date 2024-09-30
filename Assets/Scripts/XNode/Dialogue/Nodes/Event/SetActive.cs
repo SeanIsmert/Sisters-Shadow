@@ -12,9 +12,9 @@ public class SetActive : EventNodeBase
     [Tooltip("Set the GameObject's state to true to make it appear, or false to hide it")]
     public bool state = false;
 
-    private GameObject _gameObject;
+    //private GameObject _gameObject;
 
-
+    /*
     private void OnEnable()
     {
         // Find the GameObject in the scene based on the name
@@ -22,16 +22,20 @@ public class SetActive : EventNodeBase
         // Optionally, you could use tags: targetObject = GameObject.FindWithTag(targetObjectName);
         _gameObject?.SetActive(!state);
     }
+    */
 
     /// <summary>
     /// I FREAKING HATE THIS GARBAGE
     /// </summary>
-    public void ExecuteEvent()
+    public void ExecuteEvent(GameObject[] objects)
     {
-        if (_gameObject != null)
-            _gameObject.SetActive(state);
-        else
-            Debug.Log("Object is null");
+        if (objects.Length > 0)
+        {
+            foreach (GameObject obj in objects)
+            {
+                obj.SetActive(state);
+            }
+        }
     }
 
     public override string GetNodeType { get { return "ActiveEvent"; } }

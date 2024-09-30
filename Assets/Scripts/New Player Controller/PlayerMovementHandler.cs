@@ -1,9 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.UIElements;
-using UnityEngine.Windows;
 
 /// <summary>
 /// Player movement logic and state handler
@@ -15,7 +10,7 @@ using UnityEngine.Windows;
 public class PlayerMovementHandler : MonoBehaviour
 {
     [Header("Movement Establish")]
-    [Tooltip("Speed at which the character transitions between movement animations."), Range(0f, 2f)]
+    [Tooltip("Speed at which the character transitions between movement animations."), Range(0f, 5f)]
     [SerializeField] private float _movementTransition = 1f;
     [Tooltip("Angle left and right that determins a characters state of movement. Also used to determin the forward deadzone."), Range(0f, 10f)]
     [SerializeField] private float _movementAngle = 0.1f;
