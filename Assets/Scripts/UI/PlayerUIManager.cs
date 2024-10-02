@@ -1,7 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthUI : MonoBehaviour
+/// <summary>
+/// Manager script intended to handle any UI elements related to the player and displayed during regular gameplay.
+/// This includes things like health indicators or ammo counters.
+/// @author Kay.
+/// </summary>
+public class PlayerUIManager : MonoBehaviour
 {
     [SerializeField] private Image _healthCircle;
 
