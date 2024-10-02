@@ -6,6 +6,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private int _attackRange;
     [SerializeField] private LayerMask _layerMask;
 
+    [SerializeField] private Vector3 _targetingOffset;
+
     private void OnEnable()
     {
         PlayerInputManager.input.Gameplay.Shoot.performed += FireWeapon;        // Subscribe to shoot input.
@@ -18,7 +20,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void FireWeapon(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        Ray ray = new(transform.position, transform.forward);       // Ray forward from player object.
+
+        Ray ray = new(transform.position + _targetingOffset, transform.forward);       // Ray forward from player object.
         RaycastHit hit;
 
         if(Physics.Raycast(ray, out hit, _attackRange, _layerMask))
@@ -26,6 +29,6 @@ public class PlayerAttack : MonoBehaviour
             hit.transform.gameObject.GetComponent<IDamageable>()?.ValueChange(_damageAmount);       // Apply damage.
         }
 
-        Debug.DrawRay(transform.position, transform.forward, Color.magenta, 5f);
+        Debug.DrawLine(transform.position, ray.GetPoint(_attackRange), Color.magenta, 5f);
     }
 }
