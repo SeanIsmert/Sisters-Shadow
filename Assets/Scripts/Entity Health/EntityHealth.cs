@@ -1,10 +1,16 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HealthBase : MonoBehaviour, IDamageable
+/// <summary>
+/// Umbrella script meant to be used by any object that needs to have health and/or take damage.
+/// @author Kay.
+/// </summary>
+public class EntityHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private int _curHealth;                           // This object's current health value.
     [SerializeField] private float _maxHealth;                         // This object's maximum health value.
+
+    public int GetEntityHealth {  get { return _curHealth; } }
 
     [SerializeField] private UnityEvent<float> _onHealthChange;        // Event called when this object takes damage.
     [SerializeField] private UnityEvent _onDeathActions;               // Event called when this object's health reaches zero.
