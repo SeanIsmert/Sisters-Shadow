@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -49,11 +50,11 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         CheckMovementState();
         CharacterMovement(PlayerInputManager.input.Gameplay.Locomotion.ReadValue<Vector2>());
-        CharacterRotation();
     }
 
     /// <summary>
     /// Performs movement actions based on the movement state.
+    /// Passes in varriables based on the state which help diversify movement states.
     /// </summary>
     private void CharacterMovement(Vector2 controllerInput)
     {
@@ -67,18 +68,22 @@ public class PlayerMovementHandler : MonoBehaviour
 
             case MoveStates.Walking:
                 SmoothTransition(controllerInput * _walkSpeed, _movementTransition);
+                CharacterRotation();
                 break;
 
             case MoveStates.Sprinting:
                 SmoothTransition(controllerInput * _sprintSpeed, _movementTransition);
+                CharacterRotation();
                 break;
 
             case MoveStates.Aiming:
                 SmoothTransition(controllerInput * _aimSpeed, _movementTransition);
+                CharacterRotation();
                 break;
 
             case MoveStates.Turning:
                 SmoothTransition(Vector2.zero * 0, _movementTransition * 2);
+                CharacterRotation();
                 break;
         }
 
@@ -92,39 +97,27 @@ public class PlayerMovementHandler : MonoBehaviour
         else if (force == Vector3.zero && curMoveState == MoveStates.Moving)
             curMoveState = MoveStates.Idle;*/
 
-        //Messy Switch
-        /*
-        switch (curMoveState)
-        {
-            case MoveStates.Idle:
-                _currentVelocity = Vector2.MoveTowards(_currentVelocity, Vector2.zero, Time.deltaTime * _movementSpeed * 2f);
-                break;
-            case MoveStates.Walking:
-                if ((_currentVelocity.y <= 0 && _targetVelocity.y > 0) || (_currentVelocity.y >= 0 && _targetVelocity.y < 0))
-                    _currentVelocity = Vector2.MoveTowards(_currentVelocity, _targetVelocity, Time.deltaTime * _movementSpeed * 2f);
-                else
-                    _currentVelocity = Vector2.MoveTowards(_currentVelocity, _targetVelocity, Time.deltaTime * _movementSpeed);
-                break;
-            case MoveStates.Sprinting:
-                _targetVelocity = _targetVelocity * 2;
-                if ((_currentVelocity.y <= 0 && _targetVelocity.y > 0) || (_currentVelocity.y >= 0 && _targetVelocity.y < 0))
-                    _currentVelocity = Vector2.MoveTowards(_currentVelocity, _targetVelocity, Time.deltaTime * _movementSpeed * 2f);
-                else
-                    _currentVelocity = Vector2.MoveTowards(_currentVelocity, _targetVelocity, Time.deltaTime * _movementSpeed);
-                break;
-            case MoveStates.Aiming:
-                _targetVelocity = _targetVelocity * .5f;
-                if ((_currentVelocity.y <= 0 && _targetVelocity.y > 0) || (_currentVelocity.y >= 0 && _targetVelocity.y < 0))
-                    _currentVelocity = Vector2.MoveTowards(_currentVelocity, _targetVelocity, Time.deltaTime * _movementSpeed * 2f);
-                else
-                    _currentVelocity = Vector2.MoveTowards(_currentVelocity, _targetVelocity, Time.deltaTime * _movementSpeed);
-                break;
-        }
-        */
-
         // Set the Animator parameters based on the current velocity
         _animator.SetFloat("VelocityX", _currentVelocity.x);
         _animator.SetFloat("VelocityY", _currentVelocity.y);
+    }
+
+    /// <summary>
+    /// Our movement state check which based on conditions will set our players state.
+    /// Is based on priority and will return certain states over others.
+    /// </summary>
+    private void CheckMovementState()
+    {
+        if (AngleCheck())
+            curMoveState = MoveStates.Turning;
+        else if (_isAiming)
+            curMoveState = MoveStates.Aiming;
+        else if (_isSprinting)
+            curMoveState = MoveStates.Sprinting;
+        else if (_controllerInput != Vector2.zero)
+            curMoveState = MoveStates.Walking;
+        else
+            curMoveState = MoveStates.Idle;
     }
 
     /// <summary>
@@ -160,10 +153,14 @@ public class PlayerMovementHandler : MonoBehaviour
         }
         else
         {
-            float rotationSpeed = (_controllerInput.x >= 0) ? _rotationSpeed : -_rotationSpeed;
             float angle = (_controllerInput.y >= 0)
             ? Mathf.Abs(Vector2.SignedAngle(Vector2.up, _controllerInput))
             : Mathf.Abs(Vector2.SignedAngle(Vector2.down, _controllerInput));
+
+            if (angle < _movementAngle && angle > 0f)
+                return;
+
+            float rotationSpeed = (_controllerInput.x >= 0) ? _rotationSpeed : -_rotationSpeed;
             angle = _controllerInput.y >= 0 ? angle : -angle;
 
             transform.Rotate(0, ((rotationSpeed * 2) * angle) * Time.deltaTime, 0);
@@ -189,39 +186,14 @@ public class PlayerMovementHandler : MonoBehaviour
 
         if (angle > 90f - _movementAngle && angle < 90f + _movementAngle)
         {
-           // _animator.applyRootMotion = false;
-
             return true;
         }
         else
         {
-            //_animator.applyRootMotion = true;
-
             return false;
         }
     }
 
-    public void SetMovementState(MoveStates newState)
-    {
-
-        curMoveState = newState;
-    }
-
-    private void CheckMovementState()
-    { 
-        if (AngleCheck())
-            curMoveState = MoveStates.Turning;
-        else if(_isAiming)
-            curMoveState = MoveStates.Aiming;
-        else if (_isSprinting)
-            curMoveState = MoveStates.Sprinting;
-        else if (_controllerInput != Vector2.zero)
-            curMoveState = MoveStates.Walking;
-        else
-            curMoveState = MoveStates.Idle;
-    }
-
-    //Temp
     public void SprintCheck(bool check)
     {
         if (check)

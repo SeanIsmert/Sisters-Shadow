@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using XNode;
-using UnityEditor;
 
 
 #if UNITY_EDITOR
@@ -11,7 +10,6 @@ using XNodeEditor;
 [CreateAssetMenu]
 public class DialogueGraph : NodeGraph 
 {
-	//public DialogueNodeBase dialogue;
     public CoreNodeBase current;
 }
 
