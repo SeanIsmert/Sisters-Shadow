@@ -7,5 +7,5 @@ public class NPCDialogue : DialogueNodeBase, IDialogue
     [Output(dynamicPortList = true, connectionType = ConnectionType.Override)] 
     public int exit;
 
-    public override string GetNodeType { get { return "NPC"; } }
+    public override string GetNodeType { get { return "Dialogue"; } }
 }

@@ -2,7 +2,7 @@
 
 public class ExitNode : CoreNodeBase 
 {
-    [Input] public int enter;
+    [Input] public bool enter;
 
     public override string GetNodeType { get { return "Exit"; } }
 }

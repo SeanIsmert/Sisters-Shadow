@@ -23,6 +23,7 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
     [Header("World Objects")]
     [SerializeField] private GameObject[] objectsToChange;
+    //[SerializeField] private 
 
     private Coroutine _textTyping;
     private string _currentText;
@@ -55,13 +56,13 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
         switch (_conversationGraph.current.GetNodeType) 
         {
-            case "NPC":
+            case "Dialogue":
                 IDialogue dialogue = (IDialogue)_conversationGraph.current;
-                _textTyping = StartCoroutine(TextTyping(dialogue.TextField));
+                _textTyping = StartCoroutine(TextTyping(dialogue.TextField, dialogue.AnimateSpeed));
                 break;
             case "Response":
                 ClearButtons();
-                NextNode("exit");
+                //NextNode("exit");
                 break;
             case "ActiveEvent":
                 (_conversationGraph.current as SetActive)?.ExecuteEvent(objectsToChange);
@@ -71,15 +72,34 @@ public class InteractableConversation : MonoBehaviour, IInteract
                 ClearButtons();
                 ExitConversation();
                 break;
+            //case "HealthCheck":
+              //  NextNode("exit");
+                //break;
         }
         
     }
 
     public void NextNode(string fieldName)
     {
+        bool condition = false;
+        if (_conversationGraph.current is ConditionalNodeBase conditionalNode)
+        {
+            condition = conditionalNode.Condition(); // Evaluate the condition
+        }
+
         foreach (NodePort port in _conversationGraph.current.Ports)
         {
             if (port.fieldName == fieldName)
+            {
+                _conversationGraph.current = port.Connection.node as CoreNodeBase;
+                break;
+            }
+            else if (port.fieldName == "ifTrue" && condition)
+            {
+                _conversationGraph.current = port.Connection.node as CoreNodeBase;
+                break;
+            }
+            else if (port.fieldName == "ifFalse" && !condition)
             {
                 _conversationGraph.current = port.Connection.node as CoreNodeBase;
                 break;
@@ -109,11 +129,13 @@ public class InteractableConversation : MonoBehaviour, IInteract
 
                 Button button = Instantiate(_buttonPrefab, _responsePanle).GetComponent<Button>();
 
-                button.onClick.AddListener(() => NextNode(port.fieldName));
+                button.onClick.AddListener(() => { NextNode(port.fieldName); ClearButtons(); NextNode("exit"); });
+                Debug.Log(port.fieldName);
                 SetText(button.GetComponentInChildren<TextMeshProUGUI>(), response.TextField);
             }
             else if (port.Connection.node is ExitNode)
                 NextNode(port.fieldName);
+
         }
     }
 
@@ -135,32 +157,33 @@ public class InteractableConversation : MonoBehaviour, IInteract
         }
     }
 
-    private IEnumerator TextTyping(string text)
+    private IEnumerator TextTyping(string text, float animateSpeed)
     {
-        PlayerInputManager.input.UI.Submit.started += OnSubmitPerformed;
+        PlayerInputManager.input.UI.Submit.started += ctx =>OnSubmitPerformed(text);
 
         string currentText = null;
         for (int i = 0; i < text.Length; i++)
         {
             currentText += text[i];
             _spokenLine.text = currentText;
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(animateSpeed);
         }
 
-        PlayerInputManager.input.UI.Submit.started -= OnSubmitPerformed;
+        PlayerInputManager.input.UI.Submit.started -= ctx => OnSubmitPerformed(text);
 
         SpawnResponseButtons(text);
         _textTyping = null;
         yield return null;
     }
 
-    private void OnSubmitPerformed(InputAction.CallbackContext ctx)
+    private void OnSubmitPerformed(string text)
     {
+        PlayerInputManager.input.UI.Submit.started -= ctx => OnSubmitPerformed(text);
         if (_textTyping != null)
         {
             StopCoroutine(_textTyping);
-            //SetText(_spokenLine, _lastText);
-            //SpawnResponseButtons(_lastText);
+            SetText(_spokenLine, _currentText);
+            SpawnResponseButtons(text);
             _textTyping = null;
         }
     }

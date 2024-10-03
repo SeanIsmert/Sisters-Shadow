@@ -3,7 +3,7 @@
 public abstract class ConditionalNodeBase : CoreNodeBase 
 {
     [Input(typeConstraint = TypeConstraint.Strict)]
-    public int enter;
+    public bool enter;
 
     [Output(connectionType = ConnectionType.Override)]
     public bool ifTrue;  // Proceed if the condition is true
