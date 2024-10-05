@@ -6,10 +6,13 @@ public abstract class ConditionalNodeBase : CoreNodeBase
     public bool enter;
 
     [Output(connectionType = ConnectionType.Override)]
-    public bool ifTrue;  // Proceed if the condition is true
+    public bool isTrue;  // String port name that OnPortCondition returns if Condition
 
     [Output(connectionType = ConnectionType.Override)]
-    public bool ifFalse; // Proceed if the condition is false
+    public bool isFalse; // String port name that OnPortCondition returns if !Condition
+
+    //Override this in derived classes to ensure correct output path is choosen
+    public abstract string PortOnCondtion();
 
     //Override this in derived classes to implement the condition
     public abstract bool Condition();

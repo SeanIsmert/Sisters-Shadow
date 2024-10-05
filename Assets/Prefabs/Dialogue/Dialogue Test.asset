@@ -323,7 +323,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: ifTrue
+      - fieldName: isTrue
         node: {fileID: -1356706023553768498}
         reroutePoints: []
       _direction: 0
@@ -434,8 +434,8 @@ MonoBehaviour:
   ports:
     keys:
     - enter
-    - ifTrue
-    - ifFalse
+    - isFalse
+    - isTrue
     values:
     - _fieldName: enter
       _node: {fileID: -1356706023553768498}
@@ -449,19 +449,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 2
       _dynamic: 0
-    - _fieldName: ifTrue
-      _node: {fileID: -1356706023553768498}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: enter
-        node: {fileID: -2850233849097316832}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: ifFalse
+    - _fieldName: isFalse
       _node: {fileID: -1356706023553768498}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -473,9 +461,21 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: isTrue
+      _node: {fileID: -1356706023553768498}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: enter
+        node: {fileID: -2850233849097316832}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
   enter: 0
-  ifTrue: 0
-  ifFalse: 0
+  isTrue: 0
+  isFalse: 0
   healthToCheck: 2
 --- !u!114 &-915372529156337063
 MonoBehaviour:
@@ -601,7 +601,7 @@ MonoBehaviour:
   - {fileID: -8377268042734170901}
   - {fileID: -915372529156337063}
   - {fileID: 4104690374696523389}
-  current: {fileID: 5038095466950862195}
+  current: {fileID: 5907009339374382862}
 --- !u!114 &4104690374696523389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,7 +789,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   dialogueSpoken: Anything else?
-  animateSpeed: 1
+  animateSpeed: 0.1
   enter: 0
   exit: 0
 --- !u!114 &5959861041506115572
@@ -839,7 +839,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   dialogueSpoken: Could you check my health?
-  animateSpeed: 1
+  animateSpeed: 0.1
   enter: 0
   exit: 0
 --- !u!114 &6104793144903603971
@@ -915,7 +915,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: ifFalse
+      - fieldName: isFalse
         node: {fileID: -1356706023553768498}
         reroutePoints: []
       _direction: 0
