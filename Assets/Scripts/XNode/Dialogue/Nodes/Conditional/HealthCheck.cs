@@ -12,10 +12,12 @@ public class HealthCheck : ConditionalNodeBase
     {
         int health = GameObject.FindGameObjectWithTag("Player").GetComponent<EntityHealth>().GetEntityHealth;
 
-        if (health <= healthToCheck)
-            return true;
-        else
-            return false;
+        return health <= healthToCheck;
+    }
+
+    public override string PortOnCondtion()
+    {
+        return Condition() ? "isTrue" : "isFalse";
     }
 
     public override string GetNodeType { get { return "HealthCheck"; } }
