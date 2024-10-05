@@ -35,7 +35,7 @@ public class InventoryManager : MonoBehaviour
         refreshInventory();
     }
 
-    void refreshInventory()
+    public void refreshInventory()
     {
 
         for (int i = 0; i < inventory.Count; i++)
