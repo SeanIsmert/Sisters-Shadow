@@ -43,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
                         hit.transform.gameObject.GetComponent<IDamageable>()?.ValueChange(_damageAmount);       // Apply damage.
                     }
 
-                    Debug.DrawLine(transform.position, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
+                    Debug.DrawLine(transform.position + _raycastOffset, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
 
                     InventoryManager.instance.refreshInventory();                                               // Refresh inventory UI.
                 }
