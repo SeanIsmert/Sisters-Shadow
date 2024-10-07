@@ -32,6 +32,7 @@ public class PlayerMovementHandler : MonoBehaviour
     public MoveStates curMoveState;
 
     private Animator _animator;
+    private PlayerAttack _playerAttack;
     private Vector2 _currentVelocity = Vector2.zero;
     private Vector2 _controllerInput = Vector2.zero;
 
@@ -43,6 +44,7 @@ public class PlayerMovementHandler : MonoBehaviour
     void Awake()
     {
         _animator = GetComponent<Animator>();
+        _playerAttack = GetComponent<PlayerAttack>();
     }
 
     // Perform movement actions in  update.
@@ -86,16 +88,6 @@ public class PlayerMovementHandler : MonoBehaviour
                 CharacterRotation();
                 break;
         }
-
-        //Old Code
-        /*Vector3 force = new(0f, 0f, _movement.ReadValue<Vector2>().y);        // Creates a vector3 based on vertical axis input.
-
-        if (force != Vector3.zero && curMoveState == MoveStates.Idle)         // Set movement state when appropriate, otherwise return to idle.
-        {
-            curMoveState = MoveStates.Moving;
-        }
-        else if (force == Vector3.zero && curMoveState == MoveStates.Moving)
-            curMoveState = MoveStates.Idle;*/
 
         // Set the Animator parameters based on the current velocity
         _animator.SetFloat("VelocityX", _currentVelocity.x);
@@ -167,13 +159,6 @@ public class PlayerMovementHandler : MonoBehaviour
         }
 
         return;
-
-        /*
-        //Vector3 force = new(0f, _movement.ReadValue<Vector2>().x);        // Creates a vector3 based on horizontal axis input.
-
-        //Quaternion rotation = Quaternion.Euler(_rotateSpeed);     // Creates a quaternion using input multiplied by speed.
-        //_rb.MoveRotation(transform.rotation * rotation);                  // Applies the rotation!
-        */
     }
 
     /// <summary>
@@ -201,12 +186,29 @@ public class PlayerMovementHandler : MonoBehaviour
         else
             _isSprinting = false;
     }
+
     public void AimCheck(bool check)
     {
         if (check)
+        {
             _isAiming = true;
+            _animator.SetBool("Aiming", true);
+        }
         else
+        {
             _isAiming = false;
+            _animator.SetBool("Aiming", false);
+        }
+    }
+
+    public void Shoot()
+    {
+        if (_animator.GetCurrentAnimatorStateInfo(1).IsName("Pistol Shoot"))
+            return;
+        
+        _animator.Play("Pistol Shoot");
+        _playerAttack.FireWeapon();
+
     }
 }
 public enum MoveStates

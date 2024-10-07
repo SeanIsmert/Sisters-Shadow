@@ -15,17 +15,7 @@ public class PlayerAttack : MonoBehaviour
         _movementHandler = GetComponent<PlayerMovementHandler>();
     }
 
-    private void OnEnable()
-    {
-        PlayerInputManager.input.Gameplay.Shoot.performed += FireWeapon;        // Subscribe to shoot input.
-    }
-
-    private void OnDisable()
-    {
-        PlayerInputManager.input.Gameplay.Shoot.performed -= FireWeapon;
-    }
-
-    private void FireWeapon(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    public void FireWeapon()
     {
         if(_movementHandler.curMoveState == MoveStates.Aiming)
         {
