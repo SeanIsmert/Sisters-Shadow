@@ -55,7 +55,7 @@ public class PlayerInputManager : MonoBehaviour
         input.Gameplay.Aim.canceled += ctx => _movementHandler.AimCheck(false);
         input.Gameplay.Sprint.started += ctx => _movementHandler.SprintCheck(true);
         input.Gameplay.Sprint.canceled += ctx => _movementHandler.SprintCheck(false);
-        input.Gameplay.Sprint.started += ctx => _movementHandler.Shoot();
+        input.Gameplay.Shoot.started += ctx => _movementHandler.Shoot();
     }
 
     private void OnDisable()

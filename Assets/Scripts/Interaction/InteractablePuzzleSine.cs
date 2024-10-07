@@ -2,7 +2,6 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine;
 using System;
-using UnityEngine.Windows;
 
 public class InteractablePuzzleSine : MonoBehaviour, IInteract
 {
@@ -15,12 +14,9 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
     [Header("Initialize")]
     [Tooltip("The GameObject holding the UI for the puzzle")]
     [SerializeField] private GameObject _sineWaveUI;
-    [Tooltip("The LineRender component that will allow us to see this sign wave.")]
-    [SerializeField] private LineRenderer _sineWave;
     [Tooltip("The GameObject holding the UI for the puzzle")]
     [SerializeField] private GameObject _sineWavePlayerUI;
-    [Tooltip("The LineRender component that will allow us to see this sign wave.")]
-    [SerializeField] private LineRenderer _sineWavePlayer;
+    [Tooltip("The GameObject to set false when completing the puzzle")]
     [SerializeField] private GameObject _objectToDisapear;
     [Space]
 
@@ -29,8 +25,10 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
 
     private Action<InputAction.CallbackContext> _checkAction;
     private Action<InputAction.CallbackContext> _exitAction;
-    private Coroutine _animatePlayerSineWave;
+    private Coroutine _animateSineWavePlayer;
     private Coroutine _animateSineWave;
+    private LineRenderer _sineWavePlayer;
+    private LineRenderer _sineWave;
     private Vector2 _xLimit = new Vector2(0, 4);
     private float _moveSpeed = 1;
     private float _playerAmplitude;
@@ -42,6 +40,12 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
 #endregion
 
 #region Initialize
+    private void Start()
+    {
+        _sineWave = _sineWaveUI.GetComponent<LineRenderer>();
+        _sineWavePlayer = _sineWavePlayerUI.GetComponent<LineRenderer>();
+    }
+
     public void Interaction()
     {
         _exitAction = ctx => Exit(); PlayerInputManager.input.UI.Cancel.performed += _exitAction; // Subscribe to be able to leave puzzle
@@ -50,7 +54,7 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
         _sineWaveUI.SetActive(true); // Make the UI for the puzzle visible
 
         _animateSineWave = StartCoroutine(AnimatedSine());
-        _animatePlayerSineWave = StartCoroutine(AnimatedPlayerSine());
+        _animateSineWavePlayer = StartCoroutine(AnimatedPlayerSine());
     }
 
     private void Exit()
@@ -64,6 +68,7 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
     }
     #endregion
 
+#region Logic
     private void Check()
     {
         if (Mathf.Abs(_playerAmplitude - _amplitude) < 0.1f && Mathf.Abs(_playerFrequency - _frequency) < 0.1f)
@@ -77,10 +82,12 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
         }
 
     }
+#endregion
 
 #region Animation
     private IEnumerator AnimatedSine()
     {
+        // Declare local varriables
         float time = 0f;
         float leftX = _xLimit.x;
         float rightX = _xLimit.y;
@@ -89,58 +96,50 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
         _sineWave.positionCount = _points;
         while (true)
         {
-            time += Time.deltaTime * _moveSpeed; // Increment time based on frame time
+            time += Time.deltaTime * _moveSpeed; // Animate over time
 
             for (int currentPoint = 0; currentPoint < _points; currentPoint++)
             {
-                // Calculate the normalized position in the range of leftX and rightX
                 float normalizedProgress = (float)currentPoint / (_points - 1);
                 float x = Mathf.Lerp(leftX, rightX, normalizedProgress); // Spread points across the x range
-                float y = _amplitude * Mathf.Sin((tau * _frequency * x) + time); // Apply the sine wave formula
+                float y = _amplitude * Mathf.Sin((tau * _frequency * x) + time); // Effect points in the y range
                 _sineWave.SetPosition(currentPoint, new Vector3(x, y, 0));
             }
 
-            yield return null; // Wait for the next frame
+            yield return null;
         }
 
     }
 
     private IEnumerator AnimatedPlayerSine()
     {
+        // Declare local varriables
         float time = 0f;
         float leftX = _xLimit.x;
         float rightX = _xLimit.y;
         float tau = 2 * Mathf.PI;
 
-        _playerAmplitude = 0;
-        _playerFrequency = 0;
-
         _sineWavePlayer.positionCount = _points;
         while (true)
         {
-            Vector2 input = PlayerInputManager.input.UI.Navigate.ReadValue<Vector2>();
+            Vector2 input = PlayerInputManager.input.UI.Navigate.ReadValue<Vector2>(); // Read our input so we can change our sine
 
-            Debug.Log(input);
+            _playerFrequency += (input.x > 0 ? 0.003f : (input.x < 0 ? -0.003f : 0)); // Adjust frequency
+            _playerAmplitude += (input.y > 0 ? 0.003f : (input.y < 0 ? -0.003f : 0)); // Adjust amplitude
+            Mathf.Clamp(_playerFrequency, -1.5f, 1.5f); // Clamp
+            Mathf.Clamp(_playerAmplitude, -2, 2); // Clamp
 
-            // Increment amplitude and frequency based on input direction
-            _playerAmplitude += (input.x > 0 ? 0.0025f : (input.x < 0 ? -0.0025f : 0)); // Adjust amplitude
-            _playerFrequency += (input.y > 0 ? 0.001f : (input.y < 0 ? -0.001f : 0)); // Adjust frequency
-
-            // Clamp the values
-            _playerAmplitude = Mathf.Clamp(_playerAmplitude, -2, 2);
-            _playerFrequency = Mathf.Clamp(_playerFrequency, -1.5f, 1.5f);
-
-            time += Time.deltaTime * _moveSpeed; // Increment time based on frame time
+            time += Time.deltaTime * _moveSpeed; // Animate over time
 
             for (int currentPoint = 0; currentPoint < _points; currentPoint++)
             {
                 float normalizedProgress = (float)currentPoint / (_points - 1);
                 float x = Mathf.Lerp(leftX, rightX, normalizedProgress); // Spread points across the x range
-                float y = _playerAmplitude * Mathf.Sin((tau * _playerFrequency * x) + time); // Sine wave formula
+                float y = _playerAmplitude * Mathf.Sin((tau * _playerFrequency * x) + time); // Effect points in the y range
                 _sineWavePlayer.SetPosition(currentPoint, new Vector3(x, y, 0)); // Set position for the player's sine wave
             }
 
-            yield return null; // Wait for the next frame
+            yield return null;
         }
     }
 
@@ -150,9 +149,9 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
         {
             StopCoroutine(_animateSineWave);
         }
-        if (_animatePlayerSineWave != null)
+        if (_animateSineWavePlayer != null)
         {
-            StopCoroutine(_animatePlayerSineWave);
+            StopCoroutine(_animateSineWavePlayer);
         }
     }
 #endregion

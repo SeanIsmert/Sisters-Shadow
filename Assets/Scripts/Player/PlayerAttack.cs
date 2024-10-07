@@ -15,9 +15,9 @@ public class PlayerAttack : MonoBehaviour
         _movementHandler = GetComponent<PlayerMovementHandler>();
     }
 
-    public void FireWeapon()
+    public bool FireWeapon()
     {
-        if(_movementHandler.curMoveState == MoveStates.Aiming)
+        if (_movementHandler.curMoveState == MoveStates.Aiming)
         {
             foreach (InventoryItem item in InventoryManager.instance.inventory)                  // Find the appropriate ammo item.
             {
@@ -36,8 +36,12 @@ public class PlayerAttack : MonoBehaviour
                     Debug.DrawLine(transform.position + _raycastOffset, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
 
                     InventoryManager.instance.refreshInventory();                                               // Refresh inventory UI.
+                    return true;
                 }
+                else continue;
             }
         }
+        
+        return false;
     }
 }

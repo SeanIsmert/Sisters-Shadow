@@ -203,12 +203,12 @@ public class PlayerMovementHandler : MonoBehaviour
 
     public void Shoot()
     {
-        if (_animator.GetCurrentAnimatorStateInfo(1).IsName("Pistol Shoot"))
+        if (_animator.GetCurrentAnimatorStateInfo(2).IsName("Pistol Shoot"))
             return;
-        
-        _animator.Play("Pistol Shoot");
-        _playerAttack.FireWeapon();
+        if (_playerAttack.FireWeapon())
+            _animator.Play("Pistol Shoot");
 
+        return;
     }
 }
 public enum MoveStates
