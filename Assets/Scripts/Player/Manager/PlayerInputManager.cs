@@ -48,31 +48,19 @@ public class PlayerInputManager : MonoBehaviour
     {
         input.Enable();
         GameManager.OnGameStateChanged += ActionMaps;
-        //input.Gameplay.Sprint.performed += ctx => _movementHandler.SetMovementState(MoveStates.Sprinting);                                          // Input for sprinting.
-        //input.Gameplay.Sprint.canceled += ctx => _movementHandler.SetMovementState(MoveStates.Idle);
-        //input.Gameplay.Aim.performed += ctx => _movementHandler.SetMovementState(MoveStates.Aiming);                                                // Input for aiming.
-        //input.Gameplay.Aim.canceled += ctx => _movementHandler.SetMovementState(MoveStates.Idle);
+
         input.Gameplay.Interact.started += ctx => _interactableManager.HandleInteraction();                                                         // Input for interaction.
-        //Temp
+
         input.Gameplay.Aim.started += ctx => _movementHandler.AimCheck(true);
         input.Gameplay.Aim.canceled += ctx => _movementHandler.AimCheck(false);
         input.Gameplay.Sprint.started += ctx => _movementHandler.SprintCheck(true);
         input.Gameplay.Sprint.canceled += ctx => _movementHandler.SprintCheck(false);
+        input.Gameplay.Sprint.started += ctx => _movementHandler.Shoot();
     }
 
     private void OnDisable()
     {
         input.Disable();
         GameManager.OnGameStateChanged -= ActionMaps;
-        //input.Gameplay.Sprint.performed -= ctx => _movementHandler.SetMovementState(MoveStates.Sprinting);                                          // Input for sprinting.
-        //input.Gameplay.Sprint.canceled -= ctx => _movementHandler.SetMovementState(MoveStates.Idle);
-        //input.Gameplay.Aim.performed -= ctx => _movementHandler.SetMovementState(MoveStates.Aiming);                                                // Input for aiming.
-        //input.Gameplay.Aim.canceled -= ctx => _movementHandler.SetMovementState(MoveStates.Idle);
-        input.Gameplay.Interact.started -= ctx => _interactableManager.HandleInteraction();                                                         // Input for interaction.
-        //Temp
-        input.Gameplay.Aim.started -= ctx => _movementHandler.AimCheck(true);
-        input.Gameplay.Aim.canceled -= ctx => _movementHandler.AimCheck(false);
-        input.Gameplay.Sprint.started -= ctx => _movementHandler.SprintCheck(true);
-        input.Gameplay.Sprint.canceled -= ctx => _movementHandler.SprintCheck(false);
     }
 }
