@@ -120,9 +120,10 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
         {
             Vector2 input = PlayerInputManager.input.UI.Navigate.ReadValue<Vector2>();
 
+            Debug.Log(input);
 
             // Increment amplitude and frequency based on input direction
-            _playerAmplitude += (input.x > 0 ? 0.001f : (input.x < 0 ? -0.001f : 0)); // Adjust amplitude
+            _playerAmplitude += (input.x > 0 ? 0.0025f : (input.x < 0 ? -0.0025f : 0)); // Adjust amplitude
             _playerFrequency += (input.y > 0 ? 0.001f : (input.y < 0 ? -0.001f : 0)); // Adjust frequency
 
             // Clamp the values
