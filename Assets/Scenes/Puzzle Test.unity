@@ -1828,7 +1828,7 @@ MonoBehaviour:
   _sineWavePlayerUI: {fileID: 2062329675}
   _sineWavePlayer: {fileID: 2062329677}
   _objectToDisapear: {fileID: 1655720800}
-  _points: 200
+  _points: 100
 --- !u!135 &1067449819
 SphereCollider:
   m_ObjectHideFlags: 0

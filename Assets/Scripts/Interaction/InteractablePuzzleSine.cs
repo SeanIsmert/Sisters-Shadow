@@ -8,8 +8,8 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
 {
 #region Variables
     [Header("SineWave Settings")]
-    [SerializeField, Range(0, 2)] private float _amplitude;
-    [SerializeField, Range(0, 1.5f)] private float _frequency;
+    [SerializeField, Range(-2, 2)] private float _amplitude;
+    [SerializeField, Range(-1.5f, 1.5f)] private float _frequency;
     [Space]
 
     [Header("Initialize")]
@@ -33,6 +33,8 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
     private Coroutine _animateSineWave;
     private Vector2 _xLimit = new Vector2(0, 4);
     private float _moveSpeed = 1;
+    private float _playerAmplitude;
+    private float _playerFrequency;
 
 
 
@@ -64,7 +66,16 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
 
     private void Check()
     {
-        
+        if (Mathf.Abs(_playerAmplitude - _amplitude) < 0.1f && Mathf.Abs(_playerFrequency - _frequency) < 0.1f)
+        {
+            _objectToDisapear.SetActive(false);
+        }
+        else
+        {            
+            _playerAmplitude = 0;
+            _playerFrequency = 0;
+        }
+
     }
 
 #region Animation
@@ -101,8 +112,8 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
         float rightX = _xLimit.y;
         float tau = 2 * Mathf.PI;
 
-        float amplitude = 0;
-        float frequency = 0;
+        _playerAmplitude = 0;
+        _playerFrequency = 0;
 
         _sineWavePlayer.positionCount = _points;
         while (true)
@@ -111,12 +122,12 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
 
 
             // Increment amplitude and frequency based on input direction
-            amplitude += (input.x > 0 ? 0.01f : (input.x < 0 ? -0.01f : 0)); // Adjust amplitude
-            frequency += (input.y > 0 ? 0.01f : (input.y < 0 ? -0.01f : 0)); // Adjust frequency
+            _playerAmplitude += (input.x > 0 ? 0.001f : (input.x < 0 ? -0.001f : 0)); // Adjust amplitude
+            _playerFrequency += (input.y > 0 ? 0.001f : (input.y < 0 ? -0.001f : 0)); // Adjust frequency
 
             // Clamp the values
-            amplitude = Mathf.Clamp(amplitude, 0, 2);
-            frequency = Mathf.Clamp(frequency, 0, 1.5f);
+            _playerAmplitude = Mathf.Clamp(_playerAmplitude, -2, 2);
+            _playerFrequency = Mathf.Clamp(_playerFrequency, -1.5f, 1.5f);
 
             time += Time.deltaTime * _moveSpeed; // Increment time based on frame time
 
@@ -124,13 +135,8 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
             {
                 float normalizedProgress = (float)currentPoint / (_points - 1);
                 float x = Mathf.Lerp(leftX, rightX, normalizedProgress); // Spread points across the x range
-                float y = amplitude * Mathf.Sin((tau * frequency * x) + time); // Sine wave formula
+                float y = _playerAmplitude * Mathf.Sin((tau * _playerFrequency * x) + time); // Sine wave formula
                 _sineWavePlayer.SetPosition(currentPoint, new Vector3(x, y, 0)); // Set position for the player's sine wave
-            }
-
-            if (Mathf.Abs(amplitude - _amplitude) < 0.1f && Mathf.Abs(frequency - _frequency) < 0.1f)
-            {
-                _objectToDisapear.SetActive(false);
             }
 
             yield return null; // Wait for the next frame
