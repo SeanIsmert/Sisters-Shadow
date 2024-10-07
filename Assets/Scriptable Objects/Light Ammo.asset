@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Light Ammo
   description: 
   multiple: 1
-  amount: 15
+  amount: 0
   icon: {fileID: 21300000, guid: a1bc7ae6885093c43af4b74731a7ba65, type: 3}

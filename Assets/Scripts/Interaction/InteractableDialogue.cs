@@ -1,10 +1,10 @@
+using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 using XNode;
 using TMPro;
-using UnityEngine.InputSystem;
-using System;
 
 public class InteractableDialogue : MonoBehaviour, IInteract
 {
