@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_movementHandler.curMoveState == MoveStates.Aiming)
         {
-            foreach (InventoryItem item in InventoryManager.instance.inventory)                  // Find the appropriate ammo item.
+            foreach (InventoryItem item in PlayerInventory.instance.inventory)                  // Find the appropriate ammo item.
             {
                 if (item.itemName == "Light Ammo" && item.amount > 0)
                 {
@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour
 
                     Debug.DrawLine(transform.position + _raycastOffset, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
 
-                    InventoryManager.instance.refreshInventory();                                               // Refresh inventory UI.
+                    PlayerInventory.instance.refreshInventory();                                               // Refresh inventory UI.
                     return true;
                 }
                 else continue;

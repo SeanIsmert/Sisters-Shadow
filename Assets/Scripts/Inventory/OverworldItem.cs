@@ -22,7 +22,7 @@ public class OverworldItem : MonoBehaviour, IInteract
     public void Interaction()
     {
         Debug.Log("interacted with item!");
-        if (InventoryManager.instance.AddItem(onCollect))
+        if (PlayerInventory.instance.AddItem(onCollect))
         {
             InteractableManager.instance.RemoveTarget(this);
             Debug.Log("picked up " + onCollect.itemName);
