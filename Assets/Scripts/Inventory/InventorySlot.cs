@@ -1,29 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class InventorySlot : MonoBehaviour
 {
-    public RawImage img;
-    public TextMeshProUGUI itemName;
-    public TextMeshProUGUI itemAmount;
+    [SerializeField] private RawImage _image;
+    [SerializeField] private TextMeshProUGUI _itemName;
+    [SerializeField] private TextMeshProUGUI _itemAmount;
 
     public void onLoad(InventoryItem item)
     {
+        if(item == null || _itemName == null || _image == null || _itemAmount == null)
+        {
+            Debug.Log("Prefab not set up correctly, check inventory slot prefab");
+            return;
+        }
+
         if (item.itemName != null)
         {
-            itemName.text = item.name;
+            _itemName.text = item.name;
         }
         if (item.multiple)
         {
-            itemAmount.text = item.amount.ToString();
+            _itemAmount.text = item.amount.ToString();
         }
         else
         {
-            itemAmount.text = string.Empty;
+            _itemAmount.text = string.Empty;
         }
-        img.texture = item.icon.texture;
+        _image.texture = item.icon.texture;
     }
 }

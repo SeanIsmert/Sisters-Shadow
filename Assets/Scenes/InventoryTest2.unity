@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18212697, g: 0.22782516, b: 0.30738318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18212673, g: 0.2278248, b: 0.3073822, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6685,51 +6685,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!1 &618646250
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 618646251}
-  - component: {fileID: 618646252}
-  m_Layer: 0
-  m_Name: PlayerUIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &618646251
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618646250}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1537579194}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &618646252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618646250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 774c970fa437a0641b0fbd0dca82a8f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _healthCircle: {fileID: 922199013}
 --- !u!1 &623888210
 GameObject:
   m_ObjectHideFlags: 0
@@ -6807,8 +6762,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f935a85e89d878143be9c4ff7f0941eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 23511962}
-  inventorySlotPrefab: {fileID: 393716080872376002, guid: 64cfbb91c87a2864da2dbcf061576151, type: 3}
   inventory:
   - {fileID: 11400000, guid: 9f17b86cf57b50549ad9cdce0932e350, type: 2}
   inventorySlots: []
@@ -7059,6 +7012,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &684591753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 684591754}
+  - component: {fileID: 684591755}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &684591754
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684591753}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1537579194}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &684591755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 684591753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650718aa046968d40bf2addcf72c5aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _menuCanvas: {fileID: 0}
+  _saveCanvas: {fileID: 0}
+  _loseCanvas: {fileID: 0}
+  _winCanvas: {fileID: 0}
+  _infoTextField: {fileID: 0}
+  _infoImageTransform: {fileID: 0}
+  _infoCanvas: {fileID: 0}
+  _inspectTextField: {fileID: 0}
+  _inspectCanvas: {fileID: 0}
+  _dialogueTextField: {fileID: 0}
+  _dialogueCanvas: {fileID: 0}
+  _responsePanle: {fileID: 0}
+  _responseButton: {fileID: 0}
+  _inventoryCanvas: {fileID: 23511962}
+  _inventoryPanel: {fileID: 262001915}
+  _inventorySlot: {fileID: 393716080872376002, guid: 64cfbb91c87a2864da2dbcf061576151, type: 3}
+  _healthCircle: {fileID: 922199013}
 --- !u!850595691 &699127776
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -9384,7 +9398,7 @@ MonoBehaviour:
   _onHealthChange:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 618646252}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerHealthUI, Assembly-CSharp
         m_MethodName: UpdateHealthUI
         m_Mode: 0
@@ -24198,9 +24212,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 618646251}
   - {fileID: 639914798}
   - {fileID: 646921157}
+  - {fileID: 684591754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &1591021043
@@ -32567,7 +32581,7 @@ PrefabInstance:
     - target: {fileID: 5108912787275979659, guid: e185ab06d98649b439ab8e418938e4b0, type: 3}
       propertyPath: _onHealthChange.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 618646252}
+      objectReference: {fileID: 0}
     - target: {fileID: 5204510282981234246, guid: e185ab06d98649b439ab8e418938e4b0, type: 3}
       propertyPath: m_Name
       value: SS_Protag_FINAL

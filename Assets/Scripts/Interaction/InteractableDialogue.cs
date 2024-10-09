@@ -17,28 +17,24 @@ public class InteractableDialogue : MonoBehaviour, IInteract
     [Header("Events")]
     [Tooltip("The Game Objects In scene that will change when hitting the set active node")]
     [SerializeField] private GameObject[] objectsToChange;
-    [Space]
-
-    [Header("Initalize")]
-    [Tooltip("The Game Objects that holds the canvas for NPC dialogue")]
-    [SerializeField] private GameObject _dialogueCanvas;
-    [Tooltip("The Prefab button for all responses")]
-    [SerializeField] private Button _responseButton;
 
     private Action<InputAction.CallbackContext> _exitAction;
     private TextMeshProUGUI _dialogueTextField;
+    private GameObject _dialogueCanvas;
     private Transform _responsePanle;
+    private Button _responseButton;
     private Coroutine _animateText;
 
-    private string _currentText;
     public Vector3 Position { get { return transform.position; } }
-    #endregion
+#endregion
 
 #region Initialize
     private void Start()
     {
-        _dialogueTextField = _dialogueCanvas.GetComponentInChildren<TextMeshProUGUI>();
-        _responsePanle = _dialogueCanvas.GetComponentInChildren<VerticalLayoutGroup>().transform;
+        _dialogueTextField = UIManager.instance.getDialogueTextField();
+        _dialogueCanvas = UIManager.instance.getDialogueCanvas();
+        _responseButton = UIManager.instance.getResponseButton();
+        _responsePanle = UIManager.instance.getResponsePanle();
     }
 
     /// <summary>
@@ -143,7 +139,7 @@ public class InteractableDialogue : MonoBehaviour, IInteract
             if (port.Connection == null || port.IsInput) // Check to see if our has no connection or IsInput, if so skip this node
                 continue;
 
-            if (port.Connection.node is NPCDialogue)
+            if (port.Connection.node is NPCDialogue) // Allows NPC Dialogue to go into NPC Dialogue
             {
                 NextNode(port.fieldName);
             }

@@ -1,15 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public static PlayerInventory instance;
-    public GameObject panel;
-    public GameObject inventorySlotPrefab;
     public List<InventoryItem> inventory;
     public List<InventorySlot> inventorySlots;
     public int maxSize;
+
+    private GameObject _inventorySlotPrefab;
+    private GameObject _inventoryCanvas;
+    private GameObject _inventoryPanel;
+
+    public static PlayerInventory instance;
+
     private void Awake()
     {
         if (instance == null)
@@ -21,14 +24,19 @@ public class PlayerInventory : MonoBehaviour
         {
             Destroy(this);
         }
+
+        _inventorySlotPrefab = UIManager.instance.getInventorySlot();
+        _inventoryCanvas = UIManager.instance.getInventoryPanel();
+        _inventoryPanel = UIManager.instance.getInventoryCanvas();
     }
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //GameManager.instance.UpdateGameState(GameState.Inventory);
         for (int i = 0; i < maxSize; i++) 
         { 
-            var slot = Instantiate(inventorySlotPrefab, panel.transform);
+            var slot = Instantiate(_inventorySlotPrefab, _inventoryPanel.transform);
             inventorySlots.Add(slot.GetComponent<InventorySlot>());
         }
 
@@ -53,17 +61,18 @@ public class PlayerInventory : MonoBehaviour
         inventory.Add(newItem);
         refreshInventory();
         return true;
-    
     }
 
     private void OnEnable()
     {
         GameManager.OnGameStateChanged += GameStateChanged;
-        //PlayerInputManager.instance.input.UI 
     }
 
     private void GameStateChanged(GameState state)
     {
-        Debug.Log(state.ToString());
+        if(state == GameState.Inventory)
+            _inventoryCanvas.SetActive(true);
+        else
+            _inventoryCanvas.SetActive(false);
     }
 }

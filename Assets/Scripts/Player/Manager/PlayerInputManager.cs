@@ -49,6 +49,8 @@ public class PlayerInputManager : MonoBehaviour
         input.Enable();
         GameManager.OnGameStateChanged += ActionMaps;
 
+        input.Gameplay.OpenInventory.started += ctx => GameManager.instance.UpdateGameState(GameState.Inventory);
+
         input.Gameplay.Interact.started += ctx => _interactableManager.HandleInteraction();                                                         // Input for interaction.
 
         input.Gameplay.Aim.started += ctx => _movementHandler.AimCheck(true);

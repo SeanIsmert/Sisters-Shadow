@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Class for overworld items that the player can pick up.
@@ -9,15 +7,8 @@ using UnityEngine;
 /// </summary>
 public class OverworldItem : MonoBehaviour, IInteract
 {
-    public InventoryItem onCollect;
+    [SerializeField] private InventoryItem onCollect;
     public Vector3 Position { get { return transform.position; } }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log(Position);
-    }
-
 
     public void Interaction()
     {
