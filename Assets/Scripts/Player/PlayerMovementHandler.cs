@@ -42,7 +42,6 @@ public class PlayerMovementHandler : MonoBehaviour
     // Gather references to required components.
     void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
         _playerAttack = GetComponent<PlayerAttack>();
         _animator = GetComponent<Animator>();
     }
@@ -52,12 +51,7 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         CheckMovementState();
         CharacterMovement(PlayerInputManager.input.Gameplay.Locomotion.ReadValue<Vector2>());
-        if (GroundCheck(out RaycastHit hit))
-        {
-            Vector3 newPosition = transform.position;
-            newPosition.y = hit.point.y; // Set the Y position to the hit point Y
-            _characterController.Move(newPosition - transform.position); // Move the character to the new position
-        }
+        
     }
 
     /// <summary>
