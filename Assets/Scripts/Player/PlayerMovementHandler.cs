@@ -31,20 +31,20 @@ public class PlayerMovementHandler : MonoBehaviour
     [Header("Movement State")]
     public MoveStates curMoveState;
 
-    private Animator _animator;
+    private CharacterController _characterController;
     private PlayerAttack _playerAttack;
+    private Animator _animator;
     private Vector2 _currentVelocity = Vector2.zero;
     private Vector2 _controllerInput = Vector2.zero;
-
-    //Temp for test
-    private bool _isAiming;
     private bool _isSprinting;
+    private bool _isAiming;
 
     // Gather references to required components.
     void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _characterController = GetComponent<CharacterController>();
         _playerAttack = GetComponent<PlayerAttack>();
+        _animator = GetComponent<Animator>();
     }
 
     // Perform movement actions in  update.
@@ -52,6 +52,12 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         CheckMovementState();
         CharacterMovement(PlayerInputManager.input.Gameplay.Locomotion.ReadValue<Vector2>());
+        if (GroundCheck(out RaycastHit hit))
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.y = hit.point.y; // Set the Y position to the hit point Y
+            _characterController.Move(newPosition - transform.position); // Move the character to the new position
+        }
     }
 
     /// <summary>
@@ -161,6 +167,21 @@ public class PlayerMovementHandler : MonoBehaviour
         return;
     }
 
+    private bool GroundCheck(out RaycastHit hit)
+    {
+        //if (GameManager.instance.state == GameState.Animation)
+        //    return null;
+
+        Vector3 origin = transform.position + new Vector3(0, 0.2f, 0);
+        //float radius = 0.5f;
+        float maxDistance = 2f; 
+
+        return Physics.Raycast(origin, Vector3.down, out hit, maxDistance);
+
+        //Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
+        //return Physics.Raycast(ray, 5);
+    }
+
     /// <summary>
     /// Bool method that returns true when the player is supposed to be rotating.
     /// Checks if input is within an area left or right, returns false when ok.
@@ -179,6 +200,9 @@ public class PlayerMovementHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method for returning button press logic
+    /// </summary>
     public void SprintCheck(bool check)
     {
         if (check)
@@ -187,6 +211,9 @@ public class PlayerMovementHandler : MonoBehaviour
             _isSprinting = false;
     }
 
+    /// <summary>
+    /// Method for returning button press logic
+    /// </summary>
     public void AimCheck(bool check)
     {
         if (check)
@@ -201,6 +228,9 @@ public class PlayerMovementHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method for animating player shoot information
+    /// </summary>
     public void Shoot()
     {
         if (_animator.GetCurrentAnimatorStateInfo(2).IsName("Pistol Shoot"))
