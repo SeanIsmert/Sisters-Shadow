@@ -6747,12 +6747,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 639914797}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd70494205618244f8ced2b05790d621, type: 3}
+  m_Script: {fileID: 11500000, guid: f935a85e89d878143be9c4ff7f0941eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 23511962}
   inventorySlotPrefab: {fileID: 393716080872376002, guid: 64cfbb91c87a2864da2dbcf061576151, type: 3}
   inventory:
+  - {fileID: 11400000, guid: b583885d01984c248a516c6edecd85fb, type: 2}
   - {fileID: 11400000, guid: 9f17b86cf57b50549ad9cdce0932e350, type: 2}
   inventorySlots: []
   maxSize: 5
