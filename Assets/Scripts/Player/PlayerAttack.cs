@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -7,6 +9,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private LayerMask _layerMask;
 
     [SerializeField] private Vector3 _raycastOffset;
+
+    [SerializeField] private InventoryItem _ammo;
 
     private PlayerMovementHandler _movementHandler;
 
@@ -19,26 +23,24 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_movementHandler.curMoveState == MoveStates.Aiming)
         {
-            foreach (InventoryItem item in PlayerInventory.instance.inventory)                  // Find the appropriate ammo item.
+            Dictionary<InventoryItem, uint> playerInven = PlayerInventory.instance.playerInventory;     // Grab reference to inventory dictionary.
+
+            if(playerInven.ContainsKey(_ammo))
             {
-                if (item.itemName == "Light Ammo" && item.amount > 0)
+                playerInven[_ammo] -= 1;
+
+                Ray ray = new(transform.position + _raycastOffset, transform.forward);       // Ray forward from player object.
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, _attackRange, _layerMask))
                 {
-                    item.amount -= 1;
-
-                    Ray ray = new(transform.position + _raycastOffset, transform.forward);       // Ray forward from player object.
-                    RaycastHit hit;
-
-                    if (Physics.Raycast(ray, out hit, _attackRange, _layerMask))
-                    {
-                        hit.transform.gameObject.GetComponent<IDamageable>()?.ValueChange(_damageAmount);       // Apply damage.
-                    }
-
-                    Debug.DrawLine(transform.position + _raycastOffset, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
-
-                    PlayerInventory.instance.refreshInventory();                                               // Refresh inventory UI.
-                    return true;
+                    hit.transform.gameObject.GetComponent<IDamageable>()?.ValueChange(_damageAmount);       // Apply damage.
                 }
-                else continue;
+
+                Debug.DrawLine(transform.position + _raycastOffset, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
+
+                PlayerInventory.instance.RefreshInventory();                                               // Refresh inventory UI.
+                return true;
             }
         }
         

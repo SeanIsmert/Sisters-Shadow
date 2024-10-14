@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Green Plant
   description: 
   multiple: 0
-  amount: 0
+  amount: 1
   icon: {fileID: 21300000, guid: bc601b3e3ced5b640959fc6b9a6bae5a, type: 3}

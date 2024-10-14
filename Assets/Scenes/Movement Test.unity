@@ -326,10 +326,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 262001916}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 16.229187, y: 8.96875}
-  m_SizeDelta: {x: 1509.1311, y: 524.7429}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1609.1311, y: 624.7429}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &23511964
 MonoBehaviour:
@@ -6669,9 +6669,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 618646250}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 774c970fa437a0641b0fbd0dca82a8f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 650718aa046968d40bf2addcf72c5aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _menuCanvas: {fileID: 0}
+  _saveCanvas: {fileID: 0}
+  _loseCanvas: {fileID: 0}
+  _winCanvas: {fileID: 0}
+  _infoTextField: {fileID: 0}
+  _infoImageTransform: {fileID: 0}
+  _infoCanvas: {fileID: 0}
+  _inspectTextField: {fileID: 0}
+  _inspectCanvas: {fileID: 0}
+  _dialogueTextField: {fileID: 0}
+  _dialogueCanvas: {fileID: 0}
+  _responsePanle: {fileID: 0}
+  _responseButton: {fileID: 0}
+  _inventoryCanvas: {fileID: 23511962}
+  _inventoryPanel: {fileID: 23511962}
+  _inventorySlot: {fileID: 393716080872376002, guid: 64cfbb91c87a2864da2dbcf061576151, type: 3}
   _healthCircle: {fileID: 922199013}
 --- !u!1 &623888210
 GameObject:
@@ -6750,10 +6766,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f935a85e89d878143be9c4ff7f0941eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 23511962}
-  inventorySlotPrefab: {fileID: 393716080872376002, guid: 64cfbb91c87a2864da2dbcf061576151, type: 3}
-  inventory:
-  - {fileID: 11400000, guid: b583885d01984c248a516c6edecd85fb, type: 2}
+  playerInventory:
+    keys: []
+    values: 
+  inventoryItems:
   - {fileID: 11400000, guid: 9f17b86cf57b50549ad9cdce0932e350, type: 2}
   inventorySlots: []
   maxSize: 5
@@ -9280,7 +9296,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 618646252}
-        m_TargetAssemblyTypeName: PlayerHealthUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: UpdateHealthUI
         m_Mode: 0
         m_Arguments:
@@ -22223,7 +22239,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

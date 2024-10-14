@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Medium Ammo
   description: 
   multiple: 1
-  amount: 15
+  amount: 10
   icon: {fileID: 21300000, guid: 33f0b74cefdf97d479ef8c7243bece34, type: 3}
