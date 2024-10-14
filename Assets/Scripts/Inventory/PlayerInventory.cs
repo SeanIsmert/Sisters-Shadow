@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<InventoryItem> inventory;
+    public SerializableDictionary<InventoryItem, uint> playerInventory;     // Dictionary for holding item scriptable objects and their related amounts.
+
+    public List<InventoryItem> inventoryItems;
     public List<InventorySlot> inventorySlots;
     public int maxSize;
 
@@ -40,26 +42,46 @@ public class PlayerInventory : MonoBehaviour
             inventorySlots.Add(slot.GetComponent<InventorySlot>());
         }
 
-        refreshInventory();
+        RefreshInventory();
     }
 
-    public void refreshInventory()
+    public void RefreshInventory()
     {
+        Dictionary<InventoryItem, uint> invMirror = new(playerInventory);
 
-        for (int i = 0; i < inventory.Count; i++)
+        //Dictionary Things
+        foreach (KeyValuePair<InventoryItem, uint> item in invMirror)
         {
-            inventorySlots[i].onLoad(inventory[i]);
+            if (item.Value <= 0)
+                playerInventory.Remove(item.Key);
+        }
+        
+        // UI Things.
+        for (int i = 0; i < inventoryItems.Count; i++)
+        {
+            inventorySlots[i].onLoad(inventoryItems[i]);
         }
     }
 
     public bool AddItem(InventoryItem newItem)
     {
-        if(inventory.Count > maxSize)
+        if(inventoryItems.Count > maxSize)
         {
             return false;
         }
-        inventory.Add(newItem);
-        refreshInventory();
+
+        // UI Stuff
+        inventoryItems.Add(newItem);
+        RefreshInventory();
+
+        // Dictionary stuff
+        if(playerInventory.ContainsKey(newItem))
+        {
+            playerInventory[newItem] += newItem.amount;
+        }
+        else
+            playerInventory.Add(newItem, newItem.amount);
+
         return true;
     }
 
