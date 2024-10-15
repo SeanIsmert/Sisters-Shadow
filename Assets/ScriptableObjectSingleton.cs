@@ -74,10 +74,11 @@ namespace Unity.Cloud.Collaborate.Common
         [CanBeNull]
         static string GetFilePath()
         {
-            var attr = typeof(T).GetCustomAttributes(true)
+
+            var attr = "help";/*typeof(T)/*.GetCustomAttributes(true)
                                 .OfType<LocationAttribute>()
-                                .FirstOrDefault();
-            return attr?.FilePath;
+                                .FirstOrDefault();*/
+            return attr;//?.FilePath;
         }
     }
 }
