@@ -6860,8 +6860,6 @@ MonoBehaviour:
     values: 
   inventoryItems:
   - {fileID: 11400000, guid: 9f17b86cf57b50549ad9cdce0932e350, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
   inventorySlots: []
   maxSize: 5
 --- !u!1 &646921156
