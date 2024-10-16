@@ -27,9 +27,9 @@ public class PlayerInventory : MonoBehaviour
             Destroy(this);
         }
 
-        _inventorySlotPrefab = UIManager.instance.getInventorySlot();
-        _inventoryCanvas = UIManager.instance.getInventoryPanel();
-        _inventoryPanel = UIManager.instance.getInventoryCanvas();
+        _inventorySlotPrefab = UIInventory.Instance.GetInventorySlot();
+        _inventoryCanvas = UIInventory.Instance.GetInventoryCanvas();
+        _inventoryPanel = UIInventory.Instance.GetInventoryPanel();
     }
 
     // Start is called before the first frame update
@@ -92,9 +92,10 @@ public class PlayerInventory : MonoBehaviour
 
     private void GameStateChanged(GameState state)
     {
-        if(state == GameState.Inventory)
-            _inventoryCanvas.SetActive(true);
+        if (state == GameState.Inventory)
+            UIInventory.Instance.OpenUI();
         else
-            _inventoryCanvas.SetActive(false);
+            UIInventory.Instance.CloseUI();
+
     }
 }
