@@ -10,11 +10,15 @@ public class InventorySlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemName;
     [SerializeField] private TextMeshProUGUI _itemAmount;
 
-    public void onLoad(InventoryItem item)
+    public void onLoad(InventoryItem item, uint amount)
     {
         if(item == null || _itemName == null || _image == null || _itemAmount == null)
         {
-            Debug.Log("Prefab not set up correctly, check inventory slot prefab");
+            _itemName.text = "Empty";
+            _itemAmount.text = null;
+            _image.texture = null;
+
+            Debug.Log("Prefab may not be set up correctly, check inventory slot prefab");
             return;
         }
 
@@ -24,7 +28,7 @@ public class InventorySlot : MonoBehaviour
         }
         if (item.multiple)
         {
-            _itemAmount.text = item.amount.ToString();
+            _itemAmount.text = amount.ToString();
         }
         else
         {

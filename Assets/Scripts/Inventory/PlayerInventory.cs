@@ -5,9 +5,9 @@ public class PlayerInventory : MonoBehaviour
 {
     public SerializableDictionary<InventoryItem, uint> playerInventory;     // Dictionary for holding item scriptable objects and their related amounts.
 
-    public List<InventoryItem> inventoryItems;
-    public List<InventorySlot> inventorySlots;
-    public int maxSize;
+    //public List<InventoryItem> inventoryItems;                            // Old inventory list. Code uses the dictionary now!
+    public List<InventorySlot> inventorySlots;                              // List of UI elements for inventory slots.
+    public int maxSize;                                                     // The maximum inventory size.
 
     private GameObject _inventorySlotPrefab;
     private GameObject _inventoryCanvas;
@@ -47,32 +47,40 @@ public class PlayerInventory : MonoBehaviour
 
     public void RefreshInventory()
     {
-        Dictionary<InventoryItem, uint> invMirror = new(playerInventory);
+        Dictionary<InventoryItem, uint> invMirror = new(playerInventory);       // Local copy of the inventory for iteration.
+        int index = 0;                                                          // Index for setting inventory slot data.
 
         //Dictionary Things
         foreach (KeyValuePair<InventoryItem, uint> item in invMirror)
         {
-            if (item.Value <= 0)
-                playerInventory.Remove(item.Key);
+            // If a multiple item's amount reaches zero.
+            if (item.Key.multiple && item.Value <= 0)
+            {
+                inventorySlots[index].onLoad(null, 0);      // Send inventorySlot null to remove from UI.
+                playerInventory.Remove(item.Key);           // Remove the item from inventory.
+                index++;                                    // Iterate index.
+                continue;
+            }
+
+            inventorySlots[index].onLoad(item.Key, item.Value);     // Send inventorySlot updated item info.
+            index++;                                                // Iterate index.
         }
-        
-        // UI Things.
-        for (int i = 0; i < inventoryItems.Count; i++)
+
+        /*
+        // OLD INVENTORY ITERATION
+        for (int i = 0; i < playerInventory.Count; i++)
         {
-            inventorySlots[i].onLoad(inventoryItems[i]);
+            inventorySlots[i].onLoad(playerInventory[i]);
         }
+        */
     }
 
     public bool AddItem(InventoryItem newItem)
     {
-        if(inventoryItems.Count > maxSize)
+        if(playerInventory.Count > maxSize)
         {
             return false;
         }
-
-        // UI Stuff
-        inventoryItems.Add(newItem);
-        RefreshInventory();
 
         // Dictionary stuff
         if(playerInventory.ContainsKey(newItem))
@@ -81,6 +89,9 @@ public class PlayerInventory : MonoBehaviour
         }
         else
             playerInventory.Add(newItem, newItem.amount);
+
+        // UI Stuff
+        RefreshInventory();
 
         return true;
     }
