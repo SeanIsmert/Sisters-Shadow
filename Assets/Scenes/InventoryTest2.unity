@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18212697, g: 0.22782516, b: 0.30738318, a: 1}
+  m_IndirectSpecularColor: {r: 0.18212673, g: 0.2278248, b: 0.3073822, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6858,8 +6858,6 @@ MonoBehaviour:
   playerInventory:
     keys: []
     values: 
-  inventoryItems:
-  - {fileID: 11400000, guid: 9f17b86cf57b50549ad9cdce0932e350, type: 2}
   inventorySlots: []
   maxSize: 5
 --- !u!1 &646921156
@@ -24276,6 +24274,52 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1506404627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1506404629}
+  - component: {fileID: 1506404628}
+  m_Layer: 0
+  m_Name: Init
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1506404628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506404627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eb356ebf662e934d931251059921bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stuff:
+  - {fileID: 11400000, guid: 1066e29eba232f74b94c0449933d9907, type: 2}
+--- !u!4 &1506404629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506404627}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1537579193
 GameObject:
   m_ObjectHideFlags: 0
@@ -31045,9 +31089,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89616ddd92e32ce4ab8aa23ac7c6780f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryCanvas: {fileID: 23511962}
-  _inventoryPanel: {fileID: 23511962}
-  _inventorySlot: {fileID: 393716080872376002, guid: 64cfbb91c87a2864da2dbcf061576151, type: 3}
+  _inventoryCanvasPlayer: {fileID: 0}
+  _inventoryPanelPlayer: {fileID: 0}
+  _inventorySlotPlayer: {fileID: 0}
+  _inventoryCanvassGlobal: {fileID: 0}
+  _inventoryPanelsGlobal: {fileID: 0}
+  _inventorySlotsGlobal: {fileID: 0}
+  _itemDescription: {fileID: 0}
+  _itemName: {fileID: 0}
+  _itemAmount: {fileID: 0}
+  _itemImage: {fileID: 0}
 --- !u!114 &2017356536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32994,3 +33045,4 @@ SceneRoots:
   - {fileID: 498844402}
   - {fileID: 1031528736}
   - {fileID: 4281257711774273922}
+  - {fileID: 1506404629}

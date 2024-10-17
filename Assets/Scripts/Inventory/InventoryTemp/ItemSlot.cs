@@ -40,11 +40,11 @@ public class ItemSlot : MonoBehaviour
         _itemName.text = item.name;
     }
 
-    public void InPreview(Item item)
+    public void InPreview(ItemDataToken item)
     {
-        _itemDescriptionPreview.text = item.description;
-        _itemNamePreview.text = item.name;
-        _itemAmountPreview.text = item.amount.ToString();
-        _itemImagePreview.texture = item.icon.texture;
+        _itemDescriptionPreview.text = item.GetBaseItem.description;
+        _itemNamePreview.text = item.GetBaseItem.itemName;
+        _itemAmountPreview.text = item.Amount.ToString();
+        _itemImagePreview.texture = item.GetBaseItem.icon.texture;
     }
 }

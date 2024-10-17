@@ -5,7 +5,7 @@ using UnityEditor;
 #endif
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Item", order = 2)]
-public class Item : ScriptableObject
+public class Item : DatabaseElement
 {
     [Header("Initialize")]
     public string itemName;
@@ -17,10 +17,15 @@ public class Item : ScriptableObject
     public bool consumable;
     public bool stackable;
     public bool keyItem;
-    public uint amount;
+    //public Vector2Int amountRange;
     public uint maxStack;
 
     //private ItemToken();
+
+    public virtual ItemDataToken GenerateToken()
+    {
+        return new ItemDataToken(this);
+    }
 }
 
 #if UNITY_EDITOR
@@ -47,14 +52,32 @@ public class ItemEditor : Editor
 #endif
 
 [System.Serializable]
-public class ItemData
+public class ItemDataToken
 {
-    public Item Item { get; private set; }
-    public uint Amount { get; set; }
+    private int _index;
+    private uint _amount;
 
-    public ItemData(Item item, uint amount)
+    public Item GetBaseItem { get { return DatabaseContainer.Instance.itemDatabase.elements[_index] as Item; } }
+    public uint Amount { get { return _amount; } }
+
+    public string Description { get { return GetBaseItem.description; } }
+
+    public void AddAmount(uint value)
     {
-        Item = item;
-        Amount = amount;
+        _amount += value;
+
+        _amount = (uint)Mathf.Clamp(_amount, 0, GetBaseItem.maxStack);
+    }
+
+    public ItemDataToken(Item item)
+    {
+        _index = item.GetIndex;
+        _amount = 1;
+    }
+
+    public ItemDataToken(Item item, uint amount)
+    {
+        _index = item.GetIndex;
+        _amount = amount;
     }
 }

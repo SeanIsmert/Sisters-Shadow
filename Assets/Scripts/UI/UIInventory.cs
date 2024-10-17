@@ -47,15 +47,15 @@ public class UIInventory : MonoSinglton<UIInventory>
 
     public void RefreshInventory()
     {
-        List<Item> playerInventory = InventoryManager.Instance.GetInvetoryItems();
-        List<Item> globalInventory = InventoryManager.Instance.GetGlobalItems();
+        List<ItemDataToken> playerInventory = InventoryManager.Instance.GetInvetoryItems();
+        List<ItemDataToken> globalInventory = InventoryManager.Instance.GetGlobalItems();
 
-        foreach (Item item in playerInventory)
+        foreach (ItemDataToken item in playerInventory)
         {
-            //if 
+            Debug.Log(item.GetBaseItem.itemName);
         }
 
-        foreach (Item item in globalInventory)
+        foreach (ItemDataToken item in globalInventory)
         {
         
         }
