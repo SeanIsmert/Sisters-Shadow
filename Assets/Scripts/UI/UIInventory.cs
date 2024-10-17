@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using UnityEngine;
+using TMPro;
 
 public class UIInventory : MonoSinglton<UIInventory>
 {
@@ -13,48 +15,55 @@ public class UIInventory : MonoSinglton<UIInventory>
     [Header("Inventory Global UI")]
     [SerializeField] private GameObject _inventoryCanvassGlobal;
     [SerializeField] private GameObject _inventoryPanelsGlobal;
-    [SerializeField] private GameObject _inventorySlotsGlobal;    
+    [SerializeField] private GameObject _inventorySlotsGlobal;
+    [Space]
+
+    [Header("Item Slots UI")]
+    [SerializeField] private TextMeshProUGUI _itemDescription;
+    [SerializeField] private TextMeshProUGUI _itemName;
+    [SerializeField] private TextMeshProUGUI _itemAmount;
+    [SerializeField] private RawImage _itemImage;
     // ---------------------------------------------------------------------------------- //
     public GameObject GetInventoryPanel() { return _inventoryPanelPlayer; }
     public GameObject GetInventorySlot() { return _inventorySlotPlayer; }
 
-    private List<InventorySlot> inventorySlots;
+    public TextMeshProUGUI GetItemDescription() { return _itemDescription; }
+    public TextMeshProUGUI GetItemName() { return _itemName; }
+    public TextMeshProUGUI GetItemAmount() { return _itemAmount; }
+    public RawImage GetItemImage() { return _itemImage; }
+
+    private List<ItemSlot> _playerInventorySlots;
+    private List<Item> _globalInventorySlots;
     private UnityEvent _inventoryChanged;
 
     public void GenerateInventory()
     {
-        for (int i = 0; i < InventoryManagerPlayer.Instance.GetInventorySize(); i++)
+        for (int i = 0; i < InventoryManager.Instance.GetInventorySize(); i++)
         {
             var slot = Instantiate(_inventorySlotPlayer, _inventoryPanelPlayer.transform);
-            inventorySlots.Add(slot.GetComponent<InventorySlot>());
+            _playerInventorySlots.Add(slot.GetComponent<ItemSlot>());
         }
     }
 
     public void RefreshInventory()
     {
-        List<Item> inventory = InventoryManagerPlayer.Instance.GetInvetoryItems();
+        List<Item> playerInventory = InventoryManager.Instance.GetInvetoryItems();
+        List<Item> globalInventory = InventoryManager.Instance.GetGlobalItems();
 
-        foreach (Item item in inventory)
+        foreach (Item item in playerInventory)
         {
             //if 
         }
 
-        for (int i = 0; i < inventory.Count; i++)
+        foreach (Item item in globalInventory)
         {
-            if (i < inventory.Count)
-            {
-                //inventory[i].onLoad(inventory[i].Item, inventory[i].Amount);
-            }
-            else
-            {
-                //_inventorySlots[i].onLoad(null, 0);  // Empty slot
-            }
+        
         }
     }
 
     public void UseItem(Item item)
     {
-    
+        
     }
 
     public void DiscardItem(Item item)
@@ -86,7 +95,7 @@ public class UIInventory : MonoSinglton<UIInventory>
 
     private void OnEnable()
     {
+        InventoryManager.InventoryChanged += RefreshInventory;
         GameManager.OnGameStateChanged += GameStateChanged;
-        //_inventoryChanged += RefreshInventory();
     }
 }

@@ -17,7 +17,10 @@ public class Item : ScriptableObject
     public bool consumable;
     public bool stackable;
     public bool keyItem;
-    public uint maxStack = 0;
+    public uint amount;
+    public uint maxStack;
+
+    //private ItemToken();
 }
 
 #if UNITY_EDITOR
