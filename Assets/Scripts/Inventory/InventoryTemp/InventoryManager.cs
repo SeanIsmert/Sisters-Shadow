@@ -2,20 +2,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class InventoryManager : MonoSinglton<InventoryManager>
+public class InventoryManager : MonoSinglton<InventoryManager>, IDataPersistence
 {
     [Header("Player Inventory Settings")]
-    [SerializeField] private List<Item> _playerItems;
+    [SerializeField] private List<ItemDataToken> _playerItems;
     [Tooltip("The max number of slots currently (contains getter and setter)"), Range(0, 20)]
     [SerializeField] private int _inventoryMax;
     [Space]
 
     [Header("Global Inventory Settings")]
-    [SerializeField] private List<Item> _globalItems;
+    [SerializeField] private List<ItemDataToken> _globalItems;
 
     public int GetInventorySize() { return _inventoryMax; }
-    public List<Item> GetInvetoryItems() { return _playerItems; }
-    public List<Item> GetGlobalItems() { return _globalItems; }
+    public List<ItemDataToken> GetInvetoryItems() { return _playerItems; }
+    public List<ItemDataToken> GetGlobalItems() { return _globalItems; }
 
     public static event Action InventoryChanged;
     private enum ItemType { Player, Global }
@@ -27,15 +27,30 @@ public class InventoryManager : MonoSinglton<InventoryManager>
         UIInventory.Instance.GenerateInventory();
     }
 
+    /// <summary>
+    /// Expands the inventory slots
+    /// </summary>
     private void ExpandSlots(int size)
     {
         _inventoryMax += size;
     }
 
     /// <summary>
-    /// 
+    /// Adds items specifically to the Player Inventory
     /// </summary>
     private bool AddItem(Item item)
+    {
+        if (_playerItems.Count > _inventoryMax)
+        {
+            return false;
+        }
+        _playerItems.Add(item.GenerateToken());
+
+        InventoryChanged?.Invoke();
+        return true;
+    }
+
+    private bool AddItem(ItemDataToken item)
     {
         if (_playerItems.Count > _inventoryMax)
         {
@@ -47,11 +62,25 @@ public class InventoryManager : MonoSinglton<InventoryManager>
         return true;
     }
 
-    private void RemoveItem(Item item)
+    /// <summary>
+    /// Removes Items specifically from the Player Inventory
+    /// </summary>
+    private void RemoveItem(ItemDataToken item)
     {
         _playerItems.Remove(item);
     }
 
+    public void LoadData(GameData data)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SaveData(GameData data)
+    {
+        throw new NotImplementedException();
+    }
+
+    /*
     /// <summary>
     /// If you are passing in an item type of player, it moves to global<list>
     /// If you are passing in an item type of global, it moves to player<list>
@@ -73,6 +102,7 @@ public class InventoryManager : MonoSinglton<InventoryManager>
                 break;
         }
     }
+    */
 
     //Save and load implement here
     /* Inventory sizemax
