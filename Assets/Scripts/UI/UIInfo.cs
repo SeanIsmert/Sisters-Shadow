@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class UIInfo : UIManager
+public class UIInfo : MonoSinglton<UIInfo>
 {
     [Header("Info UI")]
     [SerializeField] private TextMeshProUGUI _infoTextField;

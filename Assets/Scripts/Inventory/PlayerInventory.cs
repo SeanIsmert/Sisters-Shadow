@@ -10,7 +10,6 @@ public class PlayerInventory : MonoBehaviour
     public int maxSize;                                                     // The maximum inventory size.
 
     private GameObject _inventorySlotPrefab;
-    private GameObject _inventoryCanvas;
     private GameObject _inventoryPanel;
 
     public static PlayerInventory instance;
@@ -28,7 +27,6 @@ public class PlayerInventory : MonoBehaviour
         }
 
         _inventorySlotPrefab = UIInventory.Instance.GetInventorySlot();
-        _inventoryCanvas = UIInventory.Instance.GetInventoryCanvas();
         _inventoryPanel = UIInventory.Instance.GetInventoryPanel();
     }
 
@@ -94,19 +92,5 @@ public class PlayerInventory : MonoBehaviour
         RefreshInventory();
 
         return true;
-    }
-
-    private void OnEnable()
-    {
-        GameManager.OnGameStateChanged += GameStateChanged;
-    }
-
-    private void GameStateChanged(GameState state)
-    {
-        if (state == GameState.Inventory)
-            UIInventory.Instance.OpenUI();
-        else
-            UIInventory.Instance.CloseUI();
-
     }
 }

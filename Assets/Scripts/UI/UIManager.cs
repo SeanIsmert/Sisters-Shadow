@@ -9,21 +9,26 @@ using TMPro;
 /// Written by: Kay
 /// Modified by Sean
 /// </summary>
-public class UIManager : MonoSinglton<UIManager>
+public class UIManager: MonoSinglton<UIManager>
 {
+    protected void Awake()
+    {
+        
+    }
+
     public virtual void OpenUI()
     {
-        gameObject.SetActive(true);
+        
     }
 
     public virtual void CloseUI()
     {
-        gameObject.SetActive(false);
+        
     }
 
     public virtual void ToggleUI()
     {
-        if (gameObject.activeSelf)
+        if (true)
             CloseUI();
         else
             OpenUI();
