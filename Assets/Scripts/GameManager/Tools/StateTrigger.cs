@@ -14,7 +14,7 @@ public class StateTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.UpdateGameState(_newState);
+            GameManager.Instance.UpdateGameState(_newState);
             _onStateChanged?.Invoke();
         }
     }

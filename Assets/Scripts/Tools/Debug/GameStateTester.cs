@@ -9,11 +9,11 @@ public class GameStateTester : MonoBehaviour
         // Check for key presses to change game state
         if (Keyboard.current.yKey.wasPressedThisFrame)
         {
-            GameManager.instance.UpdateGameState(GameState.Menu);
+            GameManager.Instance.UpdateGameState(GameState.Menu);
         }
         else if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            GameManager.instance.UpdateGameState(GameState.Gameplay);
+            GameManager.Instance.UpdateGameState(GameState.Gameplay);
         }
     }
 }

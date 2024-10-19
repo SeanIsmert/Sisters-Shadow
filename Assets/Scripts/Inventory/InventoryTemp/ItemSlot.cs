@@ -1,6 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
+using static UnityEditor.Progress;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class ItemSlot : MonoBehaviour
     private TextMeshProUGUI _itemAmountPreview;
     private RawImage _itemImagePreview;
 
-    private void Start()
+    private ItemToken _currentItemToken;
+
+    private void Awake()
     {
         _itemDescriptionPreview = UIInventory.Instance.GetItemDescription();
         _itemNamePreview = UIInventory.Instance.GetItemName();
@@ -20,7 +23,15 @@ public class ItemSlot : MonoBehaviour
         _itemImagePreview = UIInventory.Instance.GetItemImage();
     }
 
-    private bool CheckSlot(Item item)
+    public void SwapItem()
+    {
+        if (_currentItemToken == null || GameManager.Instance.state == GameState.InventoryPlayer)
+            return;
+
+        InventoryManager.Instance.MoveItem(_currentItemToken);
+    }
+
+    private bool CheckSlot(ItemBase item)
     {
         if (item == null || _itemName == null || _itemImage == null)
         {
@@ -34,17 +45,38 @@ public class ItemSlot : MonoBehaviour
         return true;
     }
 
-    public void InList(Item item)
+    public void ClearSlot()
     {
-        _itemImage.texture = item.icon.texture;
-        _itemName.text = item.name;
+        _itemImage.texture = null; // Clear the icon
+        _itemName.text = "Empty";  // Clear the name
     }
 
-    public void InPreview(ItemDataToken item)
+    public void InList(ItemToken itemToken)
     {
-        _itemDescriptionPreview.text = item.GetBaseItem.description;
-        _itemNamePreview.text = item.GetBaseItem.itemName;
-        _itemAmountPreview.text = item.Amount.ToString();
-        _itemImagePreview.texture = item.GetBaseItem.icon.texture;
+        _currentItemToken = itemToken;
+        ItemBase baseItem = itemToken.GetBaseItem;
+
+        if (CheckSlot(baseItem))
+        {
+            _itemImage.texture = baseItem.icon.texture;
+            _itemName.text = baseItem.itemName;
+        }
+    }
+
+    // Update the preview panel with detailed info
+    public void InPreview()
+    {
+        if (_currentItemToken == null)
+            return;
+
+        ItemBase baseItem = _currentItemToken.GetBaseItem;
+
+        _itemDescriptionPreview.text = baseItem.description;
+        _itemNamePreview.text = baseItem.itemName;
+        _itemImagePreview.texture = baseItem.icon.texture;
+        if (baseItem.stackable)
+        {
+            _itemAmountPreview.text = _currentItemToken.GetItemAmount.ToString();
+        }
     }
 }
