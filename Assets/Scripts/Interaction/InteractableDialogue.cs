@@ -43,7 +43,7 @@ public class InteractableDialogue : MonoBehaviour, IInteract
     public void Interaction()
     {
         _exitAction = ctx => Exit(); PlayerInputManager.input.UI.Cancel.performed += _exitAction; // Subscribe to be able to leave dialogue
-        GameManager.instance.UpdateGameState(GameState.Dialogue); // Set your game state to ensure no moving and button usability
+        GameManager.Instance.UpdateGameState(GameState.Dialogue); // Set your game state to ensure no moving and button usability
         UIDialogue.Instance.OpenUI(); // Turn on the canvas so you can see the dialogue
 
         foreach (Node node in _dialogueGraph.nodes) // Search for the entry node to begin traversing the tree
@@ -67,7 +67,7 @@ public class InteractableDialogue : MonoBehaviour, IInteract
         WipeResponse();
 
         PlayerInputManager.input.UI.Cancel.performed -= _exitAction; // Unsubscribe from your quit dialogue buttons
-        GameManager.instance.UpdateGameState(GameState.Gameplay); // Send the player back to Gameplay
+        GameManager.Instance.UpdateGameState(GameState.Gameplay); // Send the player back to Gameplay
         UIDialogue.Instance.CloseUI(); // Turn off the dialogue visuals
     }
 #endregion

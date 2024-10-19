@@ -1,5 +1,3 @@
-using UnityEngine.UI;
-using UnityEngine;
 using TMPro;
 
 /// <summary>
@@ -28,10 +26,10 @@ public class UIManager: MonoSinglton<UIManager>
 
     public virtual void ToggleUI()
     {
-        if (true)
-            CloseUI();
-        else
-            OpenUI();
+        //if (true)
+            //CloseUI();
+        //else
+            //OpenUI();
     }
 
     public void SetText(TMP_Text textField, string text)

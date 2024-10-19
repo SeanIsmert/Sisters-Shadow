@@ -50,7 +50,7 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
     {
         _exitAction = ctx => Exit(); PlayerInputManager.input.UI.Cancel.performed += _exitAction; // Subscribe to be able to leave puzzle
         _checkAction = ctx => Check(); PlayerInputManager.input.UI.Submit.performed += _checkAction; // Subscribe to be able to check puzzle
-        GameManager.instance.UpdateGameState(GameState.Interactable); // Set your game state to ensure no moving and button usability
+        GameManager.Instance.UpdateGameState(GameState.Interactable); // Set your game state to ensure no moving and button usability
         _sineWaveUI.SetActive(true); // Make the UI for the puzzle visible
 
         _animateSineWave = StartCoroutine(AnimatedSine());
@@ -63,7 +63,7 @@ public class InteractablePuzzleSine : MonoBehaviour, IInteract
 
         _exitAction = ctx => Exit(); PlayerInputManager.input.UI.Cancel.performed -= _exitAction; // Unsubscribe to mitigate odd behavior
         _checkAction = ctx => Check(); PlayerInputManager.input.UI.Submit.performed -= _checkAction; // Unsubscribe to mitigate odd behavior
-        GameManager.instance.UpdateGameState(GameState.Gameplay); // Set your game state to return to gameplay
+        GameManager.Instance.UpdateGameState(GameState.Gameplay); // Set your game state to return to gameplay
         _sineWaveUI.SetActive(false); // Get rid of the UI displaying the puzzle
     }
     #endregion

@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(menuName = "Database")]
+[CreateAssetMenu(fileName = "Database", menuName = "Inventory/Database", order = 1)]
 public class Database : ScriptableObject
 {
     public DatabaseElement[] elements;

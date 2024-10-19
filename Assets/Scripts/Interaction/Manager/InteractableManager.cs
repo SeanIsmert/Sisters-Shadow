@@ -77,7 +77,7 @@ public class InteractableManager : MonoBehaviour
             }
         }
 
-        if (GameManager.instance.state == GameState.Gameplay)
+        if (GameManager.Instance.state == GameState.Gameplay)
             _currentTarget?.Interaction();
     }
 

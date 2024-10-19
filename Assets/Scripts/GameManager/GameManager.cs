@@ -9,37 +9,20 @@ using System;
 /// Written by: Sean
 /// Modified by:
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSinglton<GameManager>
 {
     #region Variables
     //Events
     public static event Action<GameState> OnGameStateChanged;
-    //Singleton
-    public static GameManager instance;
     //Enum
     public GameState state;
     #endregion
-
-    #region Initialize
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else if (instance != null)
-        {
-            Destroy(this);
-        }
-    }
 
     private void Start()
     {
         //change to menu later
         UpdateGameState(GameState.Gameplay);
     }
-    #endregion
 
     #region CodeBase
     public void UpdateGameState(GameState newState)
@@ -54,8 +37,10 @@ public class GameManager : MonoBehaviour
                 break;
             case GameState.Animation: 
                 break;
-            case GameState.Inventory: //UI
+            case GameState.InventoryPlayer: //UI
                 break;
+            case GameState.InventoryGlobal //UI
+            : break;
             case GameState.Interactable: //UI
                 break;
             case GameState.Dialogue: // UI
@@ -75,6 +60,6 @@ public class GameManager : MonoBehaviour
 #region States
 public enum GameState
 {
-    Menu, Gameplay, Pause, Animation, Inventory, Interactable, Dialogue, Lose, Win
+    Menu, Gameplay, Pause, Animation, InventoryPlayer, InventoryGlobal, Interactable, Dialogue, Lose, Win
 }
 #endregion
