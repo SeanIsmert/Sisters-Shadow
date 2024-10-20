@@ -1,7 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
-using static UnityEditor.Progress;
 
 public class ItemSlot : MonoBehaviour
 {
@@ -67,16 +66,18 @@ public class ItemSlot : MonoBehaviour
     public void InPreview()
     {
         if (_currentItemToken == null)
-            return;
+            return;     
 
-        ItemBase baseItem = _currentItemToken.GetBaseItem;
-
-        _itemDescriptionPreview.text = baseItem.description;
-        _itemNamePreview.text = baseItem.itemName;
-        _itemImagePreview.texture = baseItem.icon.texture;
-        if (baseItem.stackable)
+        _itemDescriptionPreview.text = _currentItemToken.GetItemDescription;
+        _itemNamePreview.text = _currentItemToken.GetItemName;
+        _itemImagePreview.texture = _currentItemToken.GetItemImage.texture;
+        _itemAmountPreview.text = _currentItemToken.GetItemAmount.ToString();
+        if (!_currentItemToken.GetBaseItem.stackable)
         {
-            _itemAmountPreview.text = _currentItemToken.GetItemAmount.ToString();
+            _itemAmountPreview.gameObject.SetActive(false);
         }
+        else
+            _itemAmountPreview.gameObject.SetActive(true);
+
     }
 }

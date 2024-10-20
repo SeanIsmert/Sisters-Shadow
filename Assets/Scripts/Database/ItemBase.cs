@@ -55,6 +55,8 @@ public class ItemToken
     public string GetItemDescription { get { return GetBaseItem.description; } }
     public string GetItemName { get { return GetBaseItem.name; } }
     public Sprite GetItemImage { get { return GetBaseItem.icon; } }
+    public string GetKeyID { get { return _key; } }
+    public string SetKeyID { set { _key = value; } }
     public uint GetItemAmount { get { return _amount; } }
     public uint SetItemAmount { set { _amount = value; } }
 #endregion

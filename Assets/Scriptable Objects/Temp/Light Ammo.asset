@@ -22,7 +22,7 @@ MonoBehaviour:
   weapon: 0
   randomRange: 1
   maxStack: 15
-  amount: 4
+  amount: 5
   amountRange: {x: 4, y: 6}
   singleUse: 0
   keyID: 

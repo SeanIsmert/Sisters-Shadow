@@ -2,7 +2,7 @@
 
 public class NPCDialogue : DialogueNodeBase, IDialogue
 {
-    [Input(typeConstraint = TypeConstraint.Strict)] 
+    [Input] 
     public bool enter;
     [Output(dynamicPortList = true, connectionType = ConnectionType.Override)] 
     public int exit;

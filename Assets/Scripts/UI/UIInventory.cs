@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
-using TMPro;
-using UnityEngine.Windows;
 using System;
+using TMPro;
 
 public class UIInventory : MonoSinglton<UIInventory>
 {
+#region Variables
     [Header("Inventory Player UI")]
     [SerializeField] private GameObject _inventoryCanvasPlayer;
     [SerializeField] private GameObject _inventoryPanelPlayer;
@@ -39,6 +39,7 @@ public class UIInventory : MonoSinglton<UIInventory>
     [SerializeField, HideInInspector] private List<ItemSlot> _globalInventorySlots;
     private Action<UnityEngine.InputSystem.InputAction.CallbackContext> _cancelAction;
     private UnityEvent _inventoryChanged;
+#endregion
 
     public void GenerateInventory()
     {
