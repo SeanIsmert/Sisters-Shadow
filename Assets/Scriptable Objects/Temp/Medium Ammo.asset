@@ -23,7 +23,7 @@ MonoBehaviour:
   weapon: 0
   randomRange: 1
   maxStack: 8
-  amount: 0
+  amount: 3
   amountRange: {x: 2, y: 5}
   singleUse: 0
   keyID: 

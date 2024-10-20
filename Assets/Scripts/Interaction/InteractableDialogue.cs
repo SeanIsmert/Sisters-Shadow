@@ -16,7 +16,9 @@ public class InteractableDialogue : MonoBehaviour, IInteract
 
     [Header("Events")]
     [Tooltip("The Game Objects In scene that will change when hitting the set active node")]
-    [SerializeField] private GameObject[] objectsToChange;
+    [SerializeField] private GameObject[] _objectsToChange;
+    [SerializeField] private GameObject[] _objectsToInstantiate;
+    [SerializeField] private GameObject _instantiateLocation;
 
     private Action<InputAction.CallbackContext> _exitAction;
     private TextMeshProUGUI _dialogueTextField;
@@ -78,6 +80,7 @@ public class InteractableDialogue : MonoBehaviour, IInteract
         if (_dialogueGraph.current == null) // Simple check to see if the current node is null, for some reason...
             return;
 
+        string fieldName;
         switch (_dialogueGraph.current.GetNodeType)
         {
             case "Dialogue": // Your NPC Speaks his line of text
@@ -89,11 +92,19 @@ public class InteractableDialogue : MonoBehaviour, IInteract
                 NextNode("exit");
                 break;
             case "ActiveEvent": // Trigger an Event for setting game objects actives
-                (_dialogueGraph.current as SetActive)?.ExecuteEvent(objectsToChange);
+                (_dialogueGraph.current as SetActive)?.ExecuteEvent(_objectsToChange);
                 NextNode("exit");
                 break;
             case "HealthCheck": // Run the condition that checks health
-                string fieldName = (_dialogueGraph.current as HealthCheck)?.PortOnCondtion();
+                fieldName = (_dialogueGraph.current as HealthCheck)?.PortOnCondtion();
+                NextNode(fieldName);
+                break;
+            case "KeyItemCheck": // Run the condition that checks keyitems
+                fieldName = (_dialogueGraph.current as KeyItemCheck)?.PortOnCondtion();
+                NextNode(fieldName);
+                break;
+            case "AmmoCheck": // Run the condition that checks ammo
+                fieldName = (_dialogueGraph.current as AmmoCheck)?.PortOnCondtion();
                 NextNode(fieldName);
                 break;
             case "Exit": // The Exit node that dictates we have reached the end of the tree

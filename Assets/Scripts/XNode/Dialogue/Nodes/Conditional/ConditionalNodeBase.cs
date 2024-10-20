@@ -1,6 +1,4 @@
-﻿using XNode;
-
-public abstract class ConditionalNodeBase : CoreNodeBase 
+﻿public abstract class ConditionalNodeBase : CoreNodeBase 
 {
     [Input(typeConstraint = TypeConstraint.Strict)]
     public bool enter;
