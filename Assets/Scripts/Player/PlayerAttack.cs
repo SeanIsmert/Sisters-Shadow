@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private Vector3 _raycastOffset;
 
-    [SerializeField] private InventoryItem _ammo;
+    //[SerializeField] private InventoryItem _ammo;
 
     private PlayerMovementHandler _movementHandler;
 
@@ -22,11 +22,11 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_movementHandler.curMoveState == MoveStates.Aiming)
         {
-            Dictionary<InventoryItem, uint> playerInven = PlayerInventory.instance.playerInventory;     // Grab reference to inventory dictionary.
+            //Dictionary<InventoryItem, uint> playerInven = PlayerInventory.instance.playerInventory;     // Grab reference to inventory dictionary.
 
-            if(playerInven.ContainsKey(_ammo))
+            //if(playerInven.ContainsKey(_ammo))
             {
-                playerInven[_ammo] -= 1;
+                //playerInven[_ammo] -= 1;
 
                 Ray ray = new(transform.position + _raycastOffset, transform.forward);       // Ray forward from player object.
                 RaycastHit hit;
@@ -38,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
 
                 Debug.DrawLine(transform.position + _raycastOffset, ray.GetPoint(_attackRange), Color.magenta, 5f);          // Debug ray.
 
-                PlayerInventory.instance.RefreshInventory();                                               // Refresh inventory UI.
+                //PlayerInventory.instance.RefreshInventory();                                               // Refresh inventory UI.
                 return true;
             }
         }
