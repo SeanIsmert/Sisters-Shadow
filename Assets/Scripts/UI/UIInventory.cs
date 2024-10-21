@@ -62,33 +62,29 @@ public class UIInventory : MonoSinglton<UIInventory>
         List<ItemToken> globalInventory = InventoryManager.Instance.GetGlobalItems();
 
         // Update player inventory slots
-        for (int i = 0; i < playerInventory.Count; i++)
+        for (int i = 0; i < _playerInventorySlots.Count; i++)
         {
-            if (i < _playerInventorySlots.Count)
+            // While within the range of player inventory, update item slot
+            if (i < playerInventory.Count)
             {
                 _playerInventorySlots[i].InList(playerInventory[i]); // Use ItemToken
             }
-        }
-
-        // Optional: Clear any remaining slots if the inventory shrinks
-        for (int i = playerInventory.Count; i < _playerInventorySlots.Count; i++)
-        {
-            _playerInventorySlots[i].ClearSlot(); // Clear the slot if no item is assigned
+            // Once outside the range of player inventory, clear item slot
+            else
+                _playerInventorySlots[i].ClearSlot();
         }
 
         // Repeat for global inventory if you have global slots to display
-        for (int i = 0; i < globalInventory.Count; i++)
+        for (int i = 0; i < _globalInventorySlots.Count; i++)
         {
-            if (i < _globalInventorySlots.Count)
+            // While within the range of global inventory, update item slot
+            if (i < globalInventory.Count)
             {
                 _globalInventorySlots[i].InList(globalInventory[i]); // Use ItemToken
             }
-        }
-
-        // Optional: Clear remaining global slots
-        for (int i = globalInventory.Count; i < _globalInventorySlots.Count; i++)
-        {
-            _globalInventorySlots[i].ClearSlot();
+            // Once outside the range of player inventory, clear item slot
+            else
+                _globalInventorySlots[i].ClearSlot();
         }
     }
 
