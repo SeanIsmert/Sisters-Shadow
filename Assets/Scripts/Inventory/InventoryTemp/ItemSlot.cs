@@ -48,6 +48,7 @@ public class ItemSlot : MonoBehaviour
     {
         _itemImage.texture = null; // Clear the icon
         _itemName.text = "Empty";  // Clear the name
+        _currentItemToken = null;
     }
 
     public void InList(ItemToken itemToken)
