@@ -4,8 +4,9 @@ using TMPro;
 
 public class ItemSlot : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _itemName;
-    [SerializeField] private RawImage _itemImage;
+    [SerializeField] private TextMeshProUGUI _itemNameElement;      // The UI element for displaying the item's name.
+    [SerializeField] private RawImage _itemImageElement;            // The UI element for displaying the item's icon.
+    [SerializeField] private Sprite _defaultImage;                  // The image this slot will default to when there is no item.
 
     private TextMeshProUGUI _itemDescriptionPreview;
     private TextMeshProUGUI _itemNamePreview;
@@ -32,10 +33,10 @@ public class ItemSlot : MonoBehaviour
 
     private bool CheckSlot(ItemBase item)
     {
-        if (item == null || _itemName == null || _itemImage == null)
+        if (item == null || _itemNameElement == null || _itemImageElement == null)
         {
-            _itemImage.texture = null;
-            _itemName.text = "Empty";
+            _itemImageElement.texture = _defaultImage.texture;
+            _itemNameElement.text = "Empty";
 
             Debug.Log("Prefab may not be set up correctly, check inventory slot prefab");
             return false;
@@ -46,8 +47,8 @@ public class ItemSlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        _itemImage.texture = null; // Clear the icon
-        _itemName.text = "Empty";  // Clear the name
+        _itemImageElement.texture = _defaultImage.texture; // Clear the icon
+        _itemNameElement.text = "Empty";  // Clear the name
         _currentItemToken = null;
     }
 
@@ -58,8 +59,8 @@ public class ItemSlot : MonoBehaviour
 
         if (CheckSlot(baseItem))
         {
-            _itemImage.texture = baseItem.icon.texture;
-            _itemName.text = baseItem.itemName;
+            _itemImageElement.texture = baseItem.icon.texture;
+            _itemNameElement.text = baseItem.itemName;
         }
     }
 
