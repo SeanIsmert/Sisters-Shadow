@@ -32078,7 +32078,6 @@ GameObject:
   - component: {fileID: 1399736501}
   - component: {fileID: 1399736509}
   - component: {fileID: 1399736505}
-  - component: {fileID: 1399736510}
   - component: {fileID: 1399736507}
   - component: {fileID: 1399736508}
   - component: {fileID: 1399736512}
@@ -32368,35 +32367,6 @@ MonoBehaviour:
   zoom: 1
   offset: {x: 0, y: 0}
   rotation: 0
---- !u!114 &1399736510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399736499}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 902961c4c93ffdb498b0cd1090a552fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  halfToneShader: {fileID: 4800000, guid: c06404c516eeb0a42b3e9a7c6df7ad21, type: 3}
-  printCyan: 1
-  cyanDotSize: 1
-  cyanBias: 0
-  cyanOffset: {x: -8.42, y: 0}
-  printMagenta: 1
-  magentaDotSize: 1
-  magentaBias: 0
-  magentaOffset: {x: -14.7, y: 0}
-  printYellow: 1
-  yellowDotSize: 3
-  yellowBias: 0
-  yellowOffset: {x: 0, y: 0}
-  printBlack: 1
-  blackDotSize: 3
-  blackBias: -0.52
-  blackOffset: {x: 0, y: 0}
 --- !u!114 &1399736511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32427,11 +32397,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chromaticAberration: {fileID: 4800000, guid: 321bee864d6676d4dbf7189df5dd4837, type: 3}
   debugMask: 0
-  focalOffset: {x: 0.5, y: 0}
-  radius: {x: 1.15, y: 1}
+  focalOffset: {x: 0.5, y: 0.5}
+  radius: {x: 1, y: 1}
   hardness: 1
-  intensity: 1.94
-  channelOffsets: {x: 5.37, y: 0, z: 0}
+  intensity: 1.5
+  channelOffsets: {x: 5, y: 0, z: 0}
 --- !u!1 &1401445216
 GameObject:
   m_ObjectHideFlags: 0
