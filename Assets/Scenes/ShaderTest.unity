@@ -32272,11 +32272,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ditherShader: {fileID: 4800000, guid: 3def5a2e3407cae4eb321c0c456fe16a, type: 3}
-  spread: 0.085
-  redColorCount: 3
+  spread: 0.15
+  redColorCount: 14
   greenColorCount: 5
-  blueColorCount: 7
-  bayerLevel: 0
+  blueColorCount: 13
+  bayerLevel: 1
   downSamples: 2
   pointFilterDown: 1
 --- !u!114 &1399736506
@@ -32317,7 +32317,7 @@ MonoBehaviour:
   contrast: {x: 1, y: 1, z: 1}
   linearMidPoint: {x: 0.5, y: 0.5, z: 0.5}
   brightness: {x: 0, y: 0, z: 0}
-  colorFilter: {r: 0.24813095, g: 0.6096433, b: 0.6415094, a: 0}
+  colorFilter: {r: 0.5566038, g: 0.28617838, b: 0.350447, a: 0}
   saturation: {x: 1, y: 1, z: 1}
 --- !u!114 &1399736508
 MonoBehaviour:
