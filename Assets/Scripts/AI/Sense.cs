@@ -67,6 +67,7 @@ namespace AIController
             if (other.CompareTag("Player"))
             {
                 isInRange = true;
+                // UpdateManager.FastUpdate += SearchForPlayer;
             }
         }
 
@@ -97,6 +98,11 @@ namespace AIController
                 isVisible = false;
                 isInRange = false;
             }
+        }
+
+        private void SearchForPlayer()
+        {
+
         }
 
         /// <summary>
