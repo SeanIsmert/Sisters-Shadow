@@ -1,24 +1,41 @@
+using AIController;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class NewAgent : MonoBehaviour
 {
     [SerializeField] private float _fov;
 
     private NewSensor _sensor;
     private Collider _target;
+    private NavMeshAgent _navAgent;
 
-    public TempStates _curState;
+    public NavMeshAgent GetNavAgent {  get { return _navAgent; } }
+
+    public StateBase _curState;
 
     // Start is called before the first frame update
     void Start()
     {
-        _sensor = GetComponentInChildren<NewSensor>();
+        _sensor = GetComponentInChildren<NewSensor>();      // Find the child sensor component.
+        _navAgent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        UpdateManager.FastUpdate += StateUpdate;
+    }
+
+    private void OnDisable()
+    {
+        UpdateManager.FastUpdate -= SearchActions;
+        UpdateManager.FastUpdate -= StateUpdate;
+    }
+
+    private void StateUpdate(float tickSpeed)
+    {
+        _curState.OnStateUpdate();
     }
 
     /// <summary>
@@ -68,6 +85,11 @@ public class NewAgent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called by the sensor whenever a trigger event occurs, and takes in the sensor event type.
+    /// </summary>
+    /// <param name="triggerEvent"></param>
+    /// <param name="other"></param>
     public void OnSensorEvent(TriggerEventType triggerEvent, Collider other)
     {
         switch(triggerEvent)
@@ -87,15 +109,22 @@ public class NewAgent : MonoBehaviour
         }
     }
 
-    private void SearchActions()
+    /// <summary>
+    /// Sets current state to Searching and checks player visibility. If the player is visible, jumps to Chase.
+    /// </summary>
+    private void SearchActions(float tickSpeed)
     {
-        _curState = TempStates.Searching;
+        //_curState = TempStates.Searching;
 
-        if (IsColliderVisible(_target))
-            _curState = TempStates.Chase;
+        //if (IsColliderVisible(_target))
+        //    _curState = TempStates.Chase;
     }
-
-    private bool IsColliderVisible(Collider other)
+    /// <summary>
+    /// Checks agent field of view and line of sight to determine if the player is visible.
+    /// </summary>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public bool IsColliderVisible(Collider other)
     {
         Vector3 direction = other.transform.position - GetSensorPosition;
         float angle = Vector3.Angle(transform.forward, direction);
@@ -112,6 +141,9 @@ public class NewAgent : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Temporary states for agent state machine. Adjust to use StateBase later?
+    /// </summary>
     public enum TempStates
     {
         Idle,

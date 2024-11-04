@@ -22,9 +22,9 @@ public class UpdateManager : MonoBehaviour
     private float _fastTimer;
 
     //Actions for listeners to subscribe to
-    public static Action SlowUpdate;
-    public static Action MediumUpdate;
-    public static Action FastUpdate;
+    public static Action<float> SlowUpdate;
+    public static Action<float> MediumUpdate;
+    public static Action<float> FastUpdate;
 
     public static UpdateManager instance;
 
@@ -52,21 +52,21 @@ public class UpdateManager : MonoBehaviour
         if (_slowTimer >= _slowSpeed)
         {
             _slowTimer -= _slowSpeed;
-            SlowUpdate?.Invoke(); //Call listeners
+            SlowUpdate?.Invoke(_slowSpeed); //Call listeners
         }
 
         //Check on medium tick
         if (_mediumTimer >= _mediumSpeed)
         {
             _mediumTimer -= _mediumSpeed;
-            MediumUpdate?.Invoke(); //Call listeners
+            MediumUpdate?.Invoke(_mediumSpeed); //Call listeners
         }
 
         //Check on fast tick
         if (_fastTimer >= _fastSpeed)
         {
             _fastTimer -= _fastSpeed;
-            FastUpdate?.Invoke(); //Call listeners
+            FastUpdate?.Invoke(_fastSpeed); //Call listeners
         }
     }
 }

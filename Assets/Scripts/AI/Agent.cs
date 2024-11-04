@@ -70,7 +70,7 @@ namespace AIController
                     //Add it into our states
                     _states.Add(foundStates[i].GetStateType, foundStates[i]);
                     //Make sure the state is set up with the agent as its owner
-                    foundStates[i].InitState(this);
+                    //foundStates[i].InitState(this);
                 }
             }
             ChangeState(_curStateType);
