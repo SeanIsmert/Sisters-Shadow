@@ -1,19 +1,18 @@
 using AIController;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace AIController
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public class NewAgent : MonoBehaviour
+    [RequireComponent(typeof(NavMeshAgent), typeof(EntityHealth), typeof(Animator))]
+    public class Agent : MonoBehaviour
     {
-        private Dictionary<NewStateType, NewStateBase> _states = new Dictionary<NewStateType, NewStateBase>();      //Stores all states, and a key to quickly find them.
+        private Dictionary<StateType, StateBase> _states = new Dictionary<StateType, StateBase>();      //Stores all states, and a key to quickly find them.
         [Header("States")]
         [Tooltip("This agent's currently active state type.")]
-        public NewStateType _curStateType;
-        private NewStateBase _curState;
+        public StateType _curStateType;
+        private StateBase _curState;
 
         [Header("Values")]
         [Tooltip("This agent's field of view.")]
@@ -21,21 +20,32 @@ namespace AIController
 
         public NavMeshAgent GetNavAgent { get { return _navAgent; } }
 
-        private NewSensor _sensor;
+        private Sensor _sensor;
         private Collider _target;
         private NavMeshAgent _navAgent;
+        private EntityHealth _health;
+        private Animator _animator;
 
         public Collider GetTarget { get { return _target; } }
+
+        [SerializeField] private string guid;
+        [ContextMenu("Generate Guid")]
+        private void GenerateGuid()
+        {
+            guid = System.Guid.NewGuid().ToString();
+        }
 
         // Start is called before the first frame update
         void Start()
         {
-            _sensor = GetComponentInChildren<NewSensor>();      // Find the child sensor component.
+            _sensor = GetComponentInChildren<Sensor>();      // Find the child sensor component.
             _navAgent = GetComponent<NavMeshAgent>();           // Find NavMeshAgent.
+            _health = GetComponent<EntityHealth>();
+            _animator = GetComponent<Animator>();
 
-            NewStateBase[] foundStates = GetComponents<NewStateBase>();     // Collect all states on this object.
+            StateBase[] foundStates = GetComponents<StateBase>();     // Collect all states on this object.
 
-            foreach (NewStateBase state in foundStates)                     // Look through the states found.
+            foreach (StateBase state in foundStates)                     // Look through the states found.
             {
                 if (_states.ContainsKey(state.GetStateType) == false)        // Make sure we don't have duplicate states.
                 {
@@ -44,8 +54,8 @@ namespace AIController
                 }
             }
 
-            if (_states.ContainsKey(NewStateType.Patrol))
-                ChangeState(NewStateType.Patrol);
+            if (_states.ContainsKey(StateType.Patrol))
+                ChangeState(StateType.Patrol);
         }
 
         private void OnEnable()
@@ -71,7 +81,7 @@ namespace AIController
         /// Takes in a State Type and transitions into the new state.
         /// </summary>
         /// <param name="newState"></param>
-        private void ChangeState(NewStateType newState)
+        public void ChangeState(StateType newState)
         {
             if (!_states.ContainsKey(newState))        // Ensure we have the new state registered.
                 return;
@@ -83,6 +93,26 @@ namespace AIController
 
                 _curStateType = newState;           // Set the new state type.
                 _curState = _states[newState];      // Set the new state to current.
+                _curState.OnStateEnter();           // Perform the state's enter actions.
+            }
+        }
+
+        /// <summary>
+        /// Takes in an int that corresponds to a StateType and transitions into the new state.
+        /// </summary>
+        /// <param name="newState"></param>
+        public void ChangeState(int newState)
+        {
+            if (!_states.ContainsKey((StateType)newState))        // Ensure we have the new state registered.
+                return;
+
+            if (_curState == null || _curState.GetStateType != (StateType)newState)
+            {
+                if (_curState != null)              // Exit the current state.
+                    _curState.OnStateExit();
+
+                _curStateType = (StateType)newState;           // Set the new state type.
+                _curState = _states[(StateType)newState];      // Set the new state to current.
                 _curState.OnStateEnter();           // Perform the state's enter actions.
             }
         }
@@ -190,5 +220,40 @@ namespace AIController
             Vector3 rotatedForward = Quaternion.Euler(0f, -_fov * 0.5f, 0f) * transform.forward;
             UnityEditor.Handles.DrawSolidArc(GetSensorPosition, Vector3.up, rotatedForward, _fov, GetSensorRadius);
         }
+
+        public void LoadData(GameData data)
+        {
+            if (data.AIStates.TryGetValue(guid, out AIState savedState))
+            {
+                transform.position = savedState.position;
+                _curStateType = savedState.curState;
+                _health.SetEntityHealth = savedState.health;
+
+            }
+        }
+
+        public void SaveData(GameData data)
+        {
+            var aiState = new AIState(transform.position, _curStateType, _health.GetEntityHealth);
+            data.AIStates[guid] = aiState;
+        }
+    }
+}
+
+public class AIState
+{
+    //Position
+    //Current State
+    //Health
+
+    public Vector3 position;
+    public StateType curState;
+    public int health;
+
+    public AIState(Vector3 pos, StateType state, int heal)
+    {
+        position = pos;
+        curState = state;
+        health = heal;
     }
 }

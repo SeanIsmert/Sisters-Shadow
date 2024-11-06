@@ -1,9 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace AIController
 {
-    public class NewPatrolState : NewStateBase
+    public class PatrolState : StateBase
     {
         [Header("Behavior")]
         [Tooltip("Determines whether the agent will follow a predetermined path, or wander within a given area.")]
@@ -21,7 +20,7 @@ namespace AIController
         [Tooltip("The Collider that this agent will use to find random wander points.")]
         [SerializeField] private Collider _wanderArea;
 
-        public override NewStateType GetStateType => NewStateType.Patrol;
+        public override StateType GetStateType => StateType.Patrol;
 
         public override void OnStateEnter()
         {
@@ -61,10 +60,10 @@ namespace AIController
             }
         }
 
-        public override NewStateType OnStateUpdate(float tickSpeed)
+        public override StateType OnStateUpdate(float tickSpeed)
         {
             if (_agent.IsColliderVisible(_agent.GetTarget))     // If the player is in range and visible, chase!
-                return NewStateType.Chase;
+                return StateType.Chase;
 
             if (_agent.GetNavAgent.remainingDistance <= _agent.GetNavAgent.stoppingDistance)        // Check if the agent has reached its destination.
             {

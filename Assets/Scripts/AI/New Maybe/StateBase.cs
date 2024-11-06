@@ -9,22 +9,21 @@ namespace AIController
     /// Written by: Sean
     /// Modified by:
     /// </summary>
-    public abstract class NewStateBase : MonoBehaviour
+    public abstract class StateBase : MonoBehaviour
     {
         #region Variables
-        protected NewAgent _agent;
-        protected Sense _sense;
+        protected Agent _agent;
         protected Animator _animator;
 
         protected float _currentSpeed;
         protected float _targetSpeed;
 
-        public abstract NewStateType GetStateType { get; }
+        public abstract StateType GetStateType { get; }
         #endregion
 
         #region Initialize
         //Set up the state and give it an owner
-        public void InitState(NewAgent agent)
+        public void InitState(Agent agent)
         {
             _agent = agent;
             _animator = GetComponent<Animator>();
@@ -47,7 +46,7 @@ namespace AIController
         /// Is called every frame while in this state || 
         /// Returns a state type to go to the next state
         /// </summary>
-        public abstract NewStateType OnStateUpdate(float tickSpeed);
+        public abstract StateType OnStateUpdate(float tickSpeed);
 
         public abstract Vector3 MovementDestination();
         #endregion
@@ -55,7 +54,7 @@ namespace AIController
 
     #region States
     //All of the states in the game
-    public enum NewStateType
+    public enum StateType
     {
         Idle, Chase, Patrol, Pursue, Attack, Dead
     }

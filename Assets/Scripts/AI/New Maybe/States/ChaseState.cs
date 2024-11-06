@@ -1,22 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AIController
 {
-    public class NewChaseState : NewStateBase
+    public class ChaseState : StateBase
     {
         [SerializeField] private float _waitTime;
         private float _waitTimer;
 
-        public override NewStateType GetStateType => NewStateType.Chase;
+        public override StateType GetStateType => StateType.Chase;
 
         public override void OnStateEnter()
         {
             _waitTimer = _waitTime;     // Initialize timer.
         }
 
-        public override NewStateType OnStateUpdate(float tickSpeed)
+        public override StateType OnStateUpdate(float tickSpeed)
         {
             if (_agent.IsColliderVisible(_agent.GetTarget))     // If the player is visible, go to their position.
             {
@@ -24,7 +22,7 @@ namespace AIController
 
                 if(Vector3.Distance(transform.position, _agent.GetTarget.transform.position) <= _agent.GetNavAgent.stoppingDistance + 1f)     // If the player is visible and within range, go to attack.
                 {
-                    return NewStateType.Attack;
+                    return StateType.Attack;
                 }
             }
             else if (_agent.GetNavAgent.remainingDistance <= _agent.GetNavAgent.stoppingDistance)       // If the player is not visible and we reached their last known location, return to patrolling.
@@ -32,7 +30,7 @@ namespace AIController
                 if(_waitTimer > 0)              // Check wait timer before returning to patrol.
                     _waitTimer -= tickSpeed;
                 else
-                    return NewStateType.Patrol;
+                    return StateType.Patrol;
             }
 
             return GetStateType;

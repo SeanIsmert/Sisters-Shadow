@@ -3,9 +3,9 @@ using UnityEngine;
 namespace AIController
 {
     [RequireComponent(typeof(SphereCollider))]
-    public class NewSensor : MonoBehaviour
+    public class Sensor : MonoBehaviour
     {
-        private NewAgent _parentAgent;      // Reference to the parent's Agent component.
+        private Agent _parentAgent;      // Reference to the parent's Agent component.
         private SphereCollider _sensor;     // Reference to this object's sphere collider.
 
         /// <summary>
@@ -28,9 +28,9 @@ namespace AIController
         {
             GetSensorCollider.isTrigger = true;                         // Make sure collider is trigger.
 
-            if (GetComponentInParent<NewAgent>() != null)
+            if (GetComponentInParent<Agent>() != null)
             {
-                _parentAgent = GetComponentInParent<NewAgent>();        // Set Agent reference.
+                _parentAgent = GetComponentInParent<Agent>();        // Set Agent reference.
             }
             else
                 Debug.LogError("Sensor requires a parent object with a NewAgent component!");
@@ -52,12 +52,10 @@ namespace AIController
         }
     }
 
-    /*
     public enum TriggerEventType
     {
         Enter,
         Stay,
         Exit
     }
-    */
 }

@@ -1,19 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace AIController
 {
-    public class NewAttackState : NewStateBase
+    public class AttackState : StateBase
     {
         [SerializeField] private int _damageAmount;
 
-        public override NewStateType GetStateType => NewStateType.Attack;
+        public override StateType GetStateType => StateType.Attack;
 
-        public override NewStateType OnStateUpdate(float tickSpeed)
+        public override StateType OnStateUpdate(float tickSpeed)
         {
             _agent.GetTarget.gameObject.GetComponent<EntityHealth>()?.ValueChange(_damageAmount);
-            return NewStateType.Chase;
+            return StateType.Chase;
         }
 
         public override Vector3 MovementDestination()
