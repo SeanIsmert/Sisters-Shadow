@@ -22,7 +22,7 @@ public class EntityHealth : MonoBehaviour, IDamageable
 
     public void ValueChange(int amount)
     {
-        _curHealth -= amount;                                // Subtract damage amount from current health.
+        _curHealth = (int)Mathf.Clamp(_curHealth -= amount, 0, _maxHealth);     // Subtract damage amount from current health.
 
         _onHealthChange?.Invoke(_curHealth/_maxHealth);      // Send normalized value through the onHealthChange event.
 
