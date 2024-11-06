@@ -10,7 +10,7 @@ namespace AIController
 
         public override NewStateType GetStateType => NewStateType.Attack;
 
-        public override NewStateType OnStateUpdate()
+        public override NewStateType OnStateUpdate(float tickSpeed)
         {
             _agent.GetTarget.gameObject.GetComponent<EntityHealth>()?.ValueChange(_damageAmount);
             return NewStateType.Chase;

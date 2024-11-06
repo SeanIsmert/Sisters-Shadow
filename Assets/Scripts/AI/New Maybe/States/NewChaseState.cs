@@ -6,9 +6,17 @@ namespace AIController
 {
     public class NewChaseState : NewStateBase
     {
+        [SerializeField] private float _waitTime;
+        private float _waitTimer;
+
         public override NewStateType GetStateType => NewStateType.Chase;
 
-        public override NewStateType OnStateUpdate()
+        public override void OnStateEnter()
+        {
+            _waitTimer = _waitTime;     // Initialize timer.
+        }
+
+        public override NewStateType OnStateUpdate(float tickSpeed)
         {
             if (_agent.IsColliderVisible(_agent.GetTarget))     // If the player is visible, go to their position.
             {
@@ -21,7 +29,10 @@ namespace AIController
             }
             else if (_agent.GetNavAgent.remainingDistance <= _agent.GetNavAgent.stoppingDistance)       // If the player is not visible and we reached their last known location, return to patrolling.
             {
-                return NewStateType.Patrol;
+                if(_waitTimer > 0)              // Check wait timer before returning to patrol.
+                    _waitTimer -= tickSpeed;
+                else
+                    return NewStateType.Patrol;
             }
 
             return GetStateType;

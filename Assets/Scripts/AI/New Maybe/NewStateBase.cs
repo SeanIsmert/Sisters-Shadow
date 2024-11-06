@@ -47,7 +47,7 @@ namespace AIController
         /// Is called every frame while in this state || 
         /// Returns a state type to go to the next state
         /// </summary>
-        public abstract NewStateType OnStateUpdate();
+        public abstract NewStateType OnStateUpdate(float tickSpeed);
 
         public abstract Vector3 MovementDestination();
         #endregion

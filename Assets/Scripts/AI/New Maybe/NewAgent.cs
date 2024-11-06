@@ -64,7 +64,7 @@ namespace AIController
         /// <param name="tickSpeed"></param>
         private void StateUpdate(float tickSpeed)
         {
-            ChangeState(_curState.OnStateUpdate());
+            ChangeState(_curState.OnStateUpdate(tickSpeed));
         }
 
         /// <summary>
