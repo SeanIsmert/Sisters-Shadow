@@ -13,6 +13,10 @@ public class CamSwitch : MonoBehaviour
     [Header("Debug Settings")]
     public bool ConstUpdate = false;
 
+    private void Start()
+    {
+
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -42,7 +46,7 @@ public class CamSwitch : MonoBehaviour
         dither.greenColorCount = sv.greenColorCount;
         dither.blueColorCount = sv.blueColorCount;
         dither.bayerLevel = sv.bayerLevel;
-        dither.pointFilterDown = sv.pointFilterDown;
+        //dither.pointFilterDown = sv.pointFilterDown;
 
         colorCorrect.exposure = sv.exposure;
         colorCorrect.temperature = sv.temperature;
