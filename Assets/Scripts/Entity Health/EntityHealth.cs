@@ -11,18 +11,19 @@ public class EntityHealth : MonoBehaviour, IDamageable
     [SerializeField] private float _maxHealth;                         // This object's maximum health value.
 
     public int GetEntityHealth {  get { return _curHealth; } }
+    public int SetEntityHealth { set { _curHealth = value; } }
 
     [SerializeField] private UnityEvent<float> _onHealthChange;        // Event called when this object takes damage.
     [SerializeField] private UnityEvent _onDeathActions;               // Event called when this object's health reaches zero.
 
     private void Awake()
     {
-        _curHealth = (int)_maxHealth;        // Set max health on awake.
+        //_curHealth = (int)_maxHealth;        // Set max health on awake.
     }
 
     public void ValueChange(int amount)
     {
-        _curHealth -= amount;                                // Subtract damage amount from current health.
+        _curHealth = (int)Mathf.Clamp(_curHealth -= amount, 0, _maxHealth);     // Subtract damage amount from current health.
 
         _onHealthChange?.Invoke(_curHealth/_maxHealth);      // Send normalized value through the onHealthChange event.
 

@@ -13,7 +13,6 @@ namespace AIController
     {
         #region Variables
         protected Agent _agent;
-        protected Sense _sense;
         protected Animator _animator;
 
         protected float _currentSpeed;
@@ -28,7 +27,7 @@ namespace AIController
         {
             _agent = agent;
             _animator = GetComponent<Animator>();
-            _sense = agent.GetComponent<Sense>();
+            //_sense = agent.GetComponent<Sense>();
         }
         #endregion
 
@@ -47,7 +46,9 @@ namespace AIController
         /// Is called every frame while in this state || 
         /// Returns a state type to go to the next state
         /// </summary>
-        public abstract StateType OnStateUpdate();
+        public abstract StateType OnStateUpdate(float tickSpeed);
+
+        public abstract Vector3 MovementDestination();
         #endregion
     }
 
