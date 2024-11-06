@@ -9,7 +9,7 @@ public class InteractableItem : MonoBehaviour, IInteract
     {
         if (InventoryManager.Instance.AddItem(_item))
         {
-            InteractableManager.instance.RemoveTarget(this);
+            InteractableManager.Instance.RemoveTarget(this);
             Debug.Log("picked up " + _item.itemName);
             Destroy(this.gameObject);
         }

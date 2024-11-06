@@ -32,7 +32,7 @@ public class PlayerMovementHandler : MonoBehaviour
     public MoveStates curMoveState;
 
     private CharacterController _characterController;
-    private PlayerAttack _playerAttack;
+    private PlayerAttackHandler _playerAttack;
     private Animator _animator;
     private Vector2 _currentVelocity = Vector2.zero;
     private Vector2 _controllerInput = Vector2.zero;
@@ -42,7 +42,7 @@ public class PlayerMovementHandler : MonoBehaviour
     // Gather references to required components.
     void Awake()
     {
-        _playerAttack = GetComponent<PlayerAttack>();
+        _playerAttack = GetComponent<PlayerAttackHandler>();
         _animator = GetComponent<Animator>();
     }
 
@@ -51,7 +51,10 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         CheckMovementState();
         CharacterMovement(PlayerInputManager.input.Gameplay.Locomotion.ReadValue<Vector2>());
-        
+
+        _playerAttack.WeaponType();
+        if (_animator.GetInteger("WeaponType") != _playerAttack.GetWeaponType())
+            _animator.SetInteger("WeaponType", _playerAttack.GetWeaponType()); // temp
     }
 
     /// <summary>
@@ -213,12 +216,12 @@ public class PlayerMovementHandler : MonoBehaviour
         if (check)
         {
             _isAiming = true;
-            _animator.SetBool("Aiming", true);
+            _animator.SetBool("Aiming", _isAiming);
         }
         else
         {
             _isAiming = false;
-            _animator.SetBool("Aiming", false);
+            _animator.SetBool("Aiming", _isAiming);
         }
     }
 
@@ -227,10 +230,30 @@ public class PlayerMovementHandler : MonoBehaviour
     /// </summary>
     public void Shoot()
     {
-        if (_animator.GetCurrentAnimatorStateInfo(2).IsName("Pistol Shoot"))
+        if (_animator.GetBool("Shooting") || curMoveState != MoveStates.Aiming)
             return;
-        if (_playerAttack.FireWeapon())
-            _animator.Play("Pistol Shoot");
+
+        switch (_playerAttack.GetWeaponType())
+        {
+            case 0: // Pistol
+                if (_playerAttack.AmmoCheck())
+                {
+                    _playerAttack.Shoot();
+                    _animator.Play("Pistol Shoot");
+                }
+                break;
+
+            case 1: // Shotgun
+                if (_playerAttack.AmmoCheck())
+                {
+                    _playerAttack.Shoot();
+                    _animator.Play("Shotgun Shoot");
+                }
+                break;
+
+            default:
+                break;
+        }
 
         return;
     }
