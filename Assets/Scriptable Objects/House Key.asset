@@ -20,10 +20,11 @@ MonoBehaviour:
   consumable: 0
   stackable: 0
   keyItem: 1
-  weapon: 0
+  equipable: 0
   randomRange: 0
   maxStack: 0
   amount: 0
   amountRange: {x: 0, y: 0}
   singleUse: 0
   keyID: House Key
+  itemID: 

@@ -8,7 +8,7 @@ public class AmmoCheck : ConditionalNodeBase
     public int ammoToCheck;
     public override bool Condition()
     {
-        uint ammoTotal = 0;
+        int ammoTotal = 0;
         foreach (var token in InventoryManager.Instance.GetInventoryItems()) // Iterate through each item in the player's inventory
         {
             if (!token.GetBaseItem.stackable) // skip items that arn't stackable items
