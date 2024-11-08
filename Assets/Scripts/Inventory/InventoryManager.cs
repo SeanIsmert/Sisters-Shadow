@@ -72,14 +72,14 @@ public class InventoryManager : MonoSinglton<InventoryManager>
 
                 if (excessAmount > 0) // We exceed max stack
                 {
-                    curToken.SetItemAmount = curToken.GetBaseItem.maxStack; // Fill up our existing token
+                    curToken.SetItemAmount = (int)curToken.GetBaseItem.maxStack; // Fill up our existing token
 
-                    ItemToken excessToken = new ItemToken(item, (uint)excessAmount); // create a new token
+                    ItemToken excessToken = new ItemToken(item, (int)excessAmount); // create a new token
                     _playerItems.Add(excessToken); // send it to our inventory
                 }
                 else // we can add to it
                 {
-                    curToken.SetItemAmount = curToken.GetItemAmount + (uint)MathF.Abs(excessAmount); // Increment the total amount
+                    curToken.SetItemAmount = (int)curToken.GetItemAmount + (int)MathF.Abs(excessAmount); // Increment the total amount
                 }
                 // Return early since we've successfully handled the item
                 InventoryChanged?.Invoke(); // Notify listeners that the inventory has changed

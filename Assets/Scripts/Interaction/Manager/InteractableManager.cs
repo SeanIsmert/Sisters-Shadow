@@ -8,25 +8,10 @@ using UnityEngine;
 /// Written by: Sean
 /// Modified by: 
 /// </summary>
-public class InteractableManager : MonoBehaviour
+public class InteractableManager : MonoSinglton<InteractableManager>
 {
     [SerializeField] private IInteract _currentTarget;
     [SerializeField] private List<IInteract> _targets = new List<IInteract>();
-
-    public static InteractableManager instance;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this);
-        }
-        else if (instance != null)
-        {
-            Destroy(this);
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
