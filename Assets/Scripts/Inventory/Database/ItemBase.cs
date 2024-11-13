@@ -18,6 +18,7 @@ public class ItemBase : DatabaseElement
     public bool keyItem;
     public bool equipable;
 
+    public bool weapon;
     public bool randomRange;
     public uint maxStack;
     public int amount;
@@ -51,7 +52,7 @@ public class ItemToken
     private int _index;
     private int _amount;
     private string _key;
-    private bool _equiped = true;
+    private bool _equiped = false;
     // ------------------------------------------------------------------------------------------------------------------- // Getters
     public ItemBase GetBaseItem { get { return DatabaseContainer.Instance.itemDatabase.elements[_index] as ItemBase; } }
     public string GetItemDescription { get { return GetBaseItem.description; } }
@@ -102,7 +103,7 @@ public class ItemEditor : Editor
 {
     private ItemBase _curItem;
     private SerializedProperty _itemName, _description, _icon, _consumable, _stackable, _keyItem, _equipable;
-    private SerializedProperty _randomRange, _maxStack, _amount, _amountRange, _keyID, _singleUse, _itemID;
+    private SerializedProperty _weapon, _randomRange, _maxStack, _amount, _amountRange, _keyID, _singleUse, _itemID;
 
     private void OnEnable()
     {
@@ -116,6 +117,7 @@ public class ItemEditor : Editor
         _stackable = serializedObject.FindProperty("stackable");
         _keyItem = serializedObject.FindProperty("keyItem");
         _equipable = serializedObject.FindProperty("equipable");
+        _weapon = serializedObject.FindProperty("weapon");
         _randomRange = serializedObject.FindProperty("randomRange");
         _maxStack = serializedObject.FindProperty("maxStack");
         _amount = serializedObject.FindProperty("amount");
@@ -132,6 +134,7 @@ public class ItemEditor : Editor
         // General fields
         EditorGUILayout.PropertyField(_itemName);
         EditorGUILayout.PropertyField(_description);
+        EditorGUILayout.PropertyField(_itemID);
         EditorGUILayout.PropertyField(_icon);
 
         EditorGUILayout.Space();
@@ -152,9 +155,9 @@ public class ItemEditor : Editor
         EditorGUILayout.LabelField("Subsettings", EditorStyles.boldLabel);
 
         // Show itemID if either consumable or equipable
-        if (_equipable.boolValue || _consumable.boolValue)
+        if (_equipable.boolValue)
         {
-            EditorGUILayout.PropertyField(_itemID);
+            EditorGUILayout.PropertyField(_weapon);
             EditorGUILayout.Space();
             EditorGUILayout.Space();
         }
