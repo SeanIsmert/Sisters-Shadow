@@ -12,13 +12,14 @@ public class InventoryManager : MonoSinglton<InventoryManager>
 
     [Header("Global Inventory Settings")]
     [SerializeField] private List<ItemToken> _globalItems;
-
+    // ----------------------------------------------------------------------------------------- // Getters
     public int GetInventorySize() { return _inventoryMax; }
     public List<ItemToken> GetInventoryItems() { return _playerItems; }
     public List<ItemToken> GetGlobalItems() { return _globalItems; }
-
+    // ----------------------------------------------------------------------------------------- // Events
     public static event Action InventoryChanged;
-    public enum ItemType { Player, Global, None }
+    public static event Action ItemEquiped;
+    protected enum ItemType { Player, Global, None }
 
     void Start()
     {
@@ -35,7 +36,7 @@ public class InventoryManager : MonoSinglton<InventoryManager>
     }
 
     /// <summary>
-    /// Adds items specifically to the Player Inventory from gameplay
+    /// Adds items specifically to the Player Inventory from gameplay NEEDS REFACTOR
     /// </summary>
     public bool AddItem(ItemBase item)
     {
@@ -169,6 +170,7 @@ public class InventoryManager : MonoSinglton<InventoryManager>
 
     //Save and load implement here
     /* Inventory sizemax
+     * Global sizemax
      * list player
      * list global
     */

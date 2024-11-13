@@ -31,18 +31,21 @@ public class PlayerMovementHandler : MonoBehaviour
     [Header("Movement State")]
     public MoveStates curMoveState;
 
-    private CharacterController _characterController;
-    private PlayerAttackHandler _playerAttack;
+    private PlayerEquipHandler _playerAttack;
     private Animator _animator;
+
     private Vector2 _currentVelocity = Vector2.zero;
     private Vector2 _controllerInput = Vector2.zero;
+    private int _weaponIndex;
     private bool _isSprinting;
     private bool _isAiming;
+
+    private Event WeaponChange;
 
     // Gather references to required components.
     void Awake()
     {
-        _playerAttack = GetComponent<PlayerAttackHandler>();
+        _playerAttack = GetComponent<PlayerEquipHandler>();
         _animator = GetComponent<Animator>();
     }
 
@@ -162,21 +165,6 @@ public class PlayerMovementHandler : MonoBehaviour
         }
 
         return;
-    }
-
-    private bool GroundCheck(out RaycastHit hit)
-    {
-        //if (GameManager.instance.state == GameState.Animation)
-        //    return null;
-
-        Vector3 origin = transform.position + new Vector3(0, 0.2f, 0);
-        //float radius = 0.5f;
-        float maxDistance = 2f; 
-
-        return Physics.Raycast(origin, Vector3.down, out hit, maxDistance);
-
-        //Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
-        //return Physics.Raycast(ray, 5);
     }
 
     /// <summary>
