@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b89d82fa527483428ccf1de21a105c6, type: 3}
   m_Name: New Shader Values
   m_EditorClassIdentifier: 
-  spread: 0.091
+  spread: 0.087
   redColorCount: 6
   greenColorCount: 5
-  blueColorCount: 8
+  blueColorCount: 6
   bayerLevel: 1
-  exposure: {x: 1, y: 1, z: 1}
-  temperature: -50
-  tint: 0
+  exposure: {x: 1.52, y: 0.73, z: 1.24}
+  temperature: -17
+  tint: -29
   contrast: {x: 1, y: 1, z: 1}
   linearMidPoint: {x: 0.5, y: 0.5, z: 0.5}
   brightness: {x: 0, y: 0, z: 0}
-  colorFilter: {r: 0.22327042, g: 0.22327042, b: 0.13550687, a: 0}
+  colorFilter: {r: 0.46540874, g: 0.13318291, b: 0.1850932, a: 0}
   saturation: {x: 1, y: 1, z: 1}
