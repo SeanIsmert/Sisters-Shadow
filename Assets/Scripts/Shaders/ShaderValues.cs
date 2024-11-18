@@ -17,12 +17,12 @@ public class ShaderValues : ScriptableObject
 
     [Range(0, 2)]
     public int bayerLevel = 0;
-
+    /*
     [Range(0, 8)]
     public int ditherDownSamples = 0;
 
     public bool pointFilterDown = false;
-
+    */
     [Header("Color Correction settings")]
     public Vector3 exposure = new Vector3(1.0f, 1.0f, 1.0f);
 
@@ -39,7 +39,7 @@ public class ShaderValues : ScriptableObject
     public Color colorFilter;
 
     public Vector3 saturation = new Vector3(1.0f, 1.0f, 1.0f);
-
+    /*
     [Header("Chromatic Abberation settings")]
     public bool debugMask = false;
 
@@ -71,5 +71,5 @@ public class ShaderValues : ScriptableObject
 
     [Range(0.0f, 10.0f)]
     public float bloomIntensity = 1;
-
+    */
 }
