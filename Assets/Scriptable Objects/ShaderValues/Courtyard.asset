@@ -17,8 +17,8 @@ MonoBehaviour:
   greenColorCount: 12
   blueColorCount: 6
   bayerLevel: 0
-  exposure: {x: 2, y: 1, z: 1}
-  temperature: -27
+  exposure: {x: 1, y: 1, z: 1}
+  temperature: -11
   tint: 0
   contrast: {x: 1, y: 1, z: 1}
   linearMidPoint: {x: 0.5, y: 0.5, z: 0.5}
