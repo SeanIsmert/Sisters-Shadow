@@ -5,13 +5,13 @@ using TMPro;
 public class ItemSlot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _itemNameElement;      // The UI element for displaying the item's name.
-    [SerializeField] private RawImage _itemImageElement;            // The UI element for displaying the item's icon.
+    [SerializeField] private Image _itemImageElement;            // The UI element for displaying the item's icon.
     [SerializeField] private Sprite _defaultImage;                  // The image this slot will default to when there is no item.
 
     private TextMeshProUGUI _itemDescriptionPreview;
     private TextMeshProUGUI _itemNamePreview;
     private TextMeshProUGUI _itemAmountPreview;
-    private RawImage _itemImagePreview;
+    private Image _itemImagePreview;
 
     private ItemToken _currentItemToken;
 
@@ -25,6 +25,8 @@ public class ItemSlot : MonoBehaviour
 
     public void SwapItem()
     {
+        Debug.Log("Swapping item!");
+
         if (_currentItemToken == null || GameManager.Instance.state == GameState.InventoryPlayer)
             return;
 
@@ -35,7 +37,7 @@ public class ItemSlot : MonoBehaviour
     {
         if (item == null || _itemNameElement == null || _itemImageElement == null)
         {
-            _itemImageElement.texture = _defaultImage.texture;
+            _itemImageElement.sprite = _defaultImage;
             _itemNameElement.text = "Empty";
 
             Debug.Log("Prefab may not be set up correctly, check inventory slot prefab");
@@ -47,7 +49,7 @@ public class ItemSlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        _itemImageElement.texture = _defaultImage.texture; // Clear the icon
+        _itemImageElement.sprite = _defaultImage; // Clear the icon
         _itemNameElement.text = "Empty";  // Clear the name
         _currentItemToken = null;
     }
@@ -59,7 +61,7 @@ public class ItemSlot : MonoBehaviour
 
         if (CheckSlot(baseItem))
         {
-            _itemImageElement.texture = baseItem.icon.texture;
+            _itemImageElement.sprite = baseItem.icon;
             _itemNameElement.text = baseItem.itemName;
         }
     }
@@ -67,12 +69,14 @@ public class ItemSlot : MonoBehaviour
     // Update the preview panel with detailed info
     public void InPreview()
     {
+        Debug.Log("Preview update!");
+
         if (_currentItemToken == null)
             return;     
 
         _itemDescriptionPreview.text = _currentItemToken.GetItemDescription;
         _itemNamePreview.text = _currentItemToken.GetItemName;
-        _itemImagePreview.texture = _currentItemToken.GetItemImage.texture;
+        _itemImagePreview.sprite = _currentItemToken.GetItemImage;
         _itemAmountPreview.text = _currentItemToken.GetItemAmount.ToString();
         if (!_currentItemToken.GetBaseItem.stackable)
         {
