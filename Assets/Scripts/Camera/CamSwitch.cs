@@ -21,6 +21,7 @@ public class CamSwitch : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //Debug.Log("player");
             vm.Priority = 10;
             updateCamShaders();
         }

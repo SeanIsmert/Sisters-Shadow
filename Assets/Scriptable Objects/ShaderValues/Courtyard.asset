@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b89d82fa527483428ccf1de21a105c6, type: 3}
   m_Name: Courtyard
   m_EditorClassIdentifier: 
-  spread: 0.666
-  redColorCount: 12
+  spread: 0.361
+  redColorCount: 6
   greenColorCount: 12
-  blueColorCount: 2
+  blueColorCount: 6
   bayerLevel: 0
-  exposure: {x: 1, y: 1, z: 1}
-  temperature: 100
+  exposure: {x: 2, y: 1, z: 1}
+  temperature: -27
   tint: 0
   contrast: {x: 1, y: 1, z: 1}
   linearMidPoint: {x: 0.5, y: 0.5, z: 0.5}
   brightness: {x: 0, y: 0, z: 0}
-  colorFilter: {r: 0.3962264, g: 0.32520467, b: 0.32520467, a: 0}
+  colorFilter: {r: 0.2225583, g: 0.7610062, b: 0.36417523, a: 0}
   saturation: {x: 1, y: 1, z: 1}
