@@ -25,7 +25,7 @@ public class UIInventory : MonoSinglton<UIInventory>
     [SerializeField] private TextMeshProUGUI _itemDescription;
     [SerializeField] private TextMeshProUGUI _itemName;
     [SerializeField] private TextMeshProUGUI _itemAmount;
-    [SerializeField] private RawImage _itemImage;
+    [SerializeField] private Image _itemImage;
     // ---------------------------------------------------------------------------------- //
     public GameObject GetInventoryPanel() { return _inventoryPanelPlayer; }
     public GameObject GetInventorySlot() { return _inventorySlotPlayer; }
@@ -33,7 +33,7 @@ public class UIInventory : MonoSinglton<UIInventory>
     public TextMeshProUGUI GetItemDescription() { return _itemDescription; }
     public TextMeshProUGUI GetItemName() { return _itemName; }
     public TextMeshProUGUI GetItemAmount() { return _itemAmount; }
-    public RawImage GetItemImage() { return _itemImage; }
+    public Image GetItemImage() { return _itemImage; }
 
     [SerializeField, HideInInspector] private List<ItemSlot> _playerInventorySlots;
     [SerializeField, HideInInspector] private List<ItemSlot> _globalInventorySlots;
