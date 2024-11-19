@@ -15,7 +15,7 @@ public class CamSwitch : MonoBehaviour
 
     private void Start()
     {
-
+        vm.Priority = 0;
     }
     private void OnTriggerEnter(Collider other)
     {
