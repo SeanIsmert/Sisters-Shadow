@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Inventory/InventoryTest3.unity
-    guid: 07f97d722fec9504ab2b3b80175dc435
+    path: Assets/Scenes/Sister's Shadow.unity
+    guid: c00216123474e7442b3f72e6db669967
   m_configObjects: {}
