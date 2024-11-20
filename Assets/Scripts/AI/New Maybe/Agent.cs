@@ -211,6 +211,7 @@ namespace AIController
             return false;       // If any checks fail, the target collider IS NOT visible.
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_sensor == null)
@@ -220,6 +221,7 @@ namespace AIController
             Vector3 rotatedForward = Quaternion.Euler(0f, -_fov * 0.5f, 0f) * transform.forward;
             UnityEditor.Handles.DrawSolidArc(GetSensorPosition, Vector3.up, rotatedForward, _fov, GetSensorRadius);
         }
+#endif
 
         public void LoadData(GameData data)
         {
