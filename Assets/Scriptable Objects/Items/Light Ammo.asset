@@ -20,6 +20,7 @@ MonoBehaviour:
   stackable: 1
   keyItem: 0
   equipable: 0
+  weapon: 0
   randomRange: 1
   maxStack: 15
   amount: 5
