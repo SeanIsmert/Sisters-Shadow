@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// Player movement logic and state handler
@@ -7,7 +8,7 @@ using UnityEngine;
 /// Written by: Kay
 /// Modified by: Sean
 /// </summary>
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
 public class PlayerMovementHandler : MonoBehaviour
 {
     [Header("Movement Establish")]
@@ -31,7 +32,8 @@ public class PlayerMovementHandler : MonoBehaviour
     [Header("Movement State")]
     public MoveStates curMoveState;
 
-    private PlayerEquipHandler _playerAttack;
+    private PlayerEquipHandler _playerEquip;
+    private NavMeshAgent _navAgent;
     private Animator _animator;
 
     private Vector2 _currentVelocity = Vector2.zero;
@@ -45,7 +47,8 @@ public class PlayerMovementHandler : MonoBehaviour
     // Gather references to required components.
     void Awake()
     {
-        _playerAttack = GetComponent<PlayerEquipHandler>();
+        _playerEquip = GetComponent<PlayerEquipHandler>();
+        _navAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
     }
 
@@ -55,9 +58,18 @@ public class PlayerMovementHandler : MonoBehaviour
         CheckMovementState();
         CharacterMovement(PlayerInputManager.input.Gameplay.Locomotion.ReadValue<Vector2>());
 
-        _playerAttack.WeaponType();
-        if (_animator.GetInteger("WeaponType") != _playerAttack.GetWeaponType())
-            _animator.SetInteger("WeaponType", _playerAttack.GetWeaponType()); // temp
+        _playerEquip.WeaponType();
+        if (_animator.GetInteger("WeaponType") != _playerEquip.GetWeaponType())
+            _animator.SetInteger("WeaponType", _playerEquip.GetWeaponType()); // temp
+    }
+
+    private void OnAnimatorMove()
+    {
+        if (Time.deltaTime == 0)
+            return;
+        _navAgent.updatePosition = true;
+        _navAgent.updateRotation = false;
+        _navAgent.velocity = _animator.deltaPosition / Time.deltaTime;
     }
 
     /// <summary>
@@ -129,9 +141,15 @@ public class PlayerMovementHandler : MonoBehaviour
             speedMultiplier = speedMultiplier * .5f;
 
         if ((_currentVelocity.y <= 0 && targetVelocity.y > 0) || (_currentVelocity.y >= 0 && targetVelocity.y < 0))
-            _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier * 2);
+        {
+            if (_currentVelocity != targetVelocity)
+                _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier * 2);
+        }
         else
-            _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier);
+        {
+            if (_currentVelocity != targetVelocity)
+                _currentVelocity = Vector2.MoveTowards(_currentVelocity, targetVelocity, Time.deltaTime * speedMultiplier);
+        }
     }
 
     /// <summary>
@@ -221,20 +239,20 @@ public class PlayerMovementHandler : MonoBehaviour
         if (_animator.GetBool("Shooting") || curMoveState != MoveStates.Aiming)
             return;
 
-        switch (_playerAttack.GetWeaponType())
+        switch (_playerEquip.GetWeaponType())
         {
             case 0: // Pistol
-                if (_playerAttack.AmmoCheck())
+                if (_playerEquip.AmmoCheck())
                 {
-                    _playerAttack.Shoot();
+                    _playerEquip.Shoot();
                     _animator.Play("Pistol Shoot");
                 }
                 break;
 
             case 1: // Shotgun
-                if (_playerAttack.AmmoCheck())
+                if (_playerEquip.AmmoCheck())
                 {
-                    _playerAttack.Shoot();
+                    _playerEquip.Shoot();
                     _animator.Play("Shotgun Shoot");
                 }
                 break;
