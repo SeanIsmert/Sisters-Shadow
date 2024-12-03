@@ -9,8 +9,8 @@ public class CamSwitch : MonoBehaviour
     
     [SerializeField] private CinemachineVirtualCamera vm;
     [SerializeField] private ShaderValues sv;
-    private Camera mainCam;
-    private Camera minimapCam;
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private Camera minimapCam;
 
     [Header("Minimap Settings")]
     [SerializeField] private float minimapSize =5f;
@@ -21,8 +21,8 @@ public class CamSwitch : MonoBehaviour
 
     private void Start()
     {
-        mainCam = Camera.main;
-        minimapCam = GameObject.FindGameObjectWithTag("MinimapCam").GetComponent<Camera>();
+        if(mainCam == null)mainCam = Camera.main;
+        if(minimapCam == null)minimapCam = GameObject.FindGameObjectWithTag("MinimapCam").GetComponent<Camera>();
         vm.Priority = 0;
     }
     private void OnTriggerEnter(Collider other)
