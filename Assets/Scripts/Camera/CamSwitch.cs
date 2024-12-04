@@ -31,7 +31,7 @@ public class CamSwitch : MonoBehaviour
         {
             //Debug.Log("player");
             vm.Priority = 10;
-            minimapCam.gameObject.transform.position = minimapCamPos.position;
+            if(minimapCamPos != null)minimapCam.gameObject.transform.position = minimapCamPos.position;
             minimapCam.orthographicSize = minimapSize;
             updateCamShaders();
         }
