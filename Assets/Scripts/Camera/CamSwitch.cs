@@ -5,16 +5,24 @@ using UnityEngine;
 
 public class CamSwitch : MonoBehaviour
 {
-    public Transform player;
-    public CinemachineVirtualCamera vm;
-    public ShaderValues sv;
-    public Camera mainCam;
+    //public Transform player;
+    
+    [SerializeField] private CinemachineVirtualCamera vm;
+    [SerializeField] private ShaderValues sv;
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private Camera minimapCam;
+
+    [Header("Minimap Settings")]
+    [SerializeField] private float minimapSize =5f;
+    [SerializeField] private Transform minimapCamPos;
 
     [Header("Debug Settings")]
-    public bool ConstUpdate = false;
+    [SerializeField] private bool ConstUpdate = false;
 
     private void Start()
     {
+        if(mainCam == null)mainCam = Camera.main;
+        if(minimapCam == null)minimapCam = GameObject.FindGameObjectWithTag("MinimapCam").GetComponent<Camera>();
         vm.Priority = 0;
     }
     private void OnTriggerEnter(Collider other)
@@ -23,6 +31,8 @@ public class CamSwitch : MonoBehaviour
         {
             //Debug.Log("player");
             vm.Priority = 10;
+            minimapCam.gameObject.transform.position = minimapCamPos.position;
+            minimapCam.orthographicSize = minimapSize;
             updateCamShaders();
         }
     }
@@ -37,6 +47,7 @@ public class CamSwitch : MonoBehaviour
 
     private void updateCamShaders()
     {
+        if (sv == null) return;
         var dither = mainCam.GetComponent<Ditherer>();
         var colorCorrect = mainCam.GetComponent<ColorCorrection>();
         var chromAb = mainCam.GetComponent<ChromaticAberration>();
